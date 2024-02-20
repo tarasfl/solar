@@ -4,6 +4,7 @@
   
     import  { MdFilledTextField } from '@material/web/textfield/filled-text-field';
     import { onMount } from 'svelte';
+
   
     export let location;
   
@@ -51,3 +52,9 @@
   <md-filled-text-field bind:this={textFieldElement} label="Search an address" value={initialValue}>
     <md-icon slot="leadingicon">search</md-icon>
   </md-filled-text-field>
+
+  <style>
+    md-filled-text-field {
+      border-radius: 5px;
+    }
+  </style>

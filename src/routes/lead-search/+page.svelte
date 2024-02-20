@@ -2,6 +2,7 @@
 <script>
     import SearchBar from '$lib/SearchBar.svelte';
   
+    import '@material/web/switch/switch'
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
   
@@ -52,12 +53,21 @@
   </script>
   
   <div class = 'container'>
-  <div bind:this={mapElement} style="width: 420px; height: 400px;"></div>
+  <div bind:this={mapElement} class = 'map'></div>
 
   <div class='search-bar'>
+    <!-- <Segements /> -->
+  <p>Add zipCode below</p>
   {#if placesLibrary && map}
           <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />
   {/if}
+  <br />
+  <div class = 'solar-api-switch'>
+  <label for = 'switch' >
+    <md-switch selected></md-switch>
+    enable Solar API
+  </label>
+</div>
 </div>
 </div>
   
@@ -66,11 +76,24 @@
   
   
   <style>
+    .solar-api-switch {
+      margin-top: 10px;
+      width: 160px;
+    }
+    .search-bar {
+      margin: 5px;
+      width: 220px;
+    }
+    .map {
+      height: auto;
+      width: 100%;
+    }
+
     .search-bar{
       padding-top: 10px;
-      background-color: #ebebeb;
     }
     .container {
+      height: 520px;
       display: flex;
       justify-content: space-around;
     }

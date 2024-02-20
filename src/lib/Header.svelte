@@ -1,10 +1,22 @@
 
+<script>
+    import '@material/web/divider/divider'
+</script>
+
+
 <header>
     <div>
         <img alt = 'logo' src = './logo.png' class="logo">
     </div>
 </header>
+<md-divider></md-divider>
 <style>
+
+    header {
+        background-color: #EADDFF;
+        height: 120px;
+    }
+
     .logo {
         height: 85px;
     }
@@ -15,12 +27,6 @@
 * {
     margin: 0;
     padding: 0;
-}
-header {
-    vertical-align: center;
-    height: 80px;
-    width: 100%;
-    background-color: #ebebeb;
 }
 
 </style>
