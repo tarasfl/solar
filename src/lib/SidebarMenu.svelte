@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
           import Drawer, { AppContent, Content } from '@smui/drawer';
 </script>
     <Drawer>

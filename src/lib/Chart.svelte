@@ -1,13 +1,15 @@
 <!-- Chart.svelte -->
-<script>
+<script lang='ts'>
     import { onMount } from 'svelte';
     import Chart from 'chart.js/auto';
   
-    let chart;
+    let chart: Chart;
   
     onMount(() => {
-      const ctx = document.getElementById('myChart').getContext('2d');
-      chart = new Chart(ctx, {
+      const canvas:HTMLElement = document.getElementById('myChart')
+      if (canvas instanceof HTMLCanvasElement) {
+        const context = canvas.getContext('2d');
+        chart = new Chart(context, {
         type: 'bar',
         data: {
           labels: ['February', 'March', 'April', 'May', 'June', 'July'],
@@ -41,6 +43,7 @@
           }
         }
       });
+      }
     });
   </script>
   

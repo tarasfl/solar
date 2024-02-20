@@ -1,4 +1,4 @@
-<script>
+<script lang='ts'>
     import '@material/web/tabs/secondary-tab'
     import '@material/web/list/list-item'
     import '@material/web/divider/divider'
@@ -8,7 +8,7 @@
     import '@smui/layout-grid'
     import  { MdFilledTextField } from '@material/web/textfield/filled-text-field';
 
-    import Header from '$lib/Header.svelte';
+    import Header from '../lib/Header.svelte';
     import SidebarMenu from '../lib/SidebarMenu.svelte';
 </script>
 
@@ -27,11 +27,11 @@
 </html>
     <style>
         html {
-            background-color: #EADDFF;
+            background-color: #fbfcfa;
         }
         :root {
-    --md-list-container-color: #EADDFF;
-    
+    --md-list-container-color: #fbfcfa;
+
   --md-filled-button-container-shape: 10px;
   --md-filled-button-label-text-font: system-ui;
   --md-sys-color-primary: #6750A4;

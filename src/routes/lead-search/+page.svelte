@@ -1,19 +1,19 @@
 
-<script>
-    import SearchBar from '$lib/SearchBar.svelte';
+<script lang="ts">
+    import SearchBar from '../../lib/SearchBar.svelte';
   
     import '@material/web/switch/switch'
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
   
-    let location;  // location
-    let zipCode = "90571"; 
-    let map; // elemenent for map initialising
-    let mapElement; // HTML element for visualisation
+    let location: google.maps.LatLng | undefined;  // location
+    let zipCode = "90571"; // zipCode of default Location
+    let map: google.maps.Map; // elemenent for map initialising
+    let mapElement: HTMLElement; // HTML element for visualisation
   
-    let geometryLibrary;
-    let mapsLibrary;
-    let placesLibrary;
+    let geometryLibrary: google.maps.GeometryLibrary;
+    let mapsLibrary: google.maps.MapsLibrary;
+    let placesLibrary: google.maps.PlacesLibrary;
   
     onMount(async () => {
       const loader = new Loader({
@@ -40,11 +40,9 @@
       const geocoderResult = geocoderResponse.results[0];  // recieving results
       location = geocoderResult.geometry.location; // writing location
   
-      console.log(location)
+      // map = await loader.load();
   
-      map = await loader.load();
-  
-      map = new google.maps.Map(mapElement, {
+      map = new mapsLibrary.Map(mapElement, {
         center: location,
         zoom: 15,
       });
@@ -53,7 +51,8 @@
   </script>
   
   <div class = 'container'>
-  <div bind:this={mapElement} class = 'map'></div>
+    <!-- Connecting map Element -->
+    <div bind:this={mapElement} class = 'map'></div> 
 
   <div class='search-bar'>
     <!-- <Segements /> -->

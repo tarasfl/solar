@@ -1,15 +1,15 @@
 
- <script>
+ <script lang='ts'>
     /* global google */
   
     import  { MdFilledTextField } from '@material/web/textfield/filled-text-field';
     import { onMount } from 'svelte';
 
   
-    export let location;
+    export let location: google.maps.LatLng | undefined;
   
-    export let placesLibrary;
-    export let map;
+    export let placesLibrary: google.maps.PlacesLibrary;
+    export let map: google.maps.Map;
     export let initialValue = '';
     export let zoom = 15;
   
@@ -18,7 +18,7 @@
     onMount(async () => {
       // https://lit.dev/docs/components/shadow-dom/
       await textFieldElement.updateComplete;
-      const inputElement = textFieldElement.renderRoot.querySelector('input');
+      const inputElement = textFieldElement.renderRoot.querySelector('input') as HTMLInputElement;
       const autocomplete = new placesLibrary.Autocomplete(inputElement, {
         fields: ['formatted_address', 'geometry', 'name'],
       });

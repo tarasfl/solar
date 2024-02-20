@@ -1,6 +1,6 @@
 
 
-<script>
+<script lang='ts'>
       import Card, {
     Content,
     PrimaryAction,

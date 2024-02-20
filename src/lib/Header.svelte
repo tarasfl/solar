@@ -1,5 +1,5 @@
 
-<script>
+<script lang='ts'>
     import '@material/web/divider/divider'
 </script>
 
@@ -13,7 +13,7 @@
 <style>
 
     header {
-        background-color: #EADDFF;
+        background-color: #ffffff;
         height: 120px;
     }
 
