@@ -1,8 +1,4 @@
 import { c as create_ssr_component, a as compute_rest_props, g as get_current_component, b as spread, d as escape_object, f as add_attribute } from "./ssr.js";
-const globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
-  // @ts-ignore Node typings have this
-  global
-);
 const void_element_names = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
 function is_void(name) {
   return void_element_names.test(name) || name.toLowerCase() === "!doctype";
@@ -204,6 +200,5 @@ const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) 
 export {
   SmuiElement as S,
   classMap as c,
-  forwardEventsBuilder as f,
-  globals as g
+  forwardEventsBuilder as f
 };

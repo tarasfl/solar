@@ -6,7 +6,7 @@
     </Segment>
   </SegmentedButton>
   
-  <div style="margin-top: 1em;">Programmatically select:</div>
+  <!-- <div style="margin-top: 1em;">Programmatically select:</div>
   <Button on:click={() => (selected = 'Morning')}>
     <Label>Morning</Label>
   </Button>
@@ -18,7 +18,7 @@
   </Button>
   <Button on:click={() => (selected = 'Night')}>
     <Label>Night</Label>
-  </Button>
+  </Button> -->
   
   <pre class="status">Selected: {selected}</pre>
   
@@ -27,6 +27,6 @@
     import Button from '@smui/button';
     import { Label } from '@smui/common';
   
-    let choices = ['Morning', 'Afternoon', 'Evening', 'Night'];
-    let selected = 'Morning';
+    let choices = ['Manual', 'Range'];
+    let selected = 'Manual';
   </script>

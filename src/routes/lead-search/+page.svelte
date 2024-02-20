@@ -1,6 +1,7 @@
 
 <script lang="ts">
     import SearchBar from '../../lib/SearchBar.svelte';
+    import Segements from '../../lib/Segements.svelte';
   
     import '@material/web/switch/switch'
     import { onMount } from 'svelte';
@@ -55,7 +56,7 @@
     <div bind:this={mapElement} class = 'map'></div> 
 
   <div class='search-bar'>
-    <!-- <Segements /> -->
+    <Segements />
   <p>Add zipCode below</p>
   {#if placesLibrary && map}
           <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />

@@ -1,29 +1,12 @@
-import { c as create_ssr_component, a as compute_rest_props, g as get_current_component, s as setContext, o as onDestroy, b as spread, e as escape_attribute_value, d as escape_object, f as add_attribute, h as getContext, v as validate_component, m as missing_component } from "../../chunks/ssr.js";
+import { c as create_ssr_component, a as compute_rest_props, g as get_current_component, s as setContext, o as onDestroy, b as spread, e as escape_attribute_value, d as escape_object, f as add_attribute, v as validate_component } from "../../chunks/ssr.js";
 import "@material/web/tabs/secondary-tab.js";
 import "@material/web/list/list-item.js";
 import "@material/web/divider/divider.js";
 import "@material/web/list/list.js";
 import "@material/web/button/filled-button.js";
 import { MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation } from "@material/drawer";
-import { f as forwardEventsBuilder, c as classMap, S as SmuiElement, g as globals } from "../../chunks/SmuiElement.js";
-function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
-  if (typeof Event === "undefined") {
-    throw new Error("Event not defined.");
-  }
-  if (!element) {
-    throw new Error("Tried to dipatch event without element.");
-  }
-  const event = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
-  element === null || element === void 0 ? void 0 : element.dispatchEvent(event);
-  if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
-    const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
-    element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
-    if (duplicateEvent.defaultPrevented) {
-      event.preventDefault();
-    }
-  }
-  return event;
-}
+import { f as forwardEventsBuilder, c as classMap } from "../../chunks/SmuiElement.js";
+import { d as dispatch, c as classAdderBuilder, L as List, I as Item, T as Text } from "../../chunks/Subheader.js";
 const css$2 = {
   code: "header.svelte-1xu39lv{background-color:#ffffff;height:120px}.logo.svelte-1xu39lv{height:85px}div.svelte-1xu39lv{display:flex;justify-content:space-between}.svelte-1xu39lv{margin:0;padding:0}",
   map: null
@@ -171,110 +154,6 @@ const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {}
   )}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``} </aside>`;
 });
-const { Object: Object_1 } = globals;
-const internals = {
-  component: SmuiElement,
-  tag: "div",
-  class: "",
-  classMap: {},
-  contexts: {},
-  props: {}
-};
-const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "component", "tag", "getElement"]);
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let element;
-  const smuiClass = internals.class;
-  const smuiClassMap = {};
-  const smuiClassUnsubscribes = [];
-  const contexts = internals.contexts;
-  const props = internals.props;
-  let { component = internals.component } = $$props;
-  let { tag = component === SmuiElement ? internals.tag : void 0 } = $$props;
-  Object.entries(internals.classMap).forEach(([name, context]) => {
-    const store = getContext(context);
-    if (store && "subscribe" in store) {
-      smuiClassUnsubscribes.push(store.subscribe((value) => {
-        smuiClassMap[name] = value;
-      }));
-    }
-  });
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  for (let context in contexts) {
-    if (contexts.hasOwnProperty(context)) {
-      setContext(context, contexts[context]);
-    }
-  }
-  onDestroy(() => {
-    for (const unsubscribe of smuiClassUnsubscribes) {
-      unsubscribe();
-    }
-  });
-  function getElement() {
-    return element.getElement();
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-    $$bindings.component(component);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  let $$settled;
-  let $$rendered;
-  let previous_head = $$result.head;
-  do {
-    $$settled = true;
-    $$result.head = previous_head;
-    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
-      $$result,
-      Object_1.assign(
-        {},
-        { tag },
-        { use: [forwardEvents, ...use] },
-        {
-          class: classMap({
-            [className]: true,
-            [smuiClass]: true,
-            ...smuiClassMap
-          })
-        },
-        props,
-        $$restProps,
-        { this: element }
-      ),
-      {
-        this: ($$value) => {
-          element = $$value;
-          $$settled = false;
-        }
-      },
-      {
-        default: () => {
-          return `${slots.default ? slots.default({}) : ``}`;
-        }
-      }
-    )}`;
-  } while (!$$settled);
-  return $$rendered;
-});
-const defaults = Object.assign({}, internals);
-function classAdderBuilder(props) {
-  return new Proxy(ClassAdder, {
-    construct: function(target, args) {
-      Object.assign(internals, defaults, props);
-      return new target(...args);
-    },
-    get: function(target, prop) {
-      Object.assign(internals, defaults, props);
-      return target[prop];
-    }
-  });
-}
 classAdderBuilder({
   class: "mdc-drawer-app-content",
   tag: "div"
@@ -296,20 +175,79 @@ classAdderBuilder({
   tag: "h2"
 });
 const css$1 = {
-  code: "md-filled-button.svelte-1ets8ki{width:180px}:root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
+  code: ":root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
   map: null
 };
 const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$1);
-  return `${validate_component(Drawer, "Drawer").$$render($$result, {}, {}, {
+  return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "height:680px;" }, {}, {
     default: () => {
       return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
         default: () => {
-          return `<md-list style="max-width: 220px" data-svelte-h="svelte-l3qut7"><md-list-item class="list-item"><md-filled-button href="/" class="svelte-1ets8ki">dashboard</md-filled-button></md-list-item> <md-list-item class="list-item"><md-filled-button href="/lead-search" class="svelte-1ets8ki">Lead generation</md-filled-button></md-list-item> <md-list-item class="list-item"><md-filled-button href="/marketing" class="svelte-1ets8ki">Marketing</md-filled-button></md-list-item> <md-list-item class="list-item"><md-filled-button href="/users" class="svelte-1ets8ki">Users</md-filled-button></md-list-item> <md-list-item class="list-item"><md-filled-button href="/account-overview" class="svelte-1ets8ki">Account overview</md-filled-button></md-list-item> <md-list-item class="list-item"><md-filled-button href="/transactions" class="svelte-1ets8ki">Transactions</md-filled-button></md-list-item></md-list>`;
+          return `${validate_component(List, "List").$$render(
+            $$result,
+            {
+              style: " height: -webkit-fill-available;\n    justify-content: space-evenly;"
+            },
+            {},
+            {
+              default: () => {
+                return `${validate_component(Item, "Item").$$render($$result, { href: "/" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Dashboard`;
+                      }
+                    })}`;
+                  }
+                })} ${validate_component(Item, "Item").$$render($$result, { href: "/lead-search" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Lead Generation`;
+                      }
+                    })}`;
+                  }
+                })} ${validate_component(Item, "Item").$$render($$result, { href: "/marketing" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Marketing`;
+                      }
+                    })}`;
+                  }
+                })} ${validate_component(Item, "Item").$$render($$result, { href: "/users" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Users`;
+                      }
+                    })}`;
+                  }
+                })} ${validate_component(Item, "Item").$$render($$result, { href: "/account-overview" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Account Overview`;
+                      }
+                    })}`;
+                  }
+                })} ${validate_component(Item, "Item").$$render($$result, { href: "/transactions" }, {}, {
+                  default: () => {
+                    return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                      default: () => {
+                        return `Transactions`;
+                      }
+                    })}`;
+                  }
+                })}`;
+              }
+            }
+          )}`;
         }
       })}`;
     }
-  })}`;
+  })} `;
 });
 const css = {
   code: "html.svelte-hxsvg6{background-color:#fbfcfa}:root{--md-list-container-color:#fbfcfa;--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui;--md-sys-color-primary:#6750A4;--md-sys-color-on-primary:#FFFFFF}.drawer-container.svelte-hxsvg6{position:relative;display:flex;height:auto;max-width:auto;overflow:hidden;z-index:0}.svelte-hxsvg6 .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}.main-content.svelte-hxsvg6{overflow:auto;padding:16px;height:100%;box-sizing:border-box;background-color:#FFFFFF}:root{--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
