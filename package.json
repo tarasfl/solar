@@ -10,13 +10,17 @@
 		"smui-theme": "smui-theme compile static/smui.css -i src/theme"
 	},
 	"devDependencies": {
+		"@material/elevation": "^14.0.0",
 		"@smui/button": "^7.0.0-beta.16",
 		"@smui/card": "^7.0.0-beta.16",
 		"@smui/common": "^7.0.0-beta.16",
 		"@smui/drawer": "^7.0.0-beta.16",
+		"@smui/form-field": "^7.0.0-beta.16",
 		"@smui/layout-grid": "^7.0.0-beta.16",
 		"@smui/list": "^7.0.0-beta.16",
 		"@smui/segmented-button": "^7.0.0-beta.16",
+		"@smui/switch": "^7.0.0-beta.16",
+		"@smui/textfield": "^7.0.0-beta.16",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",

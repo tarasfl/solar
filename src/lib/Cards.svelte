@@ -51,9 +51,12 @@
   </Card>
   <style>
 
+    .md-card {
+      height: 64px;
+        width: auto;
+    }
+
     * :global(.card-media-16x9) {
     background-image: url(https://placehold.co/320x180?text=16x9);
-    height: 64px;
-        width: auto;
   }
   </style>

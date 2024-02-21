@@ -30,10 +30,6 @@ function compute_rest_props(props, keys) {
       rest[k] = props[k];
   return rest;
 }
-function set_store_value(store, ret, value) {
-  store.set(value);
-  return ret;
-}
 let current_component;
 function set_current_component(component) {
   current_component = component;
@@ -52,9 +48,6 @@ function setContext(key, context) {
 }
 function getContext(key) {
   return get_current_component().$$.context.get(key);
-}
-function ensure_array_like(array_like_or_iterator) {
-  return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
 }
 const _boolean_attributes = (
   /** @type {const} */
@@ -173,14 +166,6 @@ function escape_object(obj) {
   }
   return result;
 }
-function each(items, fn) {
-  items = ensure_array_like(items);
-  let str = "";
-  for (let i = 0; i < items.length; i += 1) {
-    str += fn(items[i], i);
-  }
-  return str;
-}
 const missing_component = {
   $$render: () => ""
 };
@@ -241,22 +226,20 @@ function style_object_to_string(style_object) {
   return Object.keys(style_object).filter((key) => style_object[key]).map((key) => `${key}: ${escape_attribute_value(style_object[key])};`).join(" ");
 }
 export {
-  compute_rest_props as a,
-  spread as b,
+  setContext as a,
+  compute_rest_props as b,
   create_ssr_component as c,
-  escape_object as d,
+  spread as d,
   escape_attribute_value as e,
-  add_attribute as f,
+  escape_object as f,
   get_current_component as g,
-  getContext as h,
-  subscribe as i,
-  escape as j,
-  set_store_value as k,
-  each as l,
+  add_attribute as h,
+  getContext as i,
+  subscribe as j,
+  escape as k,
   missing_component as m,
   noop as n,
   onDestroy as o,
-  safe_not_equal as p,
-  setContext as s,
+  safe_not_equal as s,
   validate_component as v
 };

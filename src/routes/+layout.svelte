@@ -1,66 +1,49 @@
 <script lang='ts'>
-    import '@material/web/tabs/secondary-tab'
-    import '@material/web/list/list-item'
-    import '@material/web/divider/divider'
-    import '@material/web/list/list-item'
-    import '@material/web/list/list'
-    import '@material/web/button/filled-button'
-    import '@smui/layout-grid'
-    import  { MdFilledTextField } from '@material/web/textfield/filled-text-field';
 
+    // importing materials UI elements
+    import '@smui/layout-grid'
+    import LayoutGrid, { Cell } from '@smui/layout-grid';
+
+    // importing components
     import Header from '../lib/Header.svelte';
     import SidebarMenu from '../lib/SidebarMenu.svelte';
+    import Footer from '../lib/Footer.svelte';
+
+    // importing svelte components
 </script>
 
 <html lang="en">
 <body>
-        <Header />
 
-    <div class="drawer-container">
-        <SidebarMenu/>
-        <main class="main-content w-screen h-screen app-content">
-            <slot></slot>
-        </main>
-    </div>
+  <!-- Responsive implementeation -->
+  <LayoutGrid>
+    <Cell span={12}>
+      <Header />
+    </Cell>
+
+    <Cell span={3}>
+      <SidebarMenu/>
+    </Cell>
+
+    <Cell span={9}>
+      <slot></slot>
+    </Cell>
+
+    <Cell span={12}>
+      <Footer />
+    </Cell>
+
+  </LayoutGrid>
+        
         
 </body>
 </html>
     <style>
-        html {
-            background-color: #fbfcfa;
-        }
-        :root {
-    --md-list-container-color: #fbfcfa;
 
-  --md-filled-button-container-shape: 10px;
-  --md-filled-button-label-text-font: system-ui;
-  --md-sys-color-primary: #6750A4;
-  --md-sys-color-on-primary: #FFFFFF;
-}
-        .drawer-container {
-    position: relative;
-    display: flex;
-    height: auto;
-    max-width: auto;
-    overflow: hidden;
-    z-index: 0;
-  }
+      body, html {
+        height: 100%;
+      }
  
-  * :global(.app-content) {
-    flex: auto;
-    overflow: auto;
-    position: relative;
-    flex-grow: 1;
-  }
- 
-  .main-content {
-    overflow: auto;
-    padding: 16px;
-    height: 100%;
-    box-sizing: border-box;
-    background-color: #FFFFFF;
-  }
-        
 /* Layout grid spacing. */
 :root {
   --mdc-layout-grid-margin-desktop: 24px;

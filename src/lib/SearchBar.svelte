@@ -2,8 +2,17 @@
  <script lang='ts'>
     /* global google */
   
-    import  { MdFilledTextField } from '@material/web/textfield/filled-text-field';
+    import '@material/web/textfield/filled-text-field';
+    import '@material/web/icon/icon';
     import { onMount } from 'svelte';
+    
+    // importing smui elements
+    import Switch from '@smui/switch';
+    import FormField from '@smui/form-field';
+    import Segements from './Segements.svelte';
+    import Textfield from '@smui/textfield';
+    import Icon from '@smui/textfield/icon';
+    import HelperText from '@smui/textfield/helper-text';
 
   
     export let location: google.maps.LatLng | undefined;
@@ -48,13 +57,34 @@
       console.log(textFieldElement)
     });
   </script>
+
+<div class='search-bar'>
+
+  <div class='search-element'>
+    <Segements />
+  </div>
+
+  <div class='search-element'>
+
+    <Textfield variant="outlined" bind:this={textFieldElement} label="Search an adress" value={initialValue}>
+      <Icon class="material-icons" slot="trailingIcon">search</Icon>
+      <HelperText slot="helper">Enter zipCode</HelperText>
+    </Textfield>
+  </div>
+
+  <div class='search-element'>
+    <FormField>
+      <Switch icons={false} />
+      <span slot="label">Enable Solar API</span>
+    </FormField>
+  </div>
+
+  </div>
   
-  <md-filled-text-field bind:this={textFieldElement} label="Search an address" value={initialValue}>
-    <md-icon slot="leadingicon">search</md-icon>
-  </md-filled-text-field>
+ 
 
   <style>
-    md-filled-text-field {
-      border-radius: 5px;
+    .search-element {
+      margin-top: 10px;
     }
   </style>

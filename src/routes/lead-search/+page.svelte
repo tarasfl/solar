@@ -1,9 +1,13 @@
 
 <script lang="ts">
+
+  //  importing components
     import SearchBar from '../../lib/SearchBar.svelte';
-    import Segements from '../../lib/Segements.svelte';
-  
+
+    // imorting smui elements 
+    import LayoutGrid, { Cell } from '@smui/layout-grid';
     import '@material/web/switch/switch'
+
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
   
@@ -50,53 +54,26 @@
     });
   
   </script>
-  
-  <div class = 'container'>
-    <!-- Connecting map Element -->
-    <div bind:this={mapElement} class = 'map'></div> 
 
-  <div class='search-bar'>
-    <Segements />
-  <p>Add zipCode below</p>
-  {#if placesLibrary && map}
-          <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />
-  {/if}
-  <br />
-  <div class = 'solar-api-switch'>
-  <label for = 'switch' >
-    <md-switch selected></md-switch>
-    enable Solar API
-  </label>
-</div>
-</div>
-</div>
-  
-   
-  
-  
+  <LayoutGrid>
+    <Cell span={9}>
+      <div bind:this={mapElement} class = 'map'></div> 
+    </Cell>
+    <Cell span={3}>
+        {#if placesLibrary && map}
+            <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />
+        {/if}
+    </Cell>
+  </LayoutGrid>
   
   <style>
-    .solar-api-switch {
-      margin-top: 10px;
-      width: 160px;
-    }
-    .search-bar {
-      margin: 5px;
-      width: 220px;
-    }
+
     .map {
-      height: auto;
+      min-height: 420px;
       width: 100%;
     }
 
-    .search-bar{
-      padding-top: 10px;
-    }
-    .container {
-      height: 520px;
-      display: flex;
-      justify-content: space-around;
-    }
+
   </style>
   
   

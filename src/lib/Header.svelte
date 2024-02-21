@@ -14,11 +14,13 @@
 
     header {
         background-color: #ffffff;
-        height: 120px;
+        height: 65px;
     }
 
     .logo {
-        height: 85px;
+        margin-left: 5px;
+        margin-top: 5px;
+        height: 55px;
     }
     div{
         display: flex;
