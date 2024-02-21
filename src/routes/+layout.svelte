@@ -1,5 +1,7 @@
 <script lang='ts'>
 
+    import {onMount} from 'svelte';
+
     // importing materials UI elements
     import '@smui/layout-grid'
     import LayoutGrid, { Cell } from '@smui/layout-grid';
@@ -8,8 +10,19 @@
     import Header from '../lib/Header.svelte';
     import SidebarMenu from '../lib/SidebarMenu.svelte';
     import Footer from '../lib/Footer.svelte';
+    import SidebarMenuSmall from '../lib/SidebarMenuSmall.svelte';
 
-    // importing svelte components
+
+    export let isSmallScreen = false;
+    
+    // Function to check screen size on mount and resize
+  const checkScreenSize = () => {
+    isSmallScreen = window.innerWidth < 600; // Adjust the breakpoint as needed
+  };
+
+    onMount(() => {
+      checkScreenSize();
+    })
 </script>
 
 <html lang="en">
@@ -17,12 +30,21 @@
 
   <!-- Responsive implementeation -->
   <LayoutGrid>
-    <Cell span={12}>
-      <Header />
-    </Cell>
+    {#if !isSmallScreen}
+      <Cell span={12}>
+        <Header />
+      </Cell>
+    {/if}
+    
 
-    <Cell span={3}>
-      <SidebarMenu/>
+    <Cell span={4}>
+      {#if !isSmallScreen}
+        <SidebarMenu />
+      {/if}
+      {#if isSmallScreen}
+        <SidebarMenuSmall />
+      {/if}
+      
     </Cell>
 
     <Cell span={9}>

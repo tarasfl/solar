@@ -6,6 +6,7 @@ import "@material/web/list/list.js";
 import { MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation } from "@material/drawer";
 import { MDCRippleFoundation, util } from "@material/ripple";
 import { events, ponyfill } from "@material/dom";
+import { MDCIconButtonToggleFoundation } from "@material/icon-button";
 const globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
   // @ts-ignore Node typings have this
   global
@@ -32,13 +33,13 @@ function dispatch(element, eventType, detail, eventInit = { bubbles: true }, dup
   }
   return event;
 }
-const css$3 = {
+const css$4 = {
   code: "header.svelte-xmq1f4{background-color:#ffffff;height:65px}.logo.svelte-xmq1f4{margin-left:5px;margin-top:5px;height:55px}div.svelte-xmq1f4{display:flex;justify-content:space-between}.svelte-xmq1f4{margin:0;padding:0}",
   map: null
 };
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$3);
-  return `<header class="svelte-xmq1f4" data-svelte-h="svelte-1j2fppr"><div class="svelte-xmq1f4"><img alt="logo" src="./logo.png" class="logo svelte-xmq1f4"></div></header> <md-divider class="svelte-xmq1f4"></md-divider>`;
+  $$result.css.add(css$4);
+  return `${Layout ? `<header class="svelte-xmq1f4" data-svelte-h="svelte-1j2fppr"><div class="svelte-xmq1f4"><img alt="logo" src="./logo.png" class="logo svelte-xmq1f4"></div></header> <md-divider class="svelte-xmq1f4"></md-divider>` : ``}`;
 });
 const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "open", "fixed", "setOpen", "isOpen", "getElement"]);
@@ -217,7 +218,7 @@ const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) 
     return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
   })(tag)}`}`}`;
 });
-const { Object: Object_1$1 } = globals;
+const { Object: Object_1$2 } = globals;
 const internals = {
   component: SmuiElement,
   tag: "div",
@@ -278,7 +279,7 @@ const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) =
     $$result.head = previous_head;
     $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
       $$result,
-      Object_1$1.assign(
+      Object_1$2.assign(
         {},
         { tag },
         { use: [forwardEvents, ...use] },
@@ -691,7 +692,7 @@ function Ripple(node, { ripple = true, surface = false, unbounded = false, disab
     }
   };
 }
-const { Object: Object_1 } = globals;
+const { Object: Object_1$1 } = globals;
 let counter = 0;
 const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let tabindex;
@@ -843,7 +844,7 @@ const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
     $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
       $$result,
-      Object_1.assign(
+      Object_1$1.assign(
         {},
         { tag },
         {
@@ -941,12 +942,12 @@ classAdderBuilder({
   class: "mdc-deprecated-list-group__subheader",
   tag: "h3"
 });
-const css$2 = {
+const css$3 = {
   code: ":root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
   map: null
 };
 const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$2);
+  $$result.css.add(css$3);
   return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "height:680px;" }, {}, {
     default: () => {
       return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
@@ -1009,29 +1010,393 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
     }
   })} `;
 });
-const css$1 = {
+const css$2 = {
   code: "footer.svelte-ydgzm{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-between}",
   map: null
 };
 const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  $$result.css.add(css$1);
+  $$result.css.add(css$2);
   return `<footer class="svelte-ydgzm" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
+});
+const { Object: Object_1 } = globals;
+const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let actionProp;
+  let $$restProps = compute_rest_props($$props, [
+    "use",
+    "class",
+    "style",
+    "ripple",
+    "color",
+    "toggle",
+    "pressed",
+    "ariaLabelOn",
+    "ariaLabelOff",
+    "touch",
+    "displayFlex",
+    "size",
+    "href",
+    "action",
+    "component",
+    "tag",
+    "getElement"
+  ]);
+  const forwardEvents = forwardEventsBuilder(get_current_component());
+  let uninitializedValue = () => {
+  };
+  function isUninitializedValue(value) {
+    return value === uninitializedValue;
+  }
+  let { use = [] } = $$props;
+  let { class: className = "" } = $$props;
+  let { style = "" } = $$props;
+  let { ripple = true } = $$props;
+  let { color = void 0 } = $$props;
+  let { toggle = false } = $$props;
+  let { pressed = uninitializedValue } = $$props;
+  let { ariaLabelOn = void 0 } = $$props;
+  let { ariaLabelOff = void 0 } = $$props;
+  let { touch = false } = $$props;
+  let { displayFlex = true } = $$props;
+  let { size = "normal" } = $$props;
+  let { href = void 0 } = $$props;
+  let { action = void 0 } = $$props;
+  let element;
+  let instance;
+  let internalClasses = {};
+  let internalStyles = {};
+  let internalAttrs = {};
+  let context = getContext("SMUI:icon-button:context");
+  let ariaDescribedby = getContext("SMUI:icon-button:aria-describedby");
+  let { component = SmuiElement } = $$props;
+  let { tag = component === SmuiElement ? href == null ? "button" : "a" : void 0 } = $$props;
+  let previousDisabled = $$restProps.disabled;
+  setContext("SMUI:icon:context", "icon-button");
+  let oldToggle = null;
+  onDestroy(() => {
+    instance && instance.destroy();
+  });
+  function hasClass(className2) {
+    return className2 in internalClasses ? internalClasses[className2] : getElement().classList.contains(className2);
+  }
+  function addClass(className2) {
+    if (!internalClasses[className2]) {
+      internalClasses[className2] = true;
+    }
+  }
+  function removeClass(className2) {
+    if (!(className2 in internalClasses) || internalClasses[className2]) {
+      internalClasses[className2] = false;
+    }
+  }
+  function addStyle(name, value) {
+    if (internalStyles[name] != value) {
+      if (value === "" || value == null) {
+        delete internalStyles[name];
+        internalStyles = internalStyles;
+      } else {
+        internalStyles[name] = value;
+      }
+    }
+  }
+  function getAttr(name) {
+    var _a;
+    return name in internalAttrs ? (_a = internalAttrs[name]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name);
+  }
+  function addAttr(name, value) {
+    if (internalAttrs[name] !== value) {
+      internalAttrs[name] = value;
+    }
+  }
+  function handleChange(evtData) {
+    pressed = evtData.isOn;
+  }
+  function getElement() {
+    return element.getElement();
+  }
+  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+    $$bindings.use(use);
+  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+    $$bindings.class(className);
+  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
+    $$bindings.style(style);
+  if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
+    $$bindings.ripple(ripple);
+  if ($$props.color === void 0 && $$bindings.color && color !== void 0)
+    $$bindings.color(color);
+  if ($$props.toggle === void 0 && $$bindings.toggle && toggle !== void 0)
+    $$bindings.toggle(toggle);
+  if ($$props.pressed === void 0 && $$bindings.pressed && pressed !== void 0)
+    $$bindings.pressed(pressed);
+  if ($$props.ariaLabelOn === void 0 && $$bindings.ariaLabelOn && ariaLabelOn !== void 0)
+    $$bindings.ariaLabelOn(ariaLabelOn);
+  if ($$props.ariaLabelOff === void 0 && $$bindings.ariaLabelOff && ariaLabelOff !== void 0)
+    $$bindings.ariaLabelOff(ariaLabelOff);
+  if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
+    $$bindings.touch(touch);
+  if ($$props.displayFlex === void 0 && $$bindings.displayFlex && displayFlex !== void 0)
+    $$bindings.displayFlex(displayFlex);
+  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
+    $$bindings.size(size);
+  if ($$props.href === void 0 && $$bindings.href && href !== void 0)
+    $$bindings.href(href);
+  if ($$props.action === void 0 && $$bindings.action && action !== void 0)
+    $$bindings.action(action);
+  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
+    $$bindings.component(component);
+  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
+    $$bindings.tag(tag);
+  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+    $$bindings.getElement(getElement);
+  let $$settled;
+  let $$rendered;
+  let previous_head = $$result.head;
+  do {
+    $$settled = true;
+    $$result.head = previous_head;
+    actionProp = (() => {
+      if (context === "data-table:pagination") {
+        switch (action) {
+          case "first-page":
+            return { "data-first-page": "true" };
+          case "prev-page":
+            return { "data-prev-page": "true" };
+          case "next-page":
+            return { "data-next-page": "true" };
+          case "last-page":
+            return { "data-last-page": "true" };
+          default:
+            return { "data-action": "true" };
+        }
+      } else if (context === "dialog:header" || context === "dialog:sheet") {
+        return { "data-mdc-dialog-action": action };
+      } else {
+        return { action };
+      }
+    })();
+    {
+      if (previousDisabled !== $$restProps.disabled) {
+        const elem = getElement();
+        if ("blur" in elem) {
+          elem.blur();
+        }
+        previousDisabled = $$restProps.disabled;
+      }
+    }
+    {
+      if (element && getElement() && toggle !== oldToggle) {
+        if (toggle && !instance) {
+          instance = new MDCIconButtonToggleFoundation({
+            addClass,
+            hasClass,
+            notifyChange: (evtData) => {
+              handleChange(evtData);
+              dispatch(getElement(), "SMUIIconButtonToggle:change", evtData, void 0, true);
+            },
+            removeClass,
+            getAttr,
+            setAttr: addAttr
+          });
+          instance.init();
+        } else if (!toggle && instance) {
+          instance.destroy();
+          instance = void 0;
+          internalClasses = {};
+          internalAttrs = {};
+        }
+        oldToggle = toggle;
+      }
+    }
+    {
+      if (instance && !isUninitializedValue(pressed) && instance.isOn() !== pressed) {
+        instance.toggle(pressed);
+      }
+    }
+    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
+      $$result,
+      Object_1.assign(
+        {},
+        { tag },
+        {
+          use: [
+            [
+              Ripple,
+              {
+                ripple,
+                unbounded: true,
+                color,
+                disabled: !!$$restProps.disabled,
+                addClass,
+                removeClass,
+                addStyle
+              }
+            ],
+            forwardEvents,
+            ...use
+          ]
+        },
+        {
+          class: classMap({
+            [className]: true,
+            "mdc-icon-button": true,
+            "mdc-icon-button--on": !isUninitializedValue(pressed) && pressed,
+            "mdc-icon-button--touch": touch,
+            "mdc-icon-button--display-flex": displayFlex,
+            "smui-icon-button--size-button": size === "button",
+            "smui-icon-button--size-mini": size === "mini",
+            "mdc-icon-button--reduced-size": size === "mini" || size === "button",
+            "mdc-card__action": context === "card:action",
+            "mdc-card__action--icon": context === "card:action",
+            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
+            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
+            "mdc-snackbar__dismiss": context === "snackbar:actions",
+            "mdc-data-table__pagination-button": context === "data-table:pagination",
+            "mdc-data-table__sort-icon-button": context === "data-table:sortable-header-cell",
+            "mdc-dialog__close": (context === "dialog:header" || context === "dialog:sheet") && action === "close",
+            ...internalClasses
+          })
+        },
+        {
+          style: Object.entries(internalStyles).map(([name, value]) => `${name}: ${value};`).concat([style]).join(" ")
+        },
+        {
+          "aria-pressed": !isUninitializedValue(pressed) ? pressed ? "true" : "false" : null
+        },
+        {
+          "aria-label": pressed ? ariaLabelOn : ariaLabelOff
+        },
+        { "data-aria-label-on": ariaLabelOn },
+        { "data-aria-label-off": ariaLabelOff },
+        { "aria-describedby": ariaDescribedby },
+        { href },
+        actionProp,
+        internalAttrs,
+        $$restProps,
+        { this: element }
+      ),
+      {
+        this: ($$value) => {
+          element = $$value;
+          $$settled = false;
+        }
+      },
+      {
+        default: () => {
+          return `<div class="mdc-icon-button__ripple"></div> ${slots.default ? slots.default({}) : ``}${touch ? `<div class="mdc-icon-button__touch"></div>` : ``}`;
+        }
+      }
+    )}`;
+  } while (!$$settled);
+  return $$rendered;
+});
+const css$1 = {
+  code: ".svelte-17tccj2 .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-17tccj2{background-color:#ffffff;height:65px}.logo.svelte-17tccj2{margin-left:5px;margin-top:5px;height:55px}div.svelte-17tccj2{display:flex;justify-content:space-between}.svelte-17tccj2{margin:0;padding:0}",
+  map: null
+};
+const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let open = false;
+  $$result.css.add(css$1);
+  let $$settled;
+  let $$rendered;
+  let previous_head = $$result.head;
+  do {
+    $$settled = true;
+    $$result.head = previous_head;
+    $$rendered = `<header class="svelte-17tccj2"><div class="svelte-17tccj2"><img alt="logo" src="./logo.png" class="logo svelte-17tccj2">  ${validate_component(IconButton, "IconButton").$$render($$result, { class: "material-icons" }, {}, {
+      default: () => {
+        return `view_list`;
+      }
+    })}</div></header> <md-divider class="svelte-17tccj2"></md-divider> ${validate_component(Drawer, "Drawer").$$render(
+      $$result,
+      { variant: "modal", fixed: false, open },
+      {
+        open: ($$value) => {
+          open = $$value;
+          $$settled = false;
+        }
+      },
+      {
+        default: () => {
+          return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
+            default: () => {
+              return `${validate_component(List, "List").$$render($$result, {}, {}, {
+                default: () => {
+                  return `${validate_component(Item, "Item").$$render($$result, { href: "/" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Dashboard`;
+                        }
+                      })}`;
+                    }
+                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/lead-search" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Lead Generation`;
+                        }
+                      })}`;
+                    }
+                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/marketing" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Marketing`;
+                        }
+                      })}`;
+                    }
+                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/users" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Users`;
+                        }
+                      })}`;
+                    }
+                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/account-overview" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Account Overview`;
+                        }
+                      })}`;
+                    }
+                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/transactions" }, {}, {
+                    default: () => {
+                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `Transactions`;
+                        }
+                      })}`;
+                    }
+                  })}`;
+                }
+              })}`;
+            }
+          })}`;
+        }
+      }
+    )}`;
+  } while (!$$settled);
+  return $$rendered;
 });
 const css = {
   code: "body.svelte-16j5e2d,html.svelte-16j5e2d{height:100%}:root{--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
   map: null
 };
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let { isSmallScreen = false } = $$props;
+  if ($$props.isSmallScreen === void 0 && $$bindings.isSmallScreen && isSmallScreen !== void 0)
+    $$bindings.isSmallScreen(isSmallScreen);
   $$result.css.add(css);
   return `<html lang="en" class="svelte-16j5e2d"><body class="svelte-16j5e2d"> ${validate_component(LayoutGrid, "LayoutGrid").$$render($$result, {}, {}, {
     default: () => {
-      return `${validate_component(Cell, "Cell").$$render($$result, { span: 12 }, {}, {
+      return `${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 12 }, {}, {
         default: () => {
           return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}`;
         }
-      })} ${validate_component(Cell, "Cell").$$render($$result, { span: 3 }, {}, {
+      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { span: 4 }, {}, {
         default: () => {
-          return `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}`;
+          return `${!isSmallScreen ? `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}` : ``} ${isSmallScreen ? `${validate_component(SidebarMenuSmall, "SidebarMenuSmall").$$render($$result, {}, {}, {})}` : ``}`;
         }
       })} ${validate_component(Cell, "Cell").$$render($$result, { span: 9 }, {}, {
         default: () => {
