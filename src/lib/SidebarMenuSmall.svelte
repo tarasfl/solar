@@ -1,10 +1,7 @@
-
+<!-- Component for small screen drawer menyu and header with burger button -->
 <header>
     <div>
         <img alt = 'logo' src = './logo.png' class="logo">
-        <!-- <Button on:click={() => (open = !open)}>
-            <Label>Toggle Drawer</Label>
-          </Button> -->
           <IconButton class="material-icons"  on:click={() => (open = !open)}>
             view_list
         </IconButton>
@@ -43,8 +40,6 @@
   <script lang="ts">
     import IconButton from '@smui/icon-button';
     import '@material/web/divider/divider'
-    // import '@material/web/icon/icon'
-    // import '@material/web/iconbutton/icon-button'
     import Drawer, {
       AppContent,
       Content,
@@ -66,18 +61,6 @@
   </script>
   
   <style>
-    /* These classes are only needed because the
-      drawer is in a container on the page. */
-    /* .drawer-container {
-      position: relative;
-      display: flex;
-      height: 350px;
-      max-width: 600px;
-      border: 1px solid
-        var(--mdc-theme-text-hint-on-background, rgba(0, 0, 0, 0.1));
-      overflow: hidden;
-      z-index: 0;
-    } */
   
     * :global(.app-content) {
       flex: auto;
@@ -86,12 +69,6 @@
       flex-grow: 1;
     }
   
-    /* .main-content {
-      overflow: auto;
-      padding: 16px;
-      height: 100%;
-      box-sizing: border-box;
-    } */
     header {
         background-color: #ffffff;
         height: 65px;

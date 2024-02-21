@@ -39,7 +39,7 @@ const css$4 = {
 };
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$4);
-  return `${Layout ? `<header class="svelte-xmq1f4" data-svelte-h="svelte-1j2fppr"><div class="svelte-xmq1f4"><img alt="logo" src="./logo.png" class="logo svelte-xmq1f4"></div></header> <md-divider class="svelte-xmq1f4"></md-divider>` : ``}`;
+  return `  <header class="svelte-xmq1f4" data-svelte-h="svelte-1j2fppr"><div class="svelte-xmq1f4"><img alt="logo" src="./logo.png" class="logo svelte-xmq1f4"></div></header> <md-divider class="svelte-xmq1f4"></md-divider>`;
 });
 const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "open", "fixed", "setOpen", "isOpen", "getElement"]);
@@ -1008,15 +1008,15 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
         }
       })}`;
     }
-  })} `;
+  })}`;
 });
 const css$2 = {
-  code: "footer.svelte-ydgzm{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-between}",
+  code: "@media only screen and (max-width: 640){footer.svelte-1av1at{position:absolute;left:0;bottom:0;width:100%}}footer.svelte-1av1at{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-around}",
   map: null
 };
 const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$2);
-  return `<footer class="svelte-ydgzm" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
+  return ` <footer class="svelte-1av1at" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
 });
 const { Object: Object_1 } = globals;
 const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1289,7 +1289,7 @@ const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
   return $$rendered;
 });
 const css$1 = {
-  code: ".svelte-17tccj2 .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-17tccj2{background-color:#ffffff;height:65px}.logo.svelte-17tccj2{margin-left:5px;margin-top:5px;height:55px}div.svelte-17tccj2{display:flex;justify-content:space-between}.svelte-17tccj2{margin:0;padding:0}",
+  code: ".svelte-17s3tzv .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-17s3tzv{background-color:#ffffff;height:65px}.logo.svelte-17s3tzv{margin-left:5px;margin-top:5px;height:55px}div.svelte-17s3tzv{display:flex;justify-content:space-between}.svelte-17s3tzv{margin:0;padding:0}",
   map: null
 };
 const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1301,11 +1301,11 @@ const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, sl
   do {
     $$settled = true;
     $$result.head = previous_head;
-    $$rendered = `<header class="svelte-17tccj2"><div class="svelte-17tccj2"><img alt="logo" src="./logo.png" class="logo svelte-17tccj2">  ${validate_component(IconButton, "IconButton").$$render($$result, { class: "material-icons" }, {}, {
+    $$rendered = ` <header class="svelte-17s3tzv"><div class="svelte-17s3tzv"><img alt="logo" src="./logo.png" class="logo svelte-17s3tzv"> ${validate_component(IconButton, "IconButton").$$render($$result, { class: "material-icons" }, {}, {
       default: () => {
         return `view_list`;
       }
-    })}</div></header> <md-divider class="svelte-17tccj2"></md-divider> ${validate_component(Drawer, "Drawer").$$render(
+    })}</div></header> <md-divider class="svelte-17s3tzv"></md-divider> ${validate_component(Drawer, "Drawer").$$render(
       $$result,
       { variant: "modal", fixed: false, open },
       {

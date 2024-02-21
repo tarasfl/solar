@@ -5,7 +5,6 @@
     </Segment>
   </SegmentedButton>
   
-  <!-- <pre class="status">Selected: {selected}</pre> -->
   
   <script lang="ts">
     import SegmentedButton, { Segment } from '@smui/segmented-button';

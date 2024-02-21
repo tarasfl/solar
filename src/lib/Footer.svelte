@@ -1,3 +1,5 @@
+<!-- Component for footer -->
+
 <footer>
     <p>© 2024 SunSniffer GmbH & Co. KG</p>
     <p>Developer by Insoftex</p>
@@ -5,6 +7,7 @@
 
 
 <style>
+
    footer {
     position:absolute;
   height: 60px;
@@ -12,6 +15,6 @@
   bottom: 0;
   width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 </style>

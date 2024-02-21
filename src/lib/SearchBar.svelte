@@ -11,8 +11,6 @@
     import FormField from '@smui/form-field';
     import Segements from './Segements.svelte';
     import Textfield from '@smui/textfield';
-    import Icon from '@smui/textfield/icon';
-    import HelperText from '@smui/textfield/helper-text';
 
   
     export let location: google.maps.LatLng | undefined;
@@ -69,11 +67,6 @@
     <md-filled-text-field bind:this={textFieldElement} label="Search an address" value={initialValue}>
       <md-icon slot="leadingicon">search</md-icon>
     </md-filled-text-field>
-
-    <!-- <Textfield variant="outlined" bind:this={textFieldElement} label="Search an adress" value={initialValue}>
-      <Icon class="material-icons" slot="trailingIcon">search</Icon>
-      <HelperText slot="helper">Enter zipCode</HelperText>
-    </Textfield> -->
   </div>
 
   <div class='search-element'>
@@ -84,8 +77,6 @@
   </div>
 
   </div>
-  
- 
 
   <style>
     .search-element {
