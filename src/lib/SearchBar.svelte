@@ -22,7 +22,7 @@
     export let initialValue = '';
     export let zoom = 15;
   
-    let textFieldElement;
+    let textFieldElement: Textfield;
   
     onMount(async () => {
       // https://lit.dev/docs/components/shadow-dom/
@@ -66,10 +66,14 @@
 
   <div class='search-element'>
 
-    <Textfield variant="outlined" bind:this={textFieldElement} label="Search an adress" value={initialValue}>
+    <md-filled-text-field bind:this={textFieldElement} label="Search an address" value={initialValue}>
+      <md-icon slot="leadingicon">search</md-icon>
+    </md-filled-text-field>
+
+    <!-- <Textfield variant="outlined" bind:this={textFieldElement} label="Search an adress" value={initialValue}>
       <Icon class="material-icons" slot="trailingIcon">search</Icon>
       <HelperText slot="helper">Enter zipCode</HelperText>
-    </Textfield>
+    </Textfield> -->
   </div>
 
   <div class='search-element'>

@@ -1,21 +1,9 @@
 import { c as create_ssr_component, v as validate_component, h as add_attribute } from "../../../chunks/ssr.js";
 import "@material/web/textfield/filled-text-field.js";
 import "@material/web/icon/icon.js";
-import { a as classAdderBuilder, L as LayoutGrid, C as Cell } from "../../../chunks/classAdderBuilder.js";
+import { L as LayoutGrid, C as Cell } from "../../../chunks/Cell.js";
 import "@material/web/switch/switch.js";
 import "@googlemaps/js-api-loader";
-classAdderBuilder({
-  class: "mdc-text-field-helper-line",
-  tag: "div"
-});
-classAdderBuilder({
-  class: "mdc-text-field__affix mdc-text-field__affix--prefix",
-  tag: "span"
-});
-classAdderBuilder({
-  class: "mdc-text-field__affix mdc-text-field__affix--suffix",
-  tag: "span"
-});
 const css = {
   code: ".map.svelte-1omdr3n{min-height:420px;width:100%}",
   map: null
