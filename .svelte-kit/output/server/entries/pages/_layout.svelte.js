@@ -1011,12 +1011,12 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
   })}`;
 });
 const css$2 = {
-  code: "@media only screen and (max-width: 640){footer.svelte-1av1at{position:absolute;left:0;bottom:0;width:100%}}footer.svelte-1av1at{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-around}",
+  code: "footer.svelte-1czyaf3{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-around}",
   map: null
 };
 const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$2);
-  return ` <footer class="svelte-1av1at" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
+  return ` <footer class="svelte-1czyaf3" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
 });
 const { Object: Object_1 } = globals;
 const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1394,11 +1394,15 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         default: () => {
           return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { span: 4 }, {}, {
+      })}` : ``} ${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 3 }, {}, {
         default: () => {
-          return `${!isSmallScreen ? `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}` : ``} ${isSmallScreen ? `${validate_component(SidebarMenuSmall, "SidebarMenuSmall").$$render($$result, {}, {}, {})}` : ``}`;
+          return `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}`;
         }
-      })} ${validate_component(Cell, "Cell").$$render($$result, { span: 9 }, {}, {
+      })}` : ``} ${isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 4 }, {}, {
+        default: () => {
+          return `${validate_component(SidebarMenuSmall, "SidebarMenuSmall").$$render($$result, {}, {}, {})}`;
+        }
+      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { span: 9 }, {}, {
         default: () => {
           return `${slots.default ? slots.default({}) : ``}`;
         }

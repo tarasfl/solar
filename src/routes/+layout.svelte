@@ -36,16 +36,19 @@
       </Cell>
     {/if}
     
-
-    <Cell span={4}>
-      {#if !isSmallScreen}
-        <SidebarMenu />
-      {/if}
+    {#if !isSmallScreen}
+    <Cell span={3}>
+      <SidebarMenu />
+      </Cell>
+    {/if}
+    
       {#if isSmallScreen}
+      <Cell span={4}>
         <SidebarMenuSmall />
+      </Cell>
       {/if}
       
-    </Cell>
+    
 
     <Cell span={9}>
       <slot></slot>
