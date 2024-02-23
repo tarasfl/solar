@@ -759,7 +759,7 @@ const css = {
   map: null
 };
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let active = "Home";
+  let active = "All Campaigns";
   $$result.css.add(css);
   let $$settled;
   let $$rendered;

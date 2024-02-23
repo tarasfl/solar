@@ -7,7 +7,7 @@
   import { Icon } from '@smui/common';
   import IconButton from '@smui/icon-button';
 
-  let active = 'Home';
+  let active = 'All Campaigns';
 </script>
 
 <div>
