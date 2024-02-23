@@ -1,18 +1,18 @@
-import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, a as setContext, o as onDestroy, d as spread, e as escape_attribute_value, f as escape_object, h as add_attribute, i as getContext, v as validate_component, m as missing_component } from "../../chunks/ssr.js";
+import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, a as setContext, o as onDestroy, d as spread, e as escape_attribute_value, f as escape_object, h as add_attribute, i as getContext, v as validate_component, m as missing_component, j as each, k as escape } from "../../chunks/ssr.js";
 import { L as LayoutGrid, C as Cell } from "../../chunks/Cell.js";
 import "@material/web/divider/divider.js";
 import "@material/web/list/list-item.js";
 import "@material/web/list/list.js";
 import { MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation } from "@material/drawer";
 import { f as forwardEventsBuilder, c as classMap } from "../../chunks/prefixFilter.js";
-import { d as dispatch, c as classAdderBuilder, S as SmuiElement, R as Ripple, g as globals, C as CommonIcon, I as IconButton } from "../../chunks/IconButton.js";
+import { d as dispatch, c as classAdderBuilder, S as SmuiElement, R as Ripple, g as globals, I as IconButton } from "../../chunks/IconButton.js";
 const css$4 = {
-  code: "header.svelte-xmq1f4{background-color:#ffffff;height:65px}.logo.svelte-xmq1f4{margin-left:5px;margin-top:5px;height:55px}div.svelte-xmq1f4{display:flex;justify-content:space-between}.svelte-xmq1f4{margin:0;padding:0}",
+  code: "header.svelte-16btwjq{background-color:#ffffff;height:65px}.logo.svelte-16btwjq{margin-left:5px;margin-top:5px;height:55px}div.svelte-16btwjq{display:flex;justify-content:space-between}.svelte-16btwjq{margin:0;padding:0}",
   map: null
 };
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$4);
-  return `  <header class="svelte-xmq1f4" data-svelte-h="svelte-1j2fppr"><div class="svelte-xmq1f4"><img alt="logo" src="./logo.png" class="logo svelte-xmq1f4"></div></header> <md-divider class="svelte-xmq1f4"></md-divider>`;
+  return `  <header class="svelte-16btwjq" data-svelte-h="svelte-1j2fppr"><div class="svelte-16btwjq"><img alt="logo" src="./logo.png" class="logo svelte-16btwjq"></div></header> <md-divider class="svelte-16btwjq"></md-divider>`;
 });
 const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "open", "fixed", "setOpen", "isOpen", "getElement"]);
@@ -625,13 +625,43 @@ const Text = classAdderBuilder({
   class: "mdc-deprecated-list-item__text",
   tag: "span"
 });
-classAdderBuilder({
+const PrimaryText = classAdderBuilder({
   class: "mdc-deprecated-list-item__primary-text",
   tag: "span"
 });
-classAdderBuilder({
+const SecondaryText = classAdderBuilder({
   class: "mdc-deprecated-list-item__secondary-text",
   tag: "span"
+});
+const Graphic = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let $$restProps = compute_rest_props($$props, ["use", "class", "getElement"]);
+  forwardEventsBuilder(get_current_component());
+  let { use = [] } = $$props;
+  let { class: className = "" } = $$props;
+  let element;
+  let menuSelectionGroup = getContext("SMUI:list:graphic:menu-selection-group");
+  function getElement() {
+    return element;
+  }
+  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+    $$bindings.use(use);
+  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
+    $$bindings.class(className);
+  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+    $$bindings.getElement(getElement);
+  return `<span${spread(
+    [
+      {
+        class: escape_attribute_value(classMap({
+          [className]: true,
+          "mdc-deprecated-list-item__graphic": true,
+          "mdc-menu__selection-group-icon": menuSelectionGroup
+        }))
+      },
+      escape_object($$restProps)
+    ],
+    {}
+  )}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>`;
 });
 classAdderBuilder({
   class: "mdc-deprecated-list-item__meta",
@@ -650,88 +680,89 @@ const css$3 = {
   map: null
 };
 const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let { selectionIndex } = $$props;
+  let { options = [
+    {
+      text: "Dashboard",
+      icon: "dashboard",
+      href: "/"
+    },
+    {
+      text: "Lead Generation",
+      icon: "search",
+      href: "/lead-search"
+    },
+    {
+      text: "Marketing",
+      icon: "trending_up",
+      href: "/marketing"
+    },
+    {
+      text: "Users",
+      icon: "people",
+      href: "/users"
+    },
+    {
+      text: "Account Overview",
+      icon: "person",
+      href: "/account-overview"
+    },
+    {
+      text: "Transactions",
+      icon: "paid",
+      href: "/transactions"
+    }
+  ] } = $$props;
+  if ($$props.selectionIndex === void 0 && $$bindings.selectionIndex && selectionIndex !== void 0)
+    $$bindings.selectionIndex(selectionIndex);
+  if ($$props.options === void 0 && $$bindings.options && options !== void 0)
+    $$bindings.options(options);
   $$result.css.add(css$3);
   return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "min-height:680px; width:auto;" }, {}, {
     default: () => {
       return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
         default: () => {
-          return `${validate_component(List, "List").$$render($$result, {}, {}, {
-            default: () => {
-              return `${validate_component(Item, "Item").$$render($$result, { href: "/" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `dashboard`;
+          return `${validate_component(List, "List").$$render(
+            $$result,
+            {
+              style: "min-height:680px; flex:1;",
+              twoLine: true,
+              singleSelection: true
+            },
+            {},
+            {
+              default: () => {
+                return `${each(options, (option, i) => {
+                  return `${validate_component(Item, "Item").$$render(
+                    $$result,
+                    {
+                      href: option.href,
+                      class: "item",
+                      selected: selectionIndex === i
+                    },
+                    {},
+                    {
+                      default: () => {
+                        return `${validate_component(PrimaryText, "PrimaryText").$$render($$result, {}, {}, {
+                          default: () => {
+                            return `${validate_component(Graphic, "Graphic").$$render($$result, { class: "material-icons" }, {}, {
+                              default: () => {
+                                return `${escape(option.icon)}`;
+                              }
+                            })}`;
+                          }
+                        })} ${validate_component(SecondaryText, "SecondaryText").$$render($$result, {}, {}, {
+                          default: () => {
+                            return `${escape(option.text)}`;
+                          }
+                        })} `;
+                      }
                     }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Dashboard`;
-                    }
-                  })}`;
-                }
-              })} ${validate_component(Item, "Item").$$render($$result, { href: "/lead-search" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `search`;
-                    }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Lead Generation`;
-                    }
-                  })}`;
-                }
-              })} ${validate_component(Item, "Item").$$render($$result, { href: "/marketing" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `trending_up`;
-                    }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Marketing`;
-                    }
-                  })}`;
-                }
-              })} ${validate_component(Item, "Item").$$render($$result, { href: "/users" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `people`;
-                    }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Users`;
-                    }
-                  })}`;
-                }
-              })} ${validate_component(Item, "Item").$$render($$result, { href: "/account-overview" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `person`;
-                    }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Account Overview`;
-                    }
-                  })}`;
-                }
-              })} ${validate_component(Item, "Item").$$render($$result, { href: "/transactions" }, {}, {
-                default: () => {
-                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
-                    default: () => {
-                      return `paid`;
-                    }
-                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                    default: () => {
-                      return `Transactions`;
-                    }
-                  })}`;
-                }
-              })}`;
+                  )}`;
+                })}`;
+              }
             }
-          })}`;
+          )}`;
         }
       })}`;
     }

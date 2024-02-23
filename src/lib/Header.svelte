@@ -1,6 +1,7 @@
 <!-- Component for layout header -->
 <script lang='ts'>
     import '@material/web/divider/divider'
+
 </script>
 
 <header>
@@ -11,7 +12,6 @@
 <md-divider></md-divider>
 
 <style>
-
     header {
         background-color: #ffffff;
         height: 65px;

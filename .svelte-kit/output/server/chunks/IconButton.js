@@ -1,4 +1,4 @@
-import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, i as getContext, v as validate_component, m as missing_component, d as spread, f as escape_object, h as add_attribute, a as setContext, o as onDestroy } from "./ssr.js";
+import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, d as spread, f as escape_object, h as add_attribute, i as getContext, a as setContext, o as onDestroy, v as validate_component, m as missing_component } from "./ssr.js";
 import { f as forwardEventsBuilder, c as classMap } from "./prefixFilter.js";
 import { MDCIconButtonToggleFoundation } from "@material/icon-button";
 import { MDCRippleFoundation, util } from "@material/ripple";
@@ -29,76 +29,6 @@ function dispatch(element, eventType, detail, eventInit = { bubbles: true }, dup
   }
   return event;
 }
-const CommonIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "on", "component", "tag", "getElement"]);
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let { on = false } = $$props;
-  let element;
-  let { component = SmuiElement } = $$props;
-  let { tag = component === SmuiElement ? "i" : void 0 } = $$props;
-  const svg = component === Svg;
-  const context = getContext("SMUI:icon:context");
-  function getElement() {
-    return element.getElement();
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.on === void 0 && $$bindings.on && on !== void 0)
-    $$bindings.on(on);
-  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-    $$bindings.component(component);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  let $$settled;
-  let $$rendered;
-  let previous_head = $$result.head;
-  do {
-    $$settled = true;
-    $$result.head = previous_head;
-    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
-      $$result,
-      Object.assign(
-        {},
-        { tag },
-        { use: [forwardEvents, ...use] },
-        {
-          class: classMap({
-            [className]: true,
-            "mdc-button__icon": context === "button",
-            "mdc-fab__icon": context === "fab",
-            "mdc-icon-button__icon": context === "icon-button",
-            "mdc-icon-button__icon--on": context === "icon-button" && on,
-            "mdc-tab__icon": context === "tab",
-            "mdc-banner__icon": context === "banner",
-            "mdc-segmented-button__icon": context === "segmented-button"
-          })
-        },
-        { "aria-hidden": "true" },
-        svg ? { focusable: "false", tabindex: "-1" } : {},
-        $$restProps,
-        { this: element }
-      ),
-      {
-        this: ($$value) => {
-          element = $$value;
-          $$settled = false;
-        }
-      },
-      {
-        default: () => {
-          return `${slots.default ? slots.default({}) : ``}`;
-        }
-      }
-    )}`;
-  } while (!$$settled);
-  return $$rendered;
-});
 const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let selfClosing;
   let $$restProps = compute_rest_props($$props, ["use", "tag", "getElement"]);
@@ -136,23 +66,6 @@ const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) 
   })(tag)}` : `${((tag$1) => {
     return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
   })(tag)}`}`}`;
-});
-const Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
-  if (console && console.warn) {
-    console.warn('The @smui/common Svg component is deprecated. You can use `tag="svg"` now.');
-  }
-  let { use = [] } = $$props;
-  forwardEventsBuilder(get_current_component());
-  let element;
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  return `<svg${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
 });
 const { Object: Object_1$1 } = globals;
 const internals = {
@@ -657,7 +570,6 @@ const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
   return $$rendered;
 });
 export {
-  CommonIcon as C,
   IconButton as I,
   Ripple as R,
   SmuiElement as S,
