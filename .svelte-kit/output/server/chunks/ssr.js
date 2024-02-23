@@ -49,6 +49,9 @@ function setContext(key, context) {
 function getContext(key) {
   return get_current_component().$$.context.get(key);
 }
+function ensure_array_like(array_like_or_iterator) {
+  return array_like_or_iterator?.length !== void 0 ? array_like_or_iterator : Array.from(array_like_or_iterator);
+}
 const _boolean_attributes = (
   /** @type {const} */
   [
@@ -166,6 +169,14 @@ function escape_object(obj) {
   }
   return result;
 }
+function each(items, fn) {
+  items = ensure_array_like(items);
+  let str = "";
+  for (let i = 0; i < items.length; i += 1) {
+    str += fn(items[i], i);
+  }
+  return str;
+}
 const missing_component = {
   $$render: () => ""
 };
@@ -237,6 +248,7 @@ export {
   getContext as i,
   subscribe as j,
   escape as k,
+  each as l,
   missing_component as m,
   noop as n,
   onDestroy as o,

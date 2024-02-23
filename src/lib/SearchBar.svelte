@@ -3,6 +3,7 @@
     /* global google */
   
     import '@material/web/textfield/filled-text-field';
+    import type { MdFilledTextField } from '@material/web/textfield/filled-text-field';
     import '@material/web/icon/icon';
     import { onMount } from 'svelte';
     
@@ -10,8 +11,7 @@
     import Switch from '@smui/switch';
     import FormField from '@smui/form-field';
     import Segements from './Segements.svelte';
-    import Textfield from '@smui/textfield';
-
+  
   
     export let location: google.maps.LatLng | undefined;
   
@@ -20,7 +20,7 @@
     export let initialValue = '';
     export let zoom = 15;
   
-    let textFieldElement: Textfield;
+    let textFieldElement: MdFilledTextField;
   
     onMount(async () => {
       // https://lit.dev/docs/components/shadow-dom/

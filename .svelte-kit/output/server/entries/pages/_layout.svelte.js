@@ -1,38 +1,11 @@
 import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, a as setContext, o as onDestroy, d as spread, e as escape_attribute_value, f as escape_object, h as add_attribute, i as getContext, v as validate_component, m as missing_component } from "../../chunks/ssr.js";
-import { f as forwardEventsBuilder, c as classMap, L as LayoutGrid, C as Cell } from "../../chunks/Cell.js";
+import { L as LayoutGrid, C as Cell } from "../../chunks/Cell.js";
 import "@material/web/divider/divider.js";
 import "@material/web/list/list-item.js";
 import "@material/web/list/list.js";
 import { MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation } from "@material/drawer";
-import { MDCRippleFoundation, util } from "@material/ripple";
-import { events, ponyfill } from "@material/dom";
-import { MDCIconButtonToggleFoundation } from "@material/icon-button";
-const globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
-  // @ts-ignore Node typings have this
-  global
-);
-const void_element_names = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
-function is_void(name) {
-  return void_element_names.test(name) || name.toLowerCase() === "!doctype";
-}
-function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
-  if (typeof Event === "undefined") {
-    throw new Error("Event not defined.");
-  }
-  if (!element) {
-    throw new Error("Tried to dipatch event without element.");
-  }
-  const event = new CustomEvent(eventType, Object.assign(Object.assign({}, eventInit), { detail }));
-  element === null || element === void 0 ? void 0 : element.dispatchEvent(event);
-  if (duplicateEventForMDC && eventType.startsWith("SMUI")) {
-    const duplicateEvent = new CustomEvent(eventType.replace(/^SMUI/g, () => "MDC"), Object.assign(Object.assign({}, eventInit), { detail }));
-    element === null || element === void 0 ? void 0 : element.dispatchEvent(duplicateEvent);
-    if (duplicateEvent.defaultPrevented) {
-      event.preventDefault();
-    }
-  }
-  return event;
-}
+import { f as forwardEventsBuilder, c as classMap } from "../../chunks/prefixFilter.js";
+import { d as dispatch, c as classAdderBuilder, S as SmuiElement, R as Ripple, g as globals, C as CommonIcon, I as IconButton } from "../../chunks/IconButton.js";
 const css$4 = {
   code: "header.svelte-xmq1f4{background-color:#ffffff;height:65px}.logo.svelte-xmq1f4{margin-left:5px;margin-top:5px;height:55px}div.svelte-xmq1f4{display:flex;justify-content:space-between}.svelte-xmq1f4{margin:0;padding:0}",
   map: null
@@ -180,148 +153,6 @@ const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     {}
   )}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``} </aside>`;
 });
-const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let selfClosing;
-  let $$restProps = compute_rest_props($$props, ["use", "tag", "getElement"]);
-  let { use = [] } = $$props;
-  let { tag } = $$props;
-  forwardEventsBuilder(get_current_component());
-  let element;
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  selfClosing = [
-    "area",
-    "base",
-    "br",
-    "col",
-    "embed",
-    "hr",
-    "img",
-    "input",
-    "link",
-    "meta",
-    "param",
-    "source",
-    "track",
-    "wbr"
-  ].indexOf(tag) > -1;
-  return `${tag === "svg" ? `<svg${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>` : `${selfClosing ? `${((tag$1) => {
-    return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : ``}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
-  })(tag)}` : `${((tag$1) => {
-    return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
-  })(tag)}`}`}`;
-});
-const { Object: Object_1$2 } = globals;
-const internals = {
-  component: SmuiElement,
-  tag: "div",
-  class: "",
-  classMap: {},
-  contexts: {},
-  props: {}
-};
-const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "component", "tag", "getElement"]);
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let element;
-  const smuiClass = internals.class;
-  const smuiClassMap = {};
-  const smuiClassUnsubscribes = [];
-  const contexts = internals.contexts;
-  const props = internals.props;
-  let { component = internals.component } = $$props;
-  let { tag = component === SmuiElement ? internals.tag : void 0 } = $$props;
-  Object.entries(internals.classMap).forEach(([name, context]) => {
-    const store = getContext(context);
-    if (store && "subscribe" in store) {
-      smuiClassUnsubscribes.push(store.subscribe((value) => {
-        smuiClassMap[name] = value;
-      }));
-    }
-  });
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  for (let context in contexts) {
-    if (contexts.hasOwnProperty(context)) {
-      setContext(context, contexts[context]);
-    }
-  }
-  onDestroy(() => {
-    for (const unsubscribe of smuiClassUnsubscribes) {
-      unsubscribe();
-    }
-  });
-  function getElement() {
-    return element.getElement();
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-    $$bindings.component(component);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  let $$settled;
-  let $$rendered;
-  let previous_head = $$result.head;
-  do {
-    $$settled = true;
-    $$result.head = previous_head;
-    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
-      $$result,
-      Object_1$2.assign(
-        {},
-        { tag },
-        { use: [forwardEvents, ...use] },
-        {
-          class: classMap({
-            [className]: true,
-            [smuiClass]: true,
-            ...smuiClassMap
-          })
-        },
-        props,
-        $$restProps,
-        { this: element }
-      ),
-      {
-        this: ($$value) => {
-          element = $$value;
-          $$settled = false;
-        }
-      },
-      {
-        default: () => {
-          return `${slots.default ? slots.default({}) : ``}`;
-        }
-      }
-    )}`;
-  } while (!$$settled);
-  return $$rendered;
-});
-const defaults = Object.assign({}, internals);
-function classAdderBuilder(props) {
-  return new Proxy(ClassAdder, {
-    construct: function(target, args) {
-      Object.assign(internals, defaults, props);
-      return new target(...args);
-    },
-    get: function(target, prop) {
-      Object.assign(internals, defaults, props);
-      return target[prop];
-    }
-  });
-}
 classAdderBuilder({
   class: "mdc-drawer-app-content",
   tag: "div"
@@ -564,135 +395,7 @@ const List = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   } while (!$$settled);
   return $$rendered;
 });
-const { applyPassive } = events;
-const { matches } = ponyfill;
-function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name, value) => node.style.setProperty(name, value), initPromise = Promise.resolve() } = {}) {
-  let instance;
-  let addLayoutListener = getContext("SMUI:addLayoutListener");
-  let removeLayoutListener;
-  let oldActive = active;
-  let oldEventTarget = eventTarget;
-  let oldActiveTarget = activeTarget;
-  function handleProps() {
-    if (surface) {
-      addClass("mdc-ripple-surface");
-      if (color === "primary") {
-        addClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      } else if (color === "secondary") {
-        removeClass("smui-ripple-surface--primary");
-        addClass("smui-ripple-surface--secondary");
-      } else {
-        removeClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      }
-    } else {
-      removeClass("mdc-ripple-surface");
-      removeClass("smui-ripple-surface--primary");
-      removeClass("smui-ripple-surface--secondary");
-    }
-    if (instance && oldActive !== active) {
-      oldActive = active;
-      if (active) {
-        instance.activate();
-      } else if (active === false) {
-        instance.deactivate();
-      }
-    }
-    if (ripple && !instance) {
-      instance = new MDCRippleFoundation({
-        addClass,
-        browserSupportsCssVars: () => util.supportsCssVariables(window),
-        computeBoundingRect: () => (rippleElement || node).getBoundingClientRect(),
-        containsEventTarget: (target) => node.contains(target),
-        deregisterDocumentInteractionHandler: (evtType, handler) => document.documentElement.removeEventListener(evtType, handler, applyPassive()),
-        deregisterInteractionHandler: (evtType, handler) => (eventTarget || node).removeEventListener(evtType, handler, applyPassive()),
-        deregisterResizeHandler: (handler) => window.removeEventListener("resize", handler),
-        getWindowPageOffset: () => ({
-          x: window.pageXOffset,
-          y: window.pageYOffset
-        }),
-        isSurfaceActive: () => active == null ? matches(activeTarget || node, ":active") : active,
-        isSurfaceDisabled: () => !!disabled,
-        isUnbounded: () => !!unbounded,
-        registerDocumentInteractionHandler: (evtType, handler) => document.documentElement.addEventListener(evtType, handler, applyPassive()),
-        registerInteractionHandler: (evtType, handler) => (eventTarget || node).addEventListener(evtType, handler, applyPassive()),
-        registerResizeHandler: (handler) => window.addEventListener("resize", handler),
-        removeClass,
-        updateCssVariable: addStyle
-      });
-      initPromise.then(() => {
-        if (instance) {
-          instance.init();
-          instance.setUnbounded(unbounded);
-        }
-      });
-    } else if (instance && !ripple) {
-      initPromise.then(() => {
-        if (instance) {
-          instance.destroy();
-          instance = void 0;
-        }
-      });
-    }
-    if (instance && (oldEventTarget !== eventTarget || oldActiveTarget !== activeTarget)) {
-      oldEventTarget = eventTarget;
-      oldActiveTarget = activeTarget;
-      instance.destroy();
-      requestAnimationFrame(() => {
-        if (instance) {
-          instance.init();
-          instance.setUnbounded(unbounded);
-        }
-      });
-    }
-    if (!ripple && unbounded) {
-      addClass("mdc-ripple-upgraded--unbounded");
-    }
-  }
-  handleProps();
-  if (addLayoutListener) {
-    removeLayoutListener = addLayoutListener(layout);
-  }
-  function layout() {
-    if (instance) {
-      instance.layout();
-    }
-  }
-  return {
-    update(props) {
-      ({
-        ripple,
-        surface,
-        unbounded,
-        disabled,
-        color,
-        active,
-        rippleElement,
-        eventTarget,
-        activeTarget,
-        addClass,
-        removeClass,
-        addStyle,
-        initPromise
-      } = Object.assign({ ripple: true, surface: false, unbounded: false, disabled: false, color: void 0, active: void 0, rippleElement: void 0, eventTarget: void 0, activeTarget: void 0, addClass: (className) => node.classList.add(className), removeClass: (className) => node.classList.remove(className), addStyle: (name, value) => node.style.setProperty(name, value), initPromise: Promise.resolve() }, props));
-      handleProps();
-    },
-    destroy() {
-      if (instance) {
-        instance.destroy();
-        instance = void 0;
-        removeClass("mdc-ripple-surface");
-        removeClass("smui-ripple-surface--primary");
-        removeClass("smui-ripple-surface--secondary");
-      }
-      if (removeLayoutListener) {
-        removeLayoutListener();
-      }
-    }
-  };
-}
-const { Object: Object_1$1 } = globals;
+const { Object: Object_1 } = globals;
 let counter = 0;
 const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let tabindex;
@@ -844,7 +547,7 @@ const Item = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     tabindex = isUninitializedValue(tabindexProp) ? !nonInteractive && !disabled && (selected || input) ? 0 : -1 : tabindexProp;
     $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
       $$result,
-      Object_1$1.assign(
+      Object_1.assign(
         {},
         { tag },
         {
@@ -943,12 +646,12 @@ classAdderBuilder({
   tag: "h3"
 });
 const css$3 = {
-  code: ":root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
+  code: "@media screen and (min-width: 1024px){}:root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
   map: null
 };
 const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$3);
-  return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "height:680px;" }, {}, {
+  return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "min-height:680px; width:auto;" }, {}, {
     default: () => {
       return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
         default: () => {
@@ -956,7 +659,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
             default: () => {
               return `${validate_component(Item, "Item").$$render($$result, { href: "/" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `dashboard`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Dashboard`;
                     }
@@ -964,7 +671,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
                 }
               })} ${validate_component(Item, "Item").$$render($$result, { href: "/lead-search" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `search`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Lead Generation`;
                     }
@@ -972,7 +683,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
                 }
               })} ${validate_component(Item, "Item").$$render($$result, { href: "/marketing" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `trending_up`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Marketing`;
                     }
@@ -980,7 +695,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
                 }
               })} ${validate_component(Item, "Item").$$render($$result, { href: "/users" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `people`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Users`;
                     }
@@ -988,7 +707,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
                 }
               })} ${validate_component(Item, "Item").$$render($$result, { href: "/account-overview" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `person`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Account Overview`;
                     }
@@ -996,7 +719,11 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
                 }
               })} ${validate_component(Item, "Item").$$render($$result, { href: "/transactions" }, {}, {
                 default: () => {
-                  return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                  return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                    default: () => {
+                      return `paid`;
+                    }
+                  })} ${validate_component(Text, "Text").$$render($$result, {}, {}, {
                     default: () => {
                       return `Transactions`;
                     }
@@ -1011,282 +738,12 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
   })}`;
 });
 const css$2 = {
-  code: "footer.svelte-1czyaf3{position:absolute;height:60px;left:0;bottom:0;width:100%;display:flex;justify-content:space-around}",
+  code: "footer.svelte-14hk8ef{height:60px;width:100%;display:flex;justify-content:space-around}",
   map: null
 };
 const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$2);
-  return ` <footer class="svelte-1czyaf3" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
-});
-const { Object: Object_1 } = globals;
-const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let actionProp;
-  let $$restProps = compute_rest_props($$props, [
-    "use",
-    "class",
-    "style",
-    "ripple",
-    "color",
-    "toggle",
-    "pressed",
-    "ariaLabelOn",
-    "ariaLabelOff",
-    "touch",
-    "displayFlex",
-    "size",
-    "href",
-    "action",
-    "component",
-    "tag",
-    "getElement"
-  ]);
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  let uninitializedValue = () => {
-  };
-  function isUninitializedValue(value) {
-    return value === uninitializedValue;
-  }
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let { style = "" } = $$props;
-  let { ripple = true } = $$props;
-  let { color = void 0 } = $$props;
-  let { toggle = false } = $$props;
-  let { pressed = uninitializedValue } = $$props;
-  let { ariaLabelOn = void 0 } = $$props;
-  let { ariaLabelOff = void 0 } = $$props;
-  let { touch = false } = $$props;
-  let { displayFlex = true } = $$props;
-  let { size = "normal" } = $$props;
-  let { href = void 0 } = $$props;
-  let { action = void 0 } = $$props;
-  let element;
-  let instance;
-  let internalClasses = {};
-  let internalStyles = {};
-  let internalAttrs = {};
-  let context = getContext("SMUI:icon-button:context");
-  let ariaDescribedby = getContext("SMUI:icon-button:aria-describedby");
-  let { component = SmuiElement } = $$props;
-  let { tag = component === SmuiElement ? href == null ? "button" : "a" : void 0 } = $$props;
-  let previousDisabled = $$restProps.disabled;
-  setContext("SMUI:icon:context", "icon-button");
-  let oldToggle = null;
-  onDestroy(() => {
-    instance && instance.destroy();
-  });
-  function hasClass(className2) {
-    return className2 in internalClasses ? internalClasses[className2] : getElement().classList.contains(className2);
-  }
-  function addClass(className2) {
-    if (!internalClasses[className2]) {
-      internalClasses[className2] = true;
-    }
-  }
-  function removeClass(className2) {
-    if (!(className2 in internalClasses) || internalClasses[className2]) {
-      internalClasses[className2] = false;
-    }
-  }
-  function addStyle(name, value) {
-    if (internalStyles[name] != value) {
-      if (value === "" || value == null) {
-        delete internalStyles[name];
-        internalStyles = internalStyles;
-      } else {
-        internalStyles[name] = value;
-      }
-    }
-  }
-  function getAttr(name) {
-    var _a;
-    return name in internalAttrs ? (_a = internalAttrs[name]) !== null && _a !== void 0 ? _a : null : getElement().getAttribute(name);
-  }
-  function addAttr(name, value) {
-    if (internalAttrs[name] !== value) {
-      internalAttrs[name] = value;
-    }
-  }
-  function handleChange(evtData) {
-    pressed = evtData.isOn;
-  }
-  function getElement() {
-    return element.getElement();
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.style === void 0 && $$bindings.style && style !== void 0)
-    $$bindings.style(style);
-  if ($$props.ripple === void 0 && $$bindings.ripple && ripple !== void 0)
-    $$bindings.ripple(ripple);
-  if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color);
-  if ($$props.toggle === void 0 && $$bindings.toggle && toggle !== void 0)
-    $$bindings.toggle(toggle);
-  if ($$props.pressed === void 0 && $$bindings.pressed && pressed !== void 0)
-    $$bindings.pressed(pressed);
-  if ($$props.ariaLabelOn === void 0 && $$bindings.ariaLabelOn && ariaLabelOn !== void 0)
-    $$bindings.ariaLabelOn(ariaLabelOn);
-  if ($$props.ariaLabelOff === void 0 && $$bindings.ariaLabelOff && ariaLabelOff !== void 0)
-    $$bindings.ariaLabelOff(ariaLabelOff);
-  if ($$props.touch === void 0 && $$bindings.touch && touch !== void 0)
-    $$bindings.touch(touch);
-  if ($$props.displayFlex === void 0 && $$bindings.displayFlex && displayFlex !== void 0)
-    $$bindings.displayFlex(displayFlex);
-  if ($$props.size === void 0 && $$bindings.size && size !== void 0)
-    $$bindings.size(size);
-  if ($$props.href === void 0 && $$bindings.href && href !== void 0)
-    $$bindings.href(href);
-  if ($$props.action === void 0 && $$bindings.action && action !== void 0)
-    $$bindings.action(action);
-  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-    $$bindings.component(component);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  let $$settled;
-  let $$rendered;
-  let previous_head = $$result.head;
-  do {
-    $$settled = true;
-    $$result.head = previous_head;
-    actionProp = (() => {
-      if (context === "data-table:pagination") {
-        switch (action) {
-          case "first-page":
-            return { "data-first-page": "true" };
-          case "prev-page":
-            return { "data-prev-page": "true" };
-          case "next-page":
-            return { "data-next-page": "true" };
-          case "last-page":
-            return { "data-last-page": "true" };
-          default:
-            return { "data-action": "true" };
-        }
-      } else if (context === "dialog:header" || context === "dialog:sheet") {
-        return { "data-mdc-dialog-action": action };
-      } else {
-        return { action };
-      }
-    })();
-    {
-      if (previousDisabled !== $$restProps.disabled) {
-        const elem = getElement();
-        if ("blur" in elem) {
-          elem.blur();
-        }
-        previousDisabled = $$restProps.disabled;
-      }
-    }
-    {
-      if (element && getElement() && toggle !== oldToggle) {
-        if (toggle && !instance) {
-          instance = new MDCIconButtonToggleFoundation({
-            addClass,
-            hasClass,
-            notifyChange: (evtData) => {
-              handleChange(evtData);
-              dispatch(getElement(), "SMUIIconButtonToggle:change", evtData, void 0, true);
-            },
-            removeClass,
-            getAttr,
-            setAttr: addAttr
-          });
-          instance.init();
-        } else if (!toggle && instance) {
-          instance.destroy();
-          instance = void 0;
-          internalClasses = {};
-          internalAttrs = {};
-        }
-        oldToggle = toggle;
-      }
-    }
-    {
-      if (instance && !isUninitializedValue(pressed) && instance.isOn() !== pressed) {
-        instance.toggle(pressed);
-      }
-    }
-    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
-      $$result,
-      Object_1.assign(
-        {},
-        { tag },
-        {
-          use: [
-            [
-              Ripple,
-              {
-                ripple,
-                unbounded: true,
-                color,
-                disabled: !!$$restProps.disabled,
-                addClass,
-                removeClass,
-                addStyle
-              }
-            ],
-            forwardEvents,
-            ...use
-          ]
-        },
-        {
-          class: classMap({
-            [className]: true,
-            "mdc-icon-button": true,
-            "mdc-icon-button--on": !isUninitializedValue(pressed) && pressed,
-            "mdc-icon-button--touch": touch,
-            "mdc-icon-button--display-flex": displayFlex,
-            "smui-icon-button--size-button": size === "button",
-            "smui-icon-button--size-mini": size === "mini",
-            "mdc-icon-button--reduced-size": size === "mini" || size === "button",
-            "mdc-card__action": context === "card:action",
-            "mdc-card__action--icon": context === "card:action",
-            "mdc-top-app-bar__navigation-icon": context === "top-app-bar:navigation",
-            "mdc-top-app-bar__action-item": context === "top-app-bar:action",
-            "mdc-snackbar__dismiss": context === "snackbar:actions",
-            "mdc-data-table__pagination-button": context === "data-table:pagination",
-            "mdc-data-table__sort-icon-button": context === "data-table:sortable-header-cell",
-            "mdc-dialog__close": (context === "dialog:header" || context === "dialog:sheet") && action === "close",
-            ...internalClasses
-          })
-        },
-        {
-          style: Object.entries(internalStyles).map(([name, value]) => `${name}: ${value};`).concat([style]).join(" ")
-        },
-        {
-          "aria-pressed": !isUninitializedValue(pressed) ? pressed ? "true" : "false" : null
-        },
-        {
-          "aria-label": pressed ? ariaLabelOn : ariaLabelOff
-        },
-        { "data-aria-label-on": ariaLabelOn },
-        { "data-aria-label-off": ariaLabelOff },
-        { "aria-describedby": ariaDescribedby },
-        { href },
-        actionProp,
-        internalAttrs,
-        $$restProps,
-        { this: element }
-      ),
-      {
-        this: ($$value) => {
-          element = $$value;
-          $$settled = false;
-        }
-      },
-      {
-        default: () => {
-          return `<div class="mdc-icon-button__ripple"></div> ${slots.default ? slots.default({}) : ``}${touch ? `<div class="mdc-icon-button__touch"></div>` : ``}`;
-        }
-      }
-    )}`;
-  } while (!$$settled);
-  return $$rendered;
+  return ` <footer class="svelte-14hk8ef" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
 });
 const css$1 = {
   code: ".svelte-17s3tzv .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-17s3tzv{background-color:#ffffff;height:65px}.logo.svelte-17s3tzv{margin-left:5px;margin-top:5px;height:55px}div.svelte-17s3tzv{display:flex;justify-content:space-between}.svelte-17s3tzv{margin:0;padding:0}",
@@ -1380,7 +837,7 @@ const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, sl
   return $$rendered;
 });
 const css = {
-  code: "body.svelte-16j5e2d,html.svelte-16j5e2d{height:100%}:root{--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
+  code: "body.svelte-133keqp,html.svelte-133keqp{height:100%}:root{--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
   map: null
 };
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -1388,13 +845,13 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   if ($$props.isSmallScreen === void 0 && $$bindings.isSmallScreen && isSmallScreen !== void 0)
     $$bindings.isSmallScreen(isSmallScreen);
   $$result.css.add(css);
-  return `<html lang="en" class="svelte-16j5e2d"><body class="svelte-16j5e2d"> ${validate_component(LayoutGrid, "LayoutGrid").$$render($$result, {}, {}, {
+  return `<html lang="en" class="svelte-133keqp"><body class="svelte-133keqp"> ${validate_component(LayoutGrid, "LayoutGrid").$$render($$result, {}, {}, {
     default: () => {
       return `${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 12 }, {}, {
         default: () => {
           return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 3 }, {}, {
+      })}` : ``} ${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 3, tablet: 2 } }, {}, {
         default: () => {
           return `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}`;
         }
@@ -1402,7 +859,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
         default: () => {
           return `${validate_component(SidebarMenuSmall, "SidebarMenuSmall").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { span: 9 }, {}, {
+      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 9, tablet: 6 } }, {}, {
         default: () => {
           return `${slots.default ? slots.default({}) : ``}`;
         }

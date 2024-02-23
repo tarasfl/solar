@@ -23,6 +23,7 @@
     onMount(() => {
       checkScreenSize();
     })
+    
 </script>
 
 <html lang="en">
@@ -37,7 +38,7 @@
     {/if}
     
     {#if !isSmallScreen}
-    <Cell span={3}>
+    <Cell spanDevices={{ desktop: 3, tablet: 2}}>
       <SidebarMenu />
       </Cell>
     {/if}
@@ -50,7 +51,7 @@
       
     
 
-    <Cell span={9}>
+    <Cell  spanDevices={{ desktop: 9, tablet: 6}}>
       <slot></slot>
     </Cell>
 
@@ -81,4 +82,5 @@
   --mdc-layout-grid-gutter-phone: 16px;
   --mdc-layout-grid-column-width-phone: 72px;
 }
+
     </style>

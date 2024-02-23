@@ -9,10 +9,10 @@
 <style>
 
    footer {
-    position:absolute;
+    /* position:absolute; */
   height: 60px;
-  left: 0;
-  bottom: 0;
+  /* left: 0;
+  bottom: 0; */
   width: 100%;
     display: flex;
     justify-content: space-around;
