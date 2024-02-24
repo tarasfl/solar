@@ -70,7 +70,7 @@
   </div>
 
   <div class='search-element'>
-    <FormField>
+    <FormField style='width:100%'>
       <Switch icons={false} />
       <span slot="label">Enable Solar API</span>
     </FormField>
@@ -79,7 +79,13 @@
   </div>
 
   <style>
+
+    md-filled-text-field {
+      width: 100%;
+    }
+  
     .search-element {
       margin-top: 10px;
+      width: 100%;
     }
   </style>

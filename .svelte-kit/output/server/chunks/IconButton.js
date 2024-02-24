@@ -1,16 +1,8 @@
-import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, d as spread, f as escape_object, h as add_attribute, i as getContext, a as setContext, o as onDestroy, v as validate_component, m as missing_component } from "./ssr.js";
-import { f as forwardEventsBuilder, c as classMap } from "./prefixFilter.js";
+import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, i as getContext, v as validate_component, m as missing_component, d as spread, f as escape_object, h as add_attribute, a as setContext, o as onDestroy } from "./ssr.js";
+import { f as forwardEventsBuilder, c as classMap, S as SmuiElement, g as globals } from "./classAdderBuilder.js";
 import { MDCIconButtonToggleFoundation } from "@material/icon-button";
 import { MDCRippleFoundation, util } from "@material/ripple";
 import { events, ponyfill } from "@material/dom";
-const globals = typeof window !== "undefined" ? window : typeof globalThis !== "undefined" ? globalThis : (
-  // @ts-ignore Node typings have this
-  global
-);
-const void_element_names = /^(?:area|base|br|col|command|embed|hr|img|input|keygen|link|meta|param|source|track|wbr)$/;
-function is_void(name) {
-  return void_element_names.test(name) || name.toLowerCase() === "!doctype";
-}
 function dispatch(element, eventType, detail, eventInit = { bubbles: true }, duplicateEventForMDC = false) {
   if (typeof Event === "undefined") {
     throw new Error("Event not defined.");
@@ -29,84 +21,17 @@ function dispatch(element, eventType, detail, eventInit = { bubbles: true }, dup
   }
   return event;
 }
-const SmuiElement = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let selfClosing;
-  let $$restProps = compute_rest_props($$props, ["use", "tag", "getElement"]);
-  let { use = [] } = $$props;
-  let { tag } = $$props;
-  forwardEventsBuilder(get_current_component());
-  let element;
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  selfClosing = [
-    "area",
-    "base",
-    "br",
-    "col",
-    "embed",
-    "hr",
-    "img",
-    "input",
-    "link",
-    "meta",
-    "param",
-    "source",
-    "track",
-    "wbr"
-  ].indexOf(tag) > -1;
-  return `${tag === "svg" ? `<svg${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>` : `${selfClosing ? `${((tag$1) => {
-    return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : ``}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
-  })(tag)}` : `${((tag$1) => {
-    return tag$1 ? `<${tag}${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${is_void(tag$1) ? "" : `${slots.default ? slots.default({}) : ``}`}${is_void(tag$1) ? "" : `</${tag$1}>`}` : "";
-  })(tag)}`}`}`;
-});
-const { Object: Object_1$1 } = globals;
-const internals = {
-  component: SmuiElement,
-  tag: "div",
-  class: "",
-  classMap: {},
-  contexts: {},
-  props: {}
-};
-const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "component", "tag", "getElement"]);
+const CommonIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let $$restProps = compute_rest_props($$props, ["use", "class", "on", "component", "tag", "getElement"]);
+  const forwardEvents = forwardEventsBuilder(get_current_component());
   let { use = [] } = $$props;
   let { class: className = "" } = $$props;
+  let { on = false } = $$props;
   let element;
-  const smuiClass = internals.class;
-  const smuiClassMap = {};
-  const smuiClassUnsubscribes = [];
-  const contexts = internals.contexts;
-  const props = internals.props;
-  let { component = internals.component } = $$props;
-  let { tag = component === SmuiElement ? internals.tag : void 0 } = $$props;
-  Object.entries(internals.classMap).forEach(([name, context]) => {
-    const store = getContext(context);
-    if (store && "subscribe" in store) {
-      smuiClassUnsubscribes.push(store.subscribe((value) => {
-        smuiClassMap[name] = value;
-      }));
-    }
-  });
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  for (let context in contexts) {
-    if (contexts.hasOwnProperty(context)) {
-      setContext(context, contexts[context]);
-    }
-  }
-  onDestroy(() => {
-    for (const unsubscribe of smuiClassUnsubscribes) {
-      unsubscribe();
-    }
-  });
+  let { component = SmuiElement } = $$props;
+  let { tag = component === SmuiElement ? "i" : void 0 } = $$props;
+  const svg = component === Svg;
+  const context = getContext("SMUI:icon:context");
   function getElement() {
     return element.getElement();
   }
@@ -114,6 +39,8 @@ const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) =
     $$bindings.use(use);
   if ($$props.class === void 0 && $$bindings.class && className !== void 0)
     $$bindings.class(className);
+  if ($$props.on === void 0 && $$bindings.on && on !== void 0)
+    $$bindings.on(on);
   if ($$props.component === void 0 && $$bindings.component && component !== void 0)
     $$bindings.component(component);
   if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
@@ -128,18 +55,24 @@ const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) =
     $$result.head = previous_head;
     $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
       $$result,
-      Object_1$1.assign(
+      Object.assign(
         {},
         { tag },
         { use: [forwardEvents, ...use] },
         {
           class: classMap({
             [className]: true,
-            [smuiClass]: true,
-            ...smuiClassMap
+            "mdc-button__icon": context === "button",
+            "mdc-fab__icon": context === "fab",
+            "mdc-icon-button__icon": context === "icon-button",
+            "mdc-icon-button__icon--on": context === "icon-button" && on,
+            "mdc-tab__icon": context === "tab",
+            "mdc-banner__icon": context === "banner",
+            "mdc-segmented-button__icon": context === "segmented-button"
           })
         },
-        props,
+        { "aria-hidden": "true" },
+        svg ? { focusable: "false", tabindex: "-1" } : {},
         $$restProps,
         { this: element }
       ),
@@ -158,19 +91,23 @@ const ClassAdder = create_ssr_component(($$result, $$props, $$bindings, slots) =
   } while (!$$settled);
   return $$rendered;
 });
-const defaults = Object.assign({}, internals);
-function classAdderBuilder(props) {
-  return new Proxy(ClassAdder, {
-    construct: function(target, args) {
-      Object.assign(internals, defaults, props);
-      return new target(...args);
-    },
-    get: function(target, prop) {
-      Object.assign(internals, defaults, props);
-      return target[prop];
-    }
-  });
-}
+const Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
+  if (console && console.warn) {
+    console.warn('The @smui/common Svg component is deprecated. You can use `tag="svg"` now.');
+  }
+  let { use = [] } = $$props;
+  forwardEventsBuilder(get_current_component());
+  let element;
+  function getElement() {
+    return element;
+  }
+  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
+    $$bindings.use(use);
+  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
+    $$bindings.getElement(getElement);
+  return `<svg${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
+});
 const { applyPassive } = events;
 const { matches } = ponyfill;
 function Ripple(node, { ripple = true, surface = false, unbounded = false, disabled = false, color, active, rippleElement, eventTarget, activeTarget, addClass = (className) => node.classList.add(className), removeClass = (className) => node.classList.remove(className), addStyle = (name, value) => node.style.setProperty(name, value), initPromise = Promise.resolve() } = {}) {
@@ -570,10 +507,8 @@ const IconButton = create_ssr_component(($$result, $$props, $$bindings, slots) =
   return $$rendered;
 });
 export {
+  CommonIcon as C,
   IconButton as I,
   Ripple as R,
-  SmuiElement as S,
-  classAdderBuilder as c,
-  dispatch as d,
-  globals as g
+  dispatch as d
 };

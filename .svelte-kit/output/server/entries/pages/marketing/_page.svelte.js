@@ -1,7 +1,10 @@
-import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, i as getContext, v as validate_component, m as missing_component, d as spread, f as escape_object, h as add_attribute, e as escape_attribute_value, a as setContext, j as each, k as escape } from "../../../chunks/ssr.js";
-import { S as SmuiElement, R as Ripple, g as globals, c as classAdderBuilder, I as IconButton } from "../../../chunks/IconButton.js";
-import { f as forwardEventsBuilder, c as classMap, e as exclude, p as prefixFilter } from "../../../chunks/prefixFilter.js";
+import { c as create_ssr_component, b as compute_rest_props, g as get_current_component, i as getContext, v as validate_component, m as missing_component, d as spread, e as escape_attribute_value, f as escape_object, h as add_attribute, a as setContext, j as each, k as escape } from "../../../chunks/ssr.js";
+import { f as forwardEventsBuilder, c as classMap, S as SmuiElement, g as globals } from "../../../chunks/classAdderBuilder.js";
+import { e as exclude, p as prefixFilter } from "../../../chunks/prefixFilter.js";
+import { R as Ripple, C as CommonIcon, I as IconButton } from "../../../chunks/IconButton.js";
 import { MDCFadingTabIndicatorFoundation, MDCSlidingTabIndicatorFoundation } from "@material/tab-indicator";
+import { P as Paper } from "../../../chunks/Paper.js";
+import "../../../chunks/Subtitle.js";
 const CommonLabel = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["use", "class", "component", "tag", "getElement"]);
   const forwardEvents = forwardEventsBuilder(get_current_component());
@@ -70,93 +73,6 @@ const CommonLabel = create_ssr_component(($$result, $$props, $$bindings, slots) 
     )}`;
   } while (!$$settled);
   return $$rendered;
-});
-const CommonIcon = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "on", "component", "tag", "getElement"]);
-  const forwardEvents = forwardEventsBuilder(get_current_component());
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let { on = false } = $$props;
-  let element;
-  let { component = SmuiElement } = $$props;
-  let { tag = component === SmuiElement ? "i" : void 0 } = $$props;
-  const svg = component === Svg;
-  const context = getContext("SMUI:icon:context");
-  function getElement() {
-    return element.getElement();
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.on === void 0 && $$bindings.on && on !== void 0)
-    $$bindings.on(on);
-  if ($$props.component === void 0 && $$bindings.component && component !== void 0)
-    $$bindings.component(component);
-  if ($$props.tag === void 0 && $$bindings.tag && tag !== void 0)
-    $$bindings.tag(tag);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  let $$settled;
-  let $$rendered;
-  let previous_head = $$result.head;
-  do {
-    $$settled = true;
-    $$result.head = previous_head;
-    $$rendered = `${validate_component(component || missing_component, "svelte:component").$$render(
-      $$result,
-      Object.assign(
-        {},
-        { tag },
-        { use: [forwardEvents, ...use] },
-        {
-          class: classMap({
-            [className]: true,
-            "mdc-button__icon": context === "button",
-            "mdc-fab__icon": context === "fab",
-            "mdc-icon-button__icon": context === "icon-button",
-            "mdc-icon-button__icon--on": context === "icon-button" && on,
-            "mdc-tab__icon": context === "tab",
-            "mdc-banner__icon": context === "banner",
-            "mdc-segmented-button__icon": context === "segmented-button"
-          })
-        },
-        { "aria-hidden": "true" },
-        svg ? { focusable: "false", tabindex: "-1" } : {},
-        $$restProps,
-        { this: element }
-      ),
-      {
-        this: ($$value) => {
-          element = $$value;
-          $$settled = false;
-        }
-      },
-      {
-        default: () => {
-          return `${slots.default ? slots.default({}) : ``}`;
-        }
-      }
-    )}`;
-  } while (!$$settled);
-  return $$rendered;
-});
-const Svg = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "getElement"]);
-  if (console && console.warn) {
-    console.warn('The @smui/common Svg component is deprecated. You can use `tag="svg"` now.');
-  }
-  let { use = [] } = $$props;
-  forwardEventsBuilder(get_current_component());
-  let element;
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  return `<svg${spread([escape_object($$restProps)], {})}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</svg>`;
 });
 const TabIndicator = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, [
@@ -779,70 +695,8 @@ const TabBar = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   } while (!$$settled);
   return $$rendered;
 });
-const Paper = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "square", "color", "elevation", "transition", "getElement"]);
-  forwardEventsBuilder(get_current_component());
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let { variant = "raised" } = $$props;
-  let { square = false } = $$props;
-  let { color = "default" } = $$props;
-  let { elevation = 1 } = $$props;
-  let { transition = false } = $$props;
-  let element;
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.variant === void 0 && $$bindings.variant && variant !== void 0)
-    $$bindings.variant(variant);
-  if ($$props.square === void 0 && $$bindings.square && square !== void 0)
-    $$bindings.square(square);
-  if ($$props.color === void 0 && $$bindings.color && color !== void 0)
-    $$bindings.color(color);
-  if ($$props.elevation === void 0 && $$bindings.elevation && elevation !== void 0)
-    $$bindings.elevation(elevation);
-  if ($$props.transition === void 0 && $$bindings.transition && transition !== void 0)
-    $$bindings.transition(transition);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  return `<div${spread(
-    [
-      {
-        class: escape_attribute_value(classMap({
-          [className]: true,
-          "smui-paper": true,
-          "smui-paper--raised": variant === "raised",
-          "smui-paper--unelevated": variant === "unelevated",
-          "smui-paper--outlined": variant === "outlined",
-          ["smui-paper--elevation-z" + elevation]: elevation !== 0 && variant === "raised",
-          "smui-paper--rounded": !square,
-          ["smui-paper--color-" + color]: color !== "default",
-          "smui-paper-transition": transition
-        }))
-      },
-      escape_object($$restProps)
-    ],
-    {}
-  )}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``} </div>`;
-});
-classAdderBuilder({
-  class: "smui-paper__content",
-  tag: "div"
-});
-classAdderBuilder({
-  class: "smui-paper__title",
-  tag: "h5"
-});
-classAdderBuilder({
-  class: "smui-paper__subtitle",
-  tag: "h6"
-});
 const css = {
-  code: ".campaign.svelte-6651is{width:auto;display:flex;justify-content:space-around;align-items:center}",
+  code: ".content.svelte-1h4ombt{background-color:#fff}.campaign.svelte-1h4ombt{width:auto;display:flex;justify-content:space-around;align-items:center}",
   map: null
 };
 const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -854,7 +708,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   do {
     $$settled = true;
     $$result.head = previous_head;
-    $$rendered = `<div>${validate_component(TabBar, "TabBar").$$render(
+    $$rendered = `<div><div class="content svelte-1h4ombt">${validate_component(TabBar, "TabBar").$$render(
       $$result,
       {
         tabs: ["All Campaigns", "LinkedIn Outreach", "Email Marketing"],
@@ -881,7 +735,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       }
     )} ${active === "All Campaigns" ? `${validate_component(Paper, "Paper").$$render($$result, { variant: "unelevated" }, {}, {
       default: () => {
-        return `<div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        return `<div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -897,7 +751,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `delete`;
           }
-        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -913,7 +767,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `delete`;
           }
-        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -933,7 +787,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       }
     })}` : `${active === "LinkedIn Outreach" ? `${validate_component(Paper, "Paper").$$render($$result, { variant: "unelevated" }, {}, {
       default: () => {
-        return `<div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        return `<div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -949,7 +803,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `delete`;
           }
-        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -969,7 +823,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
       }
     })}` : `${active === "Email Marketing" ? `${validate_component(Paper, "Paper").$$render($$result, { variant: "unelevated" }, {}, {
       default: () => {
-        return `<div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        return `<div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -985,7 +839,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `delete`;
           }
-        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-6651is"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+        })}</div></div> <div tabindex="0" role="button" class="campaign svelte-1h4ombt"><div data-svelte-h="svelte-1cppqt3"><strong>Campaign name</strong><br> <p>Date of campaign</p></div> <div>${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
           default: () => {
             return `mail_outline`;
           }
@@ -1003,7 +857,7 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           }
         })}</div></div>`;
       }
-    })}` : ``}`}`} </div>`;
+    })}` : ``}`}`}</div> </div>`;
   } while (!$$settled);
   return $$rendered;
 });

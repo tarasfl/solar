@@ -21,7 +21,7 @@
   };
 
     onMount(() => {
-      checkScreenSize();
+      window.addEventListener('resize', checkScreenSize);
     })
     
 </script>
@@ -30,7 +30,7 @@
 <body>
 
   <!-- Responsive implementeation -->
-  <LayoutGrid>
+  <LayoutGrid style=height:100%>
     {#if !isSmallScreen}
       <Cell span={12}>
         <Header />
@@ -38,24 +38,24 @@
     {/if}
     
     {#if !isSmallScreen}
-    <Cell spanDevices={{ desktop: 3, tablet: 2}}>
+    <Cell spanDevices={{ desktop: 2, tablet: 2}}>
       <SidebarMenu />
       </Cell>
     {/if}
     
       {#if isSmallScreen}
-      <Cell span={4}>
+      <Cell spanDevices={{ phone: 4, tablet: 8}}>
         <SidebarMenuSmall />
       </Cell>
       {/if}
       
     
 
-    <Cell  spanDevices={{ desktop: 9, tablet: 6}}>
+    <Cell  spanDevices={{ desktop: 10, tablet: 8, phone:4}}>
       <slot></slot>
     </Cell>
 
-    <Cell span={12}>
+    <Cell spanDevices={{ desktop: 12, tablet: 8, phone:4}}>
       <Footer />
     </Cell>
 
@@ -72,6 +72,7 @@
  
 /* Layout grid spacing. */
 :root {
+  --mdc-theme-secondary: #fff;
   --mdc-layout-grid-margin-desktop: 24px;
   --mdc-layout-grid-gutter-desktop: 24px;
   --mdc-layout-grid-column-width-desktop: 72px;

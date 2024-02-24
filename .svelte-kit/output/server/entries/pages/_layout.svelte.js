@@ -4,15 +4,15 @@ import "@material/web/divider/divider.js";
 import "@material/web/list/list-item.js";
 import "@material/web/list/list.js";
 import { MDCDismissibleDrawerFoundation, MDCModalDrawerFoundation } from "@material/drawer";
-import { f as forwardEventsBuilder, c as classMap } from "../../chunks/prefixFilter.js";
-import { d as dispatch, c as classAdderBuilder, S as SmuiElement, R as Ripple, g as globals, I as IconButton } from "../../chunks/IconButton.js";
+import { f as forwardEventsBuilder, c as classMap, a as classAdderBuilder, S as SmuiElement, g as globals } from "../../chunks/classAdderBuilder.js";
+import { d as dispatch, R as Ripple, C as CommonIcon, I as IconButton } from "../../chunks/IconButton.js";
 const css$4 = {
   code: "header.svelte-16btwjq{background-color:#ffffff;height:65px}.logo.svelte-16btwjq{margin-left:5px;margin-top:5px;height:55px}div.svelte-16btwjq{display:flex;justify-content:space-between}.svelte-16btwjq{margin:0;padding:0}",
   map: null
 };
 const Header = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$4);
-  return `  <header class="svelte-16btwjq" data-svelte-h="svelte-1j2fppr"><div class="svelte-16btwjq"><img alt="logo" src="./logo.png" class="logo svelte-16btwjq"></div></header> <md-divider class="svelte-16btwjq"></md-divider>`;
+  return `  <header class="svelte-16btwjq" data-svelte-h="svelte-1w0rzl"><div class="svelte-16btwjq"><a href="/" class="svelte-16btwjq"><img alt="logo" src="./logo.png" class="logo svelte-16btwjq"></a></div></header> <md-divider class="svelte-16btwjq"></md-divider>`;
 });
 const Drawer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let $$restProps = compute_rest_props($$props, ["use", "class", "variant", "open", "fixed", "setOpen", "isOpen", "getElement"]);
@@ -633,36 +633,6 @@ const SecondaryText = classAdderBuilder({
   class: "mdc-deprecated-list-item__secondary-text",
   tag: "span"
 });
-const Graphic = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let $$restProps = compute_rest_props($$props, ["use", "class", "getElement"]);
-  forwardEventsBuilder(get_current_component());
-  let { use = [] } = $$props;
-  let { class: className = "" } = $$props;
-  let element;
-  let menuSelectionGroup = getContext("SMUI:list:graphic:menu-selection-group");
-  function getElement() {
-    return element;
-  }
-  if ($$props.use === void 0 && $$bindings.use && use !== void 0)
-    $$bindings.use(use);
-  if ($$props.class === void 0 && $$bindings.class && className !== void 0)
-    $$bindings.class(className);
-  if ($$props.getElement === void 0 && $$bindings.getElement && getElement !== void 0)
-    $$bindings.getElement(getElement);
-  return `<span${spread(
-    [
-      {
-        class: escape_attribute_value(classMap({
-          [className]: true,
-          "mdc-deprecated-list-item__graphic": true,
-          "mdc-menu__selection-group-icon": menuSelectionGroup
-        }))
-      },
-      escape_object($$restProps)
-    ],
-    {}
-  )}${add_attribute("this", element, 0)}>${slots.default ? slots.default({}) : ``}</span>`;
-});
 classAdderBuilder({
   class: "mdc-deprecated-list-item__meta",
   tag: "span"
@@ -676,11 +646,11 @@ classAdderBuilder({
   tag: "h3"
 });
 const css$3 = {
-  code: "@media screen and (min-width: 1024px){}:root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
+  code: ":root{--md-filled-button-container-shape:10px;--md-filled-button-label-text-font:system-ui}",
   map: null
 };
 const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  let { selectionIndex } = $$props;
+  let { selectionIndex = 1 } = $$props;
   let { options = [
     {
       text: "Dashboard",
@@ -718,70 +688,80 @@ const SidebarMenu = create_ssr_component(($$result, $$props, $$bindings, slots) 
   if ($$props.options === void 0 && $$bindings.options && options !== void 0)
     $$bindings.options(options);
   $$result.css.add(css$3);
-  return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "min-height:680px; width:auto;" }, {}, {
+  return `${validate_component(Drawer, "Drawer").$$render($$result, { style: "width:auto;" }, {}, {
     default: () => {
       return `${validate_component(Content, "Content").$$render($$result, {}, {}, {
         default: () => {
-          return `${validate_component(List, "List").$$render(
-            $$result,
-            {
-              style: "min-height:680px; flex:1;",
-              twoLine: true,
-              singleSelection: true
-            },
-            {},
-            {
-              default: () => {
-                return `${each(options, (option, i) => {
-                  return `${validate_component(Item, "Item").$$render(
-                    $$result,
-                    {
-                      href: option.href,
-                      class: "item",
-                      selected: selectionIndex === i
-                    },
-                    {},
-                    {
-                      default: () => {
-                        return `${validate_component(PrimaryText, "PrimaryText").$$render($$result, {}, {}, {
-                          default: () => {
-                            return `${validate_component(Graphic, "Graphic").$$render($$result, { class: "material-icons" }, {}, {
-                              default: () => {
-                                return `${escape(option.icon)}`;
-                              }
-                            })}`;
-                          }
-                        })} ${validate_component(SecondaryText, "SecondaryText").$$render($$result, {}, {}, {
-                          default: () => {
-                            return `${escape(option.text)}`;
-                          }
-                        })} `;
-                      }
+          return `${validate_component(List, "List").$$render($$result, { twoLine: true, singleSelection: true }, {}, {
+            default: () => {
+              return `${each(options, (option, i) => {
+                return `${validate_component(Item, "Item").$$render(
+                  $$result,
+                  {
+                    href: option.href,
+                    class: classMap({ "item": true }),
+                    selected: selectionIndex === i
+                  },
+                  {},
+                  {
+                    default: () => {
+                      return `${validate_component(PrimaryText, "PrimaryText").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `${validate_component(CommonIcon, "Icon").$$render($$result, { class: "material-icons" }, {}, {
+                            default: () => {
+                              return `${escape(option.icon)}`;
+                            }
+                          })}`;
+                        }
+                      })} ${validate_component(SecondaryText, "SecondaryText").$$render($$result, {}, {}, {
+                        default: () => {
+                          return `${escape(option.text)}`;
+                        }
+                      })} `;
                     }
-                  )}`;
-                })}`;
-              }
+                  }
+                )}`;
+              })}`;
             }
-          )}`;
+          })}`;
         }
       })}`;
     }
   })}`;
 });
 const css$2 = {
-  code: "footer.svelte-14hk8ef{height:60px;width:100%;display:flex;justify-content:space-around}",
+  code: "footer.svelte-15zhduy{background-color:#fff;height:60px;width:100%;display:flex;justify-content:space-around;align-items:center}",
   map: null
 };
 const Footer = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   $$result.css.add(css$2);
-  return ` <footer class="svelte-14hk8ef" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
+  return `  <md-divider></md-divider> <footer class="svelte-15zhduy" data-svelte-h="svelte-1i7pfxx"><p>© 2024 SunSniffer GmbH &amp; Co. KG</p> <p>Developer by Insoftex</p> </footer>`;
 });
 const css$1 = {
-  code: ".svelte-17s3tzv .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-17s3tzv{background-color:#ffffff;height:65px}.logo.svelte-17s3tzv{margin-left:5px;margin-top:5px;height:55px}div.svelte-17s3tzv{display:flex;justify-content:space-between}.svelte-17s3tzv{margin:0;padding:0}",
+  code: ".svelte-2fghyh .item{height:100px}.svelte-2fghyh .app-content{flex:auto;overflow:auto;position:relative;flex-grow:1}header.svelte-2fghyh{background-color:#ffffff;height:65px}.logo.svelte-2fghyh{margin-left:5px;margin-top:5px;height:55px}div.svelte-2fghyh{display:flex;justify-content:space-between}.svelte-2fghyh{margin:0;padding:0}",
   map: null
 };
 const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let open = false;
+  let { menu_elements = [
+    { text: "Dashboard", href: "/" },
+    {
+      text: "Lead generation",
+      href: "/lead-search"
+    },
+    { text: "marketing", href: "/marketing" },
+    { text: "Users", href: "/users" },
+    {
+      text: "Account overview",
+      href: "/account-overview"
+    },
+    {
+      text: "Transactions",
+      href: "/transactions"
+    }
+  ] } = $$props;
+  if ($$props.menu_elements === void 0 && $$bindings.menu_elements && menu_elements !== void 0)
+    $$bindings.menu_elements(menu_elements);
   $$result.css.add(css$1);
   let $$settled;
   let $$rendered;
@@ -789,11 +769,11 @@ const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, sl
   do {
     $$settled = true;
     $$result.head = previous_head;
-    $$rendered = ` <header class="svelte-17s3tzv"><div class="svelte-17s3tzv"><img alt="logo" src="./logo.png" class="logo svelte-17s3tzv"> ${validate_component(IconButton, "IconButton").$$render($$result, { class: "material-icons" }, {}, {
+    $$rendered = `  <header class="svelte-2fghyh"><div class="svelte-2fghyh"><img alt="logo" src="./logo.png" class="logo svelte-2fghyh"> ${validate_component(IconButton, "IconButton").$$render($$result, { class: "material-icons" }, {}, {
       default: () => {
         return `view_list`;
       }
-    })}</div></header> <md-divider class="svelte-17s3tzv"></md-divider> ${validate_component(Drawer, "Drawer").$$render(
+    })}</div></header> <md-divider class="svelte-2fghyh"></md-divider> ${validate_component(Drawer, "Drawer").$$render(
       $$result,
       { variant: "modal", fixed: false, open },
       {
@@ -808,55 +788,17 @@ const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, sl
             default: () => {
               return `${validate_component(List, "List").$$render($$result, {}, {}, {
                 default: () => {
-                  return `${validate_component(Item, "Item").$$render($$result, { href: "/" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Dashboard`;
-                        }
-                      })}`;
-                    }
-                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/lead-search" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Lead Generation`;
-                        }
-                      })}`;
-                    }
-                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/marketing" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Marketing`;
-                        }
-                      })}`;
-                    }
-                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/users" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Users`;
-                        }
-                      })}`;
-                    }
-                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/account-overview" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Account Overview`;
-                        }
-                      })}`;
-                    }
-                  })} ${validate_component(Item, "Item").$$render($$result, { href: "/transactions" }, {}, {
-                    default: () => {
-                      return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
-                        default: () => {
-                          return `Transactions`;
-                        }
-                      })}`;
-                    }
-                  })}`;
+                  return `${each(menu_elements, (elemenent) => {
+                    return `${validate_component(Item, "Item").$$render($$result, { href: elemenent.href, class: "item" }, {}, {
+                      default: () => {
+                        return `${validate_component(Text, "Text").$$render($$result, {}, {}, {
+                          default: () => {
+                            return `${escape(elemenent.text)}`;
+                          }
+                        })} `;
+                      }
+                    })}`;
+                  })} `;
                 }
               })}`;
             }
@@ -868,7 +810,7 @@ const SidebarMenuSmall = create_ssr_component(($$result, $$props, $$bindings, sl
   return $$rendered;
 });
 const css = {
-  code: "body.svelte-133keqp,html.svelte-133keqp{height:100%}:root{--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
+  code: "body.svelte-gxtoc6,html.svelte-gxtoc6{height:100%}:root{--mdc-theme-secondary:#fff;--mdc-layout-grid-margin-desktop:24px;--mdc-layout-grid-gutter-desktop:24px;--mdc-layout-grid-column-width-desktop:72px;--mdc-layout-grid-margin-tablet:16px;--mdc-layout-grid-gutter-tablet:16px;--mdc-layout-grid-column-width-tablet:72px;--mdc-layout-grid-margin-phone:16px;--mdc-layout-grid-gutter-phone:16px;--mdc-layout-grid-column-width-phone:72px}",
   map: null
 };
 const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -876,21 +818,21 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   if ($$props.isSmallScreen === void 0 && $$bindings.isSmallScreen && isSmallScreen !== void 0)
     $$bindings.isSmallScreen(isSmallScreen);
   $$result.css.add(css);
-  return `<html lang="en" class="svelte-133keqp"><body class="svelte-133keqp"> ${validate_component(LayoutGrid, "LayoutGrid").$$render($$result, {}, {}, {
+  return `<html lang="en" class="svelte-gxtoc6"><body class="svelte-gxtoc6"> ${validate_component(LayoutGrid, "LayoutGrid").$$render($$result, {}, {}, {
     default: () => {
       return `${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 12 }, {}, {
         default: () => {
           return `${validate_component(Header, "Header").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 3, tablet: 2 } }, {}, {
+      })}` : ``} ${!isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 2, tablet: 2 } }, {}, {
         default: () => {
           return `${validate_component(SidebarMenu, "SidebarMenu").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { span: 4 }, {}, {
+      })}` : ``} ${isSmallScreen ? `${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { phone: 4, tablet: 8 } }, {}, {
         default: () => {
           return `${validate_component(SidebarMenuSmall, "SidebarMenuSmall").$$render($$result, {}, {}, {})}`;
         }
-      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 9, tablet: 6 } }, {}, {
+      })}` : ``} ${validate_component(Cell, "Cell").$$render($$result, { spanDevices: { desktop: 10, tablet: 8 } }, {}, {
         default: () => {
           return `${slots.default ? slots.default({}) : ``}`;
         }

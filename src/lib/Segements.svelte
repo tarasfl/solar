@@ -1,6 +1,6 @@
 
-<SegmentedButton segments={choices} let:segment singleSelect bind:selected>
-    <Segment {segment}>
+<SegmentedButton segments={choices} let:segment singleSelect bind:selected style='width:100%'>
+    <Segment {segment} style='width:50%'>
       <Label>{segment}</Label>
     </Segment>
   </SegmentedButton>

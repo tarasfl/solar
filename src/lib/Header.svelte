@@ -6,7 +6,7 @@
 
 <header>
     <div>
-        <img alt = 'logo' src = './logo.png' class="logo">
+        <a href='/'><img alt = 'logo' src = './logo.png' class="logo"></a>
     </div>
 </header>
 <md-divider></md-divider>

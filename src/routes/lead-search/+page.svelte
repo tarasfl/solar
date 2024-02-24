@@ -1,12 +1,12 @@
 
 <script lang="ts">
 
-  //  importing components
+    //  importing components
     import SearchBar from '../../lib/SearchBar.svelte';
 
     // imorting smui elements 
     import LayoutGrid, { Cell } from '@smui/layout-grid';
-    import '@material/web/switch/switch'
+    import Paper, { Title, Subtitle, Content } from '@smui/paper';
 
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
@@ -57,11 +57,14 @@
 
   <LayoutGrid>
     <Cell span={9}>
-      <div bind:this={mapElement} class = 'map'></div> 
+        <div bind:this={mapElement} class = 'map'></div>
     </Cell>
-    <Cell span={3}>
+    <Cell spanDevices={{ desktop: 3, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
-            <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />
+        <Paper color="secondary" style='min-height: 300px;'>
+          <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />
+      </Paper>
+            
         {/if}
     </Cell>
   </LayoutGrid>

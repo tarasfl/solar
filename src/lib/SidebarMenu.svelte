@@ -1,12 +1,12 @@
 <script lang="ts">
   import '@material/web/list/list-item'
   import '@material/web/list/list'
-  import Drawer, { AppContent, Content } from '@smui/drawer';
+  import Drawer, {Content } from '@smui/drawer';
   import List, { Item, Text, PrimaryText, SecondaryText, Graphic} from '@smui/list';
   import { Icon } from '@smui/common';
 
   // options for navigation drawer
-  export let selectionIndex: number;
+  export let selectionIndex =1;
   export let options = [
     {
       text:'Dashboard',
@@ -17,7 +17,7 @@
       text:'Lead Generation',
       icon:'search',
       href:'/lead-search'
-    },
+    }, 
     {
       text:'Marketing',
       icon:'trending_up',
@@ -40,13 +40,13 @@
     }
   ]
 </script>
-<Drawer style='min-height:680px; width:auto;'>
+<Drawer style='width:auto;'>
   <Content>
-    <List style='min-height:680px; flex:1;' twoLine singleSelection >
+    <List twoLine singleSelection >
       {#each options as option, i}
-        <Item href={option.href} class='item' 
+        <Item href={option.href} style = 'height:90px'
         on:SMUI:action={() => (selectionIndex = i)} selected={selectionIndex === i}>
-          <PrimaryText><Graphic class="material-icons">{option.icon}</Graphic></PrimaryText>
+          <PrimaryText><Icon class="material-icons">{option.icon}</Icon></PrimaryText>
           <SecondaryText>{option.text}</SecondaryText>
         </Item>
       {/each}
@@ -54,10 +54,6 @@
   </Content>
 </Drawer>
 <style>
-  @media screen and (min-width: 1024px) {
-}
-
-
 :root {
   --md-filled-button-container-shape: 10px;
   --md-filled-button-label-text-font: system-ui;

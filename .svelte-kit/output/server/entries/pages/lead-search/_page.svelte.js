@@ -2,7 +2,7 @@ import { c as create_ssr_component, v as validate_component, h as add_attribute 
 import "@material/web/textfield/filled-text-field.js";
 import "@material/web/icon/icon.js";
 import { L as LayoutGrid, C as Cell } from "../../../chunks/Cell.js";
-import "@material/web/switch/switch.js";
+import "../../../chunks/Subtitle.js";
 import "@googlemaps/js-api-loader";
 const css = {
   code: ".map.svelte-1omdr3n{min-height:420px;width:100%}",
@@ -50,11 +50,18 @@ const Page = create_ssr_component(($$result, $$props, $$bindings, slots) => {
           default: () => {
             return `<div class="map svelte-1omdr3n"${add_attribute("this", mapElement, 0)}></div>`;
           }
-        })} ${validate_component(Cell, "Cell").$$render($$result, { span: 3 }, {}, {
-          default: () => {
-            return `${``}`;
+        })} ${validate_component(Cell, "Cell").$$render(
+          $$result,
+          {
+            spanDevices: { desktop: 3, tablet: 8, phone: 4 }
+          },
+          {},
+          {
+            default: () => {
+              return `${``}`;
+            }
           }
-        })}`;
+        )}`;
       }
     })}`;
   } while (!$$settled);

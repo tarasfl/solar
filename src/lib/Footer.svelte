@@ -1,20 +1,24 @@
 <!-- Component for footer -->
+<script lang="ts">
+  import '@material/web/divider/divider'
+</script>
 
+<md-divider></md-divider>
 <footer>
-    <p>© 2024 SunSniffer GmbH & Co. KG</p>
-    <p>Developer by Insoftex</p>
+    <p>© 2024 <a href='https://www.sunsniffer.de/en/'>SunSniffer GmbH & Co. KG</a></p>
+    <p>Developer by <a href='https://insoftex.com/'>Insoftex</a></p>
 </footer>
 
 
 <style>
 
    footer {
-    /* position:absolute; */
-  height: 60px;
-  /* left: 0;
-  bottom: 0; */
-  width: 100%;
+    bottom: 0;
+    background-color: #fff;
+    height: 60px;
+    width: 100%;
     display: flex;
     justify-content: space-around;
+    align-items: center;
 }
 </style>

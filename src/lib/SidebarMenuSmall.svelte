@@ -1,4 +1,56 @@
 <!-- Component for small screen drawer menyu and header with burger button -->
+
+<script lang="ts">
+  import IconButton from '@smui/icon-button';
+  import '@material/web/divider/divider'
+  import Drawer, {
+    AppContent,
+    Content,
+    Header,
+    Title,
+    Subtitle,
+    Scrim,
+  } from '@smui/drawer';
+  import Button, { Label } from '@smui/button';
+  import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
+
+  let open = false;
+  let active = 'Inbox';
+
+  function setActive(value: string) {
+    active = value;
+    open = false;
+  }
+
+  export let menu_elements = [
+    {
+      text:'Dashboard',
+      href: '/'
+    },
+    {
+      text: 'Lead generation',
+      href: '/lead-search'
+    },
+    {
+      text: 'marketing',
+      href: '/marketing'
+    },
+    {
+      text: 'Users',
+      href: '/users'
+    },
+    {
+      text: 'Account overview',
+      href: '/account-overview'
+    },
+    {
+      text: 'Transactions',
+      href: '/transactions'
+    }
+
+]
+</script>
+
 <header>
     <div>
         <img alt = 'logo' src = './logo.png' class="logo">
@@ -14,7 +66,12 @@
    <Drawer variant="modal" fixed={false} bind:open>
       <Content>
         <List>
-          <Item href="/" on:click={() => (open = false)}>
+          {#each menu_elements as elemenent }
+              <Item href={elemenent.href} on:click={() => (open = false)} class="item">
+                <Text>{elemenent.text}</Text>
+              </Item>
+          {/each}
+          <!-- <Item href="/" on:click={() => (open = false)}>
             <Text>Dashboard</Text>
           </Item>
           <Item href="/lead-search" on:click={() => (open = false)}>
@@ -31,36 +88,16 @@
           </Item>
           <Item href = '/transactions' on:click={() => (open = false)}>
             <Text>Transactions</Text>
-          </Item>
+          </Item> -->
     
         </List>
         </Content>
     </Drawer>
-
-  <script lang="ts">
-    import IconButton from '@smui/icon-button';
-    import '@material/web/divider/divider'
-    import Drawer, {
-      AppContent,
-      Content,
-      Header,
-      Title,
-      Subtitle,
-      Scrim,
-    } from '@smui/drawer';
-    import Button, { Label } from '@smui/button';
-    import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
-  
-    let open = false;
-    let active = 'Inbox';
-  
-    function setActive(value: string) {
-      active = value;
-      open = false;
-    }
-  </script>
   
   <style>
+     * :global(.item) {
+    height: 100px;
+  }
   
     * :global(.app-content) {
       flex: auto;
