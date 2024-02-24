@@ -4,15 +4,9 @@
   import IconButton from '@smui/icon-button';
   import '@material/web/divider/divider'
   import Drawer, {
-    AppContent,
-    Content,
-    Header,
-    Title,
-    Subtitle,
-    Scrim,
+    Content
   } from '@smui/drawer';
-  import Button, { Label } from '@smui/button';
-  import List, { Item, Text, Graphic, Separator, Subheader } from '@smui/list';
+  import List, { Item, PrimaryText, SecondaryText, Graphic} from '@smui/list';
 
   let open = false;
   let active = 'Inbox';
@@ -25,29 +19,34 @@
   export let menu_elements = [
     {
       text:'Dashboard',
-      href: '/'
+      icon:'dashboard',
+      href:'/'
     },
     {
-      text: 'Lead generation',
-      href: '/lead-search'
+      text:'Lead Generation',
+      icon:'search',
+      href:'/lead-search'
+    }, 
+    {
+      text:'Marketing',
+      icon:'trending_up',
+      href:'/marketing'
     },
     {
-      text: 'marketing',
-      href: '/marketing'
+      text:'Users',
+      icon:'people',
+      href:'/users'
     },
     {
-      text: 'Users',
-      href: '/users'
+      text:'Account Overview',
+      icon:'person',
+      href:'/account-overview'
     },
     {
-      text: 'Account overview',
-      href: '/account-overview'
-    },
-    {
-      text: 'Transactions',
-      href: '/transactions'
+      text:'Transactions',
+      icon:'paid',
+      href:'/transactions'
     }
-
 ]
 </script>
 
@@ -65,31 +64,14 @@
    
    <Drawer variant="modal" fixed={false} bind:open>
       <Content>
-        <List>
-          {#each menu_elements as elemenent }
-              <Item href={elemenent.href} on:click={() => (open = false)} class="item">
-                <Text>{elemenent.text}</Text>
+        <List twoLine singleSelection >
+          {#each menu_elements as element }
+              <Item href={element.href} on:click={() => (open = false)} class="item">
+                <PrimaryText><Graphic class='material-icons'>{element.icon}</Graphic></PrimaryText>
+                <SecondaryText>{element.text}</SecondaryText>
+
               </Item>
           {/each}
-          <!-- <Item href="/" on:click={() => (open = false)}>
-            <Text>Dashboard</Text>
-          </Item>
-          <Item href="/lead-search" on:click={() => (open = false)}>
-            <Text>Lead Generation</Text>
-          </Item>
-          <Item href="/marketing" on:click={() => (open = false)}>
-            <Text>Marketing</Text>
-          </Item>
-          <Item href="/users" on:click={() => (open = false)}>
-            <Text>Users</Text>
-          </Item>
-          <Item href = '/account-overview' on:click={() => (open = false)}>
-            <Text>Account Overview</Text>
-          </Item>
-          <Item href = '/transactions' on:click={() => (open = false)}>
-            <Text>Transactions</Text>
-          </Item> -->
-    
         </List>
         </Content>
     </Drawer>
