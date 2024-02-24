@@ -12,3 +12,6 @@ Additionally, you need a development environment with <a href='https://nodejs.or
 <h1>Running the app</h1>
 
 First, run <code>npm install</code> to install the required dependencies.
+
+Then <code>npm run build</code> to build the project 
+And after <code>npm run preview</code> to run the server
