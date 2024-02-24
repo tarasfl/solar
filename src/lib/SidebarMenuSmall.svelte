@@ -52,7 +52,7 @@
 
 <header>
     <div>
-        <img alt = 'logo' src = './logo.png' class="logo">
+        <a href='/'><img alt = 'logo' src = './logo.png' class="logo"></a>
           <IconButton class="material-icons"  on:click={() => (open = !open)}>
             view_list
         </IconButton>
