@@ -17,10 +17,11 @@
     
     // Function to check screen size on mount and resize
   const checkScreenSize = () => {
-    isSmallScreen = window.innerWidth < 640; // Adjust the breakpoint as needed
+    isSmallScreen = window.innerWidth < 768; // Adjust the breakpoint as needed
   };
 
     onMount(() => {
+      checkScreenSize();
       window.addEventListener('resize', checkScreenSize);
     })
     
