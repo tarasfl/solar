@@ -1,4 +1,4 @@
-# Projecct for <a href='http://localhost:5173/account-overview#:~:text=SunSniffer%20GmbH%20%26%20Co.%20KG'>SunSniffer GmbH & Co. KG</a> 
+# Project for <a href='http://localhost:5173/account-overview#:~:text=SunSniffer%20GmbH%20%26%20Co.%20KG'>SunSniffer GmbH & Co. KG</a> 
 <br/>
 <h1>Before you begin</h1>
 
