@@ -5,12 +5,12 @@
     import LayoutGrid, { Cell } from '@smui/layout-grid';
 </script>
 <h3 class = 'page-title'>Analytics</h3>
-<LayoutGrid>
+<!-- <LayoutGrid>
     <Cell spanDevices = {{desktop: 12}}>
 <Cards />
     </Cell>
 
-</LayoutGrid>
+</LayoutGrid> -->
 
 <div class='cards'>
 
