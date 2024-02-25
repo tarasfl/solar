@@ -53,9 +53,15 @@
 <header>
     <div>
         <a href='/'><img alt = 'logo' src = './logo.png' class="logo"></a>
+        <div>
+          <IconButton class = 'material-icons bell' href='/account-overview' color='secondary'>account_circle</IconButton>
+          
+          <IconButton class = 'material-icons bell' >notifications</IconButton>
           <IconButton class="material-icons"  on:click={() => (open = !open)}>
             view_list
         </IconButton>
+      </div>
+          
     </div>
 </header>
 <md-divider></md-divider>

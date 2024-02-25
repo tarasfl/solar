@@ -3,7 +3,6 @@
     import {onMount} from 'svelte';
 
     // importing materials UI elements
-    import '@smui/layout-grid'
     import LayoutGrid, { Cell } from '@smui/layout-grid';
 
     // importing components
@@ -31,7 +30,7 @@
 <body>
 
   <!-- Responsive implementeation -->
-  <LayoutGrid style=height:100%>
+  <LayoutGrid>
     {#if !isSmallScreen}
       <Cell span={12}>
         <Header />
@@ -57,19 +56,22 @@
     </Cell>
 
     <Cell spanDevices={{ desktop: 12, tablet: 8, phone:4}}>
-      <Footer />
+      <Footer/>
     </Cell>
 
   </LayoutGrid>
-        
+  
         
 </body>
 </html>
     <style>
-
-      body, html {
-        height: 100%;
+     * :global( .page-title){
+        margin-bottom: 10px;
       }
+
+      /* body, html {
+        height: 100%;
+      } */
  
 /* Layout grid spacing. */
 :root {

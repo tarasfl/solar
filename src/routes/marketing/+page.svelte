@@ -43,7 +43,9 @@
   let active = 'All Campaigns';
 </script>
 
+<h3 class="page-title">Marketing</h3>
 <div>
+ 
   <Paper color='secondary'style=" min-height:500px">
     <TabBar tabs={['All Campaigns', 'LinkedIn Outreach', 'Email Marketing']} let:tab bind:active>
       <Tab {tab}>
@@ -150,17 +152,21 @@
   </div>
 
   <style>
+    div {
+      color: rgba(114, 114, 114, 0.9);
+    }
+
     .campaign-title {
       width: 30%;
     }
     .campaign-type {
       display: flex;
-      justify-content: center;
+      justify-content: left;
       width: 20%;
     }
     .campaign-status {
       width: 30%;
-      text-align: center;
+      text-align:start;
     }
     .icons {
       width: 20%;

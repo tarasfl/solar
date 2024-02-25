@@ -8,7 +8,7 @@
     MediaContent,
   } from '@smui/card';
 </script>
-
+<div class="cards">
 <Card>
     <Media class="card-media-16x9" aspectRatio="16x9">
       <MediaContent>
@@ -20,7 +20,7 @@
         </h2>
       </MediaContent>
     </Media>
-    <Content style="color: #888;">Here's some gray text down here.</Content>
+    <Content style="color: #888;">Here's some analytic information.</Content>
   </Card>
 
   <Card>
@@ -34,7 +34,7 @@
         </h2>
       </MediaContent>
     </Media>
-    <Content style="color: #888;">Here's some gray text down here.</Content>
+    <Content style="color: #888;">Here's some analytic information.</Content>
   </Card>
   <Card>
     <Media class="card-media-16x9" aspectRatio="16x9">
@@ -47,13 +47,20 @@
         </h2>
       </MediaContent>
     </Media>
-    <Content style="color: #888;">Here's some gray text down here.</Content>
+    <Content style="color: #888;">Here's some analytic information.</Content>
   </Card>
+</div>
   <style>
 
-    .md-card {
-      height: 64px;
-        width: auto;
+    .cards {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    * :global(.card-media-16x9) {
+      height: 180px;
+      width: 320px;
+
     }
 
     * :global(.card-media-16x9) {

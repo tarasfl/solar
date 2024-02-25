@@ -11,6 +11,7 @@
     import Switch from '@smui/switch';
     import FormField from '@smui/form-field';
     import Segements from './Segements.svelte';
+    import Button, { Label } from '@smui/button';
   
   
     export let location: google.maps.LatLng | undefined;
@@ -52,7 +53,6 @@
         }
       });
 
-      console.log(textFieldElement)
     });
   </script>
 
@@ -74,6 +74,9 @@
       <Switch icons={false} />
       <span slot="label">Enable Solar API</span>
     </FormField>
+    <Button  variant="raised" style='width:100%'>
+      <Label>Search</Label>
+    </Button>
   </div>
 
   </div>

@@ -2,8 +2,7 @@
   import '@material/web/list/list-item'
   import '@material/web/list/list'
   import Drawer, {Content } from '@smui/drawer';
-  import List, { Item, Text, PrimaryText, SecondaryText, Graphic} from '@smui/list';
-  import { Icon } from '@smui/common';
+  import List, { Item, SecondaryText, Graphic} from '@smui/list';
 
   // options for navigation drawer
   export let selectionIndex =1;
@@ -40,22 +39,24 @@
     }
   ]
 </script>
-<Drawer style='width:auto;'>
+<div>
+<Drawer style='width:auto;' class='nav'>
   <Content>
-    <List twoLine singleSelection >
+    <List  singleSelection >
       {#each options as option, i}
-        <Item href={option.href} style = 'height:90px'
+        <Item href={option.href} class='nav-list-item' style = 'height: 90px; max-width:240px;'
         on:SMUI:action={() => (selectionIndex = i)} selected={selectionIndex === i}>
-          <PrimaryText><Icon class="material-icons">{option.icon}</Icon></PrimaryText>
-          <SecondaryText>{option.text}</SecondaryText>
+          <Graphic class="material-icons" >{option.icon}</Graphic>
+          <SecondaryText><big>{option.text}</big></SecondaryText>
         </Item>
       {/each}
     </List>
   </Content>
 </Drawer>
+</div>
 <style>
+
 :root {
   --md-filled-button-container-shape: 10px;
-  --md-filled-button-label-text-font: system-ui;
 }
 </style>
