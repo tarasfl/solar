@@ -12,6 +12,9 @@
     import FormField from '@smui/form-field';
     import Segements from './Segements.svelte';
     import Button, { Label } from '@smui/button';
+    import Slider from '@smui/slider';
+ 
+
   
   
     export let location: google.maps.LatLng | undefined;
@@ -20,6 +23,8 @@
     export let map: google.maps.Map;
     export let initialValue = '';
     export let zoom = 15;
+    export let value = 0;
+    export let checkedSolarSwitch = false;
   
     let textFieldElement: MdFilledTextField;
   
@@ -71,11 +76,22 @@
 
   <div class='search-element'>
     <FormField style='width:100%'>
-      <Switch icons={false} />
+      <Switch icons={false} bind:checked={checkedSolarSwitch}/>
       <span slot="label">Enable Solar API</span>
     </FormField>
+
+  {#if checkedSolarSwitch}
+    <Slider
+    bind:value
+    min={0}
+    max={1000}
+    step={10}
+    input$aria-label="Continuous slider"
+  />
+  <pre class="status">Min kW Potential: {value}</pre>
+  {/if}
     <Button  variant="raised" style='width:100%'>
-      <Label>Search</Label>
+      <Label style='color:#fff'>Search</Label>
     </Button>
   </div>
 

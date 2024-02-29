@@ -58,11 +58,11 @@
   <div class='lead-search'>
 
   <LayoutGrid class='container'>
-    <Cell span={9} style='height:100%'>
+    <Cell span={8} style='height:100%'>
       
         <div bind:this={mapElement} class = 'map'></div>
     </Cell>
-    <Cell spanDevices={{ desktop: 3, tablet: 8, phone: 4}}>
+    <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
         <Paper color="secondary" style='height:100%'>
           <SearchBar bind:location {placesLibrary} {map} initialValue={zipCode} />

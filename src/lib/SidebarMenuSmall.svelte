@@ -7,6 +7,9 @@
     Content
   } from '@smui/drawer';
   import List, { Item, PrimaryText, SecondaryText, Graphic} from '@smui/list';
+  import Accordion, { Panel, Header, Content as AccordionContent } from '@smui-extra/accordion';
+
+
 
   let open = false;
   let active = 'Inbox';
@@ -16,38 +19,48 @@
     open = false;
   }
 
-  export let menu_elements = [
+    // options for navigation drawer
+    export let selectionIndex =1;
+  export let options = [
     {
-      text:'Dashboard',
+      subMenu:0,
+      title:'Dashboard',
       icon:'dashboard',
-      href:'/'
+      href:['/']
     },
     {
-      text:'Lead Generation',
+      subMenu: 1,
+      title:'Lead Generation',
+      elements: ['Lead Generation', 'All Campaigns'],
       icon:'search',
-      href:'/lead-search'
+      href:['/lead-search', '/all-campaigns']
     }, 
     {
-      text:'Marketing',
+      subMenu: 0,
+      title:'Marketing',
       icon:'trending_up',
-      href:'/marketing'
+      href:['/marketing']
     },
     {
-      text:'Users',
+      subMenu: 0,
+      title:'Users',
       icon:'people',
-      href:'/users'
+      href:['/users']
     },
     {
-      text:'Account Overview',
+      subMenu:0,
+      title:'Account Overview',
       icon:'person',
-      href:'/account-overview'
+      href:['/account-overview']
     },
     {
-      text:'Transactions',
+      subMenu:0,
+      title:'Transactions',
       icon:'paid',
-      href:'/transactions'
+      href:['/transactions']
     }
-]
+  ]
+
 </script>
 
 <header>
@@ -60,15 +73,49 @@
           <IconButton class="material-icons"  on:click={() => (open = !open)}>
             view_list
         </IconButton>
+          
       </div>
           
     </div>
 </header>
 <md-divider></md-divider>
 
+<Drawer style='width:auto;' class='nav' variant="modal" fixed={false} bind:open>
+  <Content>
+    <List >
+      {#each options as option, i}
+      {#if option.subMenu}
+        <Accordion>
+          <Panel>
+            <Header>
+              <Graphic class="material-icons" >{option.icon}</Graphic>
+              <SecondaryText><big>{option.title}</big></SecondaryText>
+            </Header>
+            <AccordionContent>
+              <List>
+              {#each option.elements as txt, i}
+                  <Item href={option.href[i]}><SecondaryText>{txt}</SecondaryText></Item>   
+              {/each}
+            </List>
+            </AccordionContent>
+          </Panel>
+        </Accordion>
+
+     
+      {:else}
+        <Item href={option.href[0]} class='nav-list-item' style = 'height: 90px; max-width:240px;'
+        on:SMUI:action={() => (selectionIndex = i)} selected={selectionIndex === i}>
+          <Graphic class="material-icons" >{option.icon}</Graphic>
+          <SecondaryText><big>{option.title}</big></SecondaryText>
+        </Item>
+        {/if}
+      {/each}
+    </List>
+  </Content>
+</Drawer>
 
    
-   <Drawer variant="modal" fixed={false} bind:open>
+   <!-- <Drawer variant="modal" fixed={false} bind:open>
       <Content>
         <List twoLine singleSelection >
           {#each menu_elements as element }
@@ -80,7 +127,7 @@
           {/each}
         </List>
         </Content>
-    </Drawer>
+    </Drawer> -->
   
   <style>
      * :global(.item) {
