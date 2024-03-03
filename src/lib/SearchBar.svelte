@@ -14,7 +14,8 @@
     import Button, { Label } from '@smui/button';
     import Slider from '@smui/slider';
  
-    import {findBuilldingsInArea, searchBuildings} from '../routes/buildings'
+    import { searchBuildings} from '../routes/buildings'
+    import {getBuildingInsight} from '../routes/solar'
   
     export let location: google.maps.LatLng | undefined;
   
@@ -28,14 +29,11 @@
   
     let textFieldElement: MdFilledTextField;
 
+    // function fro parsing Solar API data
     export function parseData(){
       searchBuildings(bounds)
   .then(buildings => {
-    console.log(buildings)
-    // buildings.forEach(element => {
-    //   console.log(element)
-    // });
-    // console.log(buildings);
+    getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A')
   })
   .catch(error => {
     console.error('Error searching buildings:', error);
@@ -56,7 +54,6 @@
           return;
         }
         if (place.geometry.viewport) {
-          // map.fitBounds(place.geometry.viewport);
           bounds = place.geometry.viewport
           map.setCenter(place.geometry.location);
           map.setZoom(zoom);

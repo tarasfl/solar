@@ -1,4 +1,3 @@
-import {findClosestBuilding} from './solar'
 
 function buildBboxFromBounds(bounds: google.maps.LatLngBounds) {
     const sw = bounds.getSouthWest(); // Southwest corner
@@ -51,36 +50,4 @@ export async function searchBuildings(bounds: google.maps.LatLngBounds) {
         };
     }));
     return nodeCoordinates;
-
-  
-    // Extract and return the buildings from the response
-    // const buildings = data.elements.filter(element => element.type === 'way' && element.tags.building);
-    // return buildings;
   }
-
-export function findBuilldingsInArea(map: google.maps.Map, location: google.maps.LatLng | undefined, bounds: google.maps.LatLngBounds | undefined){
-    let  request = {
-        location:location,
-        radius: 500,
-        type: 'business'
-      };
-      let  request_2 = {
-        bounds:bounds,
-        type: 'business'
-      }
-      let data: any;
-      const service = new google.maps.places.PlacesService(map);
-      service.nearbySearch(request_2, callback);
-
-      function callback(results: any, status: google.maps.places.PlacesServiceStatus, pagination: any):void {
-        if (status == google.maps.places.PlacesServiceStatus.OK) {
-                console.log(results)
-                // findClosestBuilding(results[0].geometry.location, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A')
-            }
-            if (pagination.hasNextPage) {
-                // Fetch the next page of results
-                pagination.nextPage();
-            }
-        
-        };
-}

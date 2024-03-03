@@ -10,7 +10,6 @@
 
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
-    import {findBuilldingsInArea} from '../buildings'
   
     let location: google.maps.LatLng | undefined;  // location
     let zipCode = "90571"; // zipCode of default Location
@@ -52,8 +51,6 @@
       console.log(geocoderResult)
       console.log(bounds)
       location = geocoderResult.geometry.location; // writing location
-
-      findBuilldingsInArea(map,location, bounds)
   
       map = new mapsLibrary.Map(mapElement, {
         center: location,

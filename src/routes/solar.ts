@@ -1,11 +1,30 @@
-export async function findClosestBuilding(
-    location: google.maps.LatLng,
-    apiKey: string,
+
+// function for sleep between each request
+function sleep(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// export function for requesting Solar API data
+export async function getBuildingInsight(
+    elements: any,
+    apiKey: string
+) {
+    // handling request limit quota
+    for (let i = 0; i < elements.length; i++) {
+        await sleep(1000);
+        makeRequestBuildingInsight(elements[i].latitude, elements[i].longitude, apiKey)  
+    };
+    
+}
+
+// fetching and parsing data from Solar API
+async function makeRequestBuildingInsight(
+    lat: number,
+    lon: number,
+    apiKey: string
   ){
-   console.log(location.lng())
-   let f_1 = `https://solar.googleapis.com/v1/dataLayers:get?location.latitude=${location.lat()}&location.longitude=${location.lng()}&radiusMeters=100&view=FULL_LAYERS&pixelSizeMeters=0.5&key=${apiKey}`
-   let f_2 = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${location.lat()}&location.longitude=${location.lng()}&requiredQuality=HIGH&key=${apiKey}`
-    return fetch(f_2).then(
+   let fetchURL = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lon}&requiredQuality=HIGH&key=${apiKey}`
+    return fetch(fetchURL).then(
       async (response) => {
         const content = await response.json();
         if (response.status != 200) {
