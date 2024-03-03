@@ -14,19 +14,33 @@
     import Button, { Label } from '@smui/button';
     import Slider from '@smui/slider';
  
-
-  
+    import {findBuilldingsInArea, searchBuildings} from '../routes/buildings'
   
     export let location: google.maps.LatLng | undefined;
   
     export let placesLibrary: google.maps.PlacesLibrary;
     export let map: google.maps.Map;
+    export let bounds: google.maps.LatLngBounds;
     export let initialValue = '';
     export let zoom = 15;
     export let value = 0;
     export let checkedSolarSwitch = false;
   
     let textFieldElement: MdFilledTextField;
+
+    export function parseData(){
+      searchBuildings(bounds)
+  .then(buildings => {
+    console.log(buildings)
+    // buildings.forEach(element => {
+    //   console.log(element)
+    // });
+    // console.log(buildings);
+  })
+  .catch(error => {
+    console.error('Error searching buildings:', error);
+  });
+    }
   
     onMount(async () => {
       // https://lit.dev/docs/components/shadow-dom/
@@ -43,6 +57,7 @@
         }
         if (place.geometry.viewport) {
           // map.fitBounds(place.geometry.viewport);
+          bounds = place.geometry.viewport
           map.setCenter(place.geometry.location);
           map.setZoom(zoom);
         } else {
@@ -90,7 +105,7 @@
   />
   <pre class="status">Min kW Potential: {value}</pre>
   {/if}
-    <Button  variant="raised" style='width:100%'>
+    <Button  variant="raised" style='width:100%' on:click = {() => parseData()}>
       <Label style='color:#fff'>Search</Label>
     </Button>
   </div>
