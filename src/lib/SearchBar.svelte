@@ -14,19 +14,46 @@
     import Button, { Label } from '@smui/button';
     import Slider from '@smui/slider';
  
-
-  
+    import { searchBuildings} from '../routes/buildings'
+    import {getBuildingInsight, loadingStatus} from '../routes/solar'
   
     export let location: google.maps.LatLng | undefined;
   
     export let placesLibrary: google.maps.PlacesLibrary;
     export let map: google.maps.Map;
+    export let bounds: google.maps.LatLngBounds;
     export let initialValue = '';
     export let zoom = 15;
     export let value = 0;
     export let checkedSolarSwitch = false;
   
     let textFieldElement: MdFilledTextField;
+
+    // function for parsing Solar API data
+    export async function parseData(){
+      let data: any;
+      if(checkedSolarSwitch){
+        searchBuildings(bounds)
+          .then(buildings => {
+            loadingStatus.set(true)
+            console.log(value)
+            getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
+              console.log(data)
+            }).finally(
+              () => {
+                loadingStatus.set(false)
+              }
+            )
+            
+          })
+          .catch(error => {
+            console.error('Error searching buildings:', error);
+          });
+      }
+      else{
+        console.log('solar api is not turned on')
+      }
+    }
   
     onMount(async () => {
       // https://lit.dev/docs/components/shadow-dom/
@@ -42,7 +69,7 @@
           return;
         }
         if (place.geometry.viewport) {
-          // map.fitBounds(place.geometry.viewport);
+          bounds = place.geometry.viewport
           map.setCenter(place.geometry.location);
           map.setZoom(zoom);
         } else {
@@ -90,7 +117,7 @@
   />
   <pre class="status">Min kW Potential: {value}</pre>
   {/if}
-    <Button  variant="raised" style='width:100%'>
+    <Button  variant="raised" style='width:100%' on:click = {() => parseData()}>
       <Label style='color:#fff'>Search</Label>
     </Button>
   </div>
