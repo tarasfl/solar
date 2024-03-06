@@ -1,25 +1,30 @@
 <script lang='ts'>
 
-    import {onMount} from 'svelte';
+  import {onMount} from 'svelte';
 
-    // importing materials UI elements
-    import LayoutGrid, { Cell } from '@smui/layout-grid';
+  // importing materials UI elements
+  import LayoutGrid, { Cell } from '@smui/layout-grid';
+  import { loadingStatus } from './solar';
 
-    // importing components
-    import Header from '../lib/Header.svelte';
-    import SidebarMenu from '../lib/SidebarMenu.svelte';
-    import Footer from '../lib/Footer.svelte';
-    import SidebarMenuSmall from '../lib/SidebarMenuSmall.svelte';
+  // importing components
+  import Header from '../lib/Header.svelte';
+  import SidebarMenu from '../lib/SidebarMenu.svelte';
+  import Footer from '../lib/Footer.svelte';
+  import SidebarMenuSmall from '../lib/SidebarMenuSmall.svelte';
+  import Loading from '../lib/Loading.svelte';
 
+  export let isSmallScreen = false;
+  let isLoading = false;
 
-    export let isSmallScreen = false;
-    
     // Function to check screen size on mount and resize
   const checkScreenSize = () => {
     isSmallScreen = window.innerWidth < 768; // Adjust the breakpoint as needed
   };
 
     onMount(() => {
+      loadingStatus.subscribe(value => {
+      isLoading = value;
+    });
       checkScreenSize();
       window.addEventListener('resize', checkScreenSize);
     })
@@ -29,6 +34,9 @@
 <html lang="en">
 <body>
 
+  {#if isLoading}
+    <Loading message = {'Search results may take approximately 2-5 minutes to ensure accurate data retrieval'}/>
+  {:else}
   <!-- Responsive implementeation -->
   <LayoutGrid>
     {#if !isSmallScreen}
@@ -49,8 +57,6 @@
       </Cell>
       {/if}
       
-    
-
     <Cell  spanDevices={{ desktop: 10, tablet: 8, phone:4}}>
       <slot></slot>
     </Cell>
@@ -61,7 +67,8 @@
 
   </LayoutGrid>
   
-        
+  {/if}
+    
 </body>
 </html>
     <style>
@@ -69,10 +76,6 @@
         margin-bottom: 10px;
       }
 
-      /* body, html {
-        height: 100%;
-      } */
- 
 /* Layout grid spacing. */
 :root {
   --mdc-theme-secondary: #fff;

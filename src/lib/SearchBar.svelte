@@ -15,7 +15,7 @@
     import Slider from '@smui/slider';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus} from '../routes/solar'
   
     export let location: google.maps.LatLng | undefined;
   
@@ -29,15 +29,30 @@
   
     let textFieldElement: MdFilledTextField;
 
-    // function fro parsing Solar API data
-    export function parseData(){
-      searchBuildings(bounds)
-  .then(buildings => {
-    getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A')
-  })
-  .catch(error => {
-    console.error('Error searching buildings:', error);
-  });
+    // function for parsing Solar API data
+    export async function parseData(){
+      let data: any;
+      if(checkedSolarSwitch){
+        searchBuildings(bounds)
+          .then(buildings => {
+            loadingStatus.set(true)
+            console.log(value)
+            getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
+              console.log(data)
+            }).finally(
+              () => {
+                loadingStatus.set(false)
+              }
+            )
+            
+          })
+          .catch(error => {
+            console.error('Error searching buildings:', error);
+          });
+      }
+      else{
+        console.log('solar api is not turned on')
+      }
     }
   
     onMount(async () => {

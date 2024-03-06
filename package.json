@@ -14,6 +14,7 @@
 		"@smui-extra/accordion": "^7.0.0-beta.16",
 		"@smui/button": "^7.0.0-beta.16",
 		"@smui/card": "^7.0.0-beta.16",
+		"@smui/circular-progress": "^7.0.0-beta.16",
 		"@smui/common": "^7.0.0-beta.16",
 		"@smui/data-table": "^7.0.0-beta.16",
 		"@smui/drawer": "^7.0.0-beta.16",
