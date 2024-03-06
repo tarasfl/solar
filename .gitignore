@@ -1,0 +1,6 @@
+# Svelte.js
+node_modules/
+public/build/
+.DS_Store
+.env
+vite.config.js.timestamp-*
