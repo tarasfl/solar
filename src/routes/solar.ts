@@ -1,8 +1,10 @@
 
 import { writable } from 'svelte/store';
 
-// cariable for showing fetching status 
+// variable for showing fetching status 
 export const loadingStatus = writable<boolean>(false);
+
+export const solarData = writable()
 
 // capcity per each solar panel
 let PANEL_CAPACITY = 250
