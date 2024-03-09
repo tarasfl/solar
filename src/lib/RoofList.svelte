@@ -29,6 +29,10 @@
     export let data: any[];
     export let location: {lat: number, lng:number} | undefined;
     export let map: google.maps.Map;
+    export let area: number;
+    export let maxPanelCount: number;
+    export let anualSunshine: number;
+    export let c02Savings: number;
     console.log(data)
 
 
@@ -48,6 +52,10 @@
             <Cell><Button on:click = {() => {
                 location = {lat: i.center.latitude, lng: i.center.longitude}
                 map.setCenter(location)
+                area = i.solarPotential.maxArrayAreaMeters2
+                maxPanelCount = i.solarPotential.maxArrayPanelsCount
+                anualSunshine = i.solarPotential.maxSunshineHoursPerYear
+                c02Savings = i.solarPotential.carbonOffsetFactorKgPerMwh
         }}><Label>{i.name}</Label></Button></Cell>
           
         </Row>
@@ -56,16 +64,8 @@
    
     <Pagination slot="paginate">
       <svelte:fragment slot="total">
-        {start + 1}-{end} of {items.length}
+        {start + 1}-{end}/{items.length}
       </svelte:fragment>
-   
-      <IconButton
-        class="material-icons"
-        action="first-page"
-        title="First page"
-        on:click={() => (currentPage = 0)}
-        disabled={currentPage === 0}>first_page</IconButton
-      >
       <IconButton
         class="material-icons"
         action="prev-page"
@@ -80,12 +80,6 @@
         on:click={() => currentPage++}
         disabled={currentPage === lastPage}>chevron_right</IconButton
       >
-      <IconButton
-        class="material-icons"
-        action="last-page"
-        title="Last page"
-        on:click={() => (currentPage = lastPage)}
-        disabled={currentPage === lastPage}>last_page</IconButton
-      >
     </Pagination>
   </DataTable>
+

@@ -28,6 +28,7 @@ export async function searchBuildings(bounds: google.maps.LatLngBounds) {
   
     // Parse the JSON response
     const data = await response.json();
+    console.log(data)
     
     const nodeIds = data.elements.flatMap(element => element.nodes[0]);
     console.log(nodeIds)

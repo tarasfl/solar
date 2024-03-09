@@ -74,7 +74,9 @@
   <LayoutGrid class='container'>
     <Cell span={8} style='height:100%'>
       
-        <div bind:this={mapElement} class = 'map'></div>
+      <div bind:this={mapElement} class = 'map'>
+    </div>
+
     </Cell>
     <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
