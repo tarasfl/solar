@@ -1,11 +1,12 @@
-
  <script lang='ts'>
     /* global google */
   
     import '@material/web/textfield/filled-text-field';
     import type { MdFilledTextField } from '@material/web/textfield/filled-text-field';
     import '@material/web/icon/icon';
-    import { onMount } from 'svelte';
+    import { onMount, } from 'svelte';
+    import {redirect} from '@sveltejs/kit'
+    import { createEventDispatcher } from 'svelte';
     
     // importing smui elements
     import Switch from '@smui/switch';
@@ -15,7 +16,8 @@
     import Slider from '@smui/slider';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData} from '../routes/solar'
+    import { goto } from '$app/navigation';
   
     export let location: google.maps.LatLng | undefined;
   
@@ -26,6 +28,7 @@
     export let zoom = 15;
     export let value = 0;
     export let checkedSolarSwitch = false;
+    const dispatch = createEventDispatcher()
   
     let textFieldElement: MdFilledTextField;
 
@@ -36,12 +39,14 @@
         searchBuildings(bounds)
           .then(buildings => {
             loadingStatus.set(true)
-            console.log(value)
             getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
-              console.log(data)
+              solarData.set(data)
             }).finally(
               () => {
+                
+                dispatch('status', { success: true });
                 loadingStatus.set(false)
+                
               }
             )
             

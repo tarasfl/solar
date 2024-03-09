@@ -1,10 +1,10 @@
 
 import { writable } from 'svelte/store';
 
-// cariable for showing fetching status 
+// variable for showing fetching status 
 export const loadingStatus = writable<boolean>(false);
 
-// capcity per each solar panel
+// capacity per each solar panel
 let PANEL_CAPACITY = 250
 // function for sleep between each request
 function sleep(ms:number) {

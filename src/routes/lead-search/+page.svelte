@@ -9,7 +9,9 @@
     import Paper, { Title, Subtitle, Content } from '@smui/paper';
 
     import { onMount } from 'svelte';
+    import sqlite3 from "sqlite3";
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
+    import { goto } from '$app/navigation';
   
     let location: google.maps.LatLng | undefined;  // location
     let zipCode = "90571"; // zipCode of default Location
@@ -21,8 +23,16 @@
     let geometryLibrary: google.maps.GeometryLibrary;
     let mapsLibrary: google.maps.MapsLibrary;
     let placesLibrary: google.maps.PlacesLibrary;
+
+    function handleStatus(event:any) {
+    // redirect on sucessful data fetching
+   if ( event.detail.success){
+    goto('/campaign-result')
+   };
+  }
   
     onMount(async () => {
+      
       const loader = new Loader({
         apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
         version: 'weekly', // You can specify the version of Google Maps API
@@ -65,12 +75,14 @@
   <LayoutGrid class='container'>
     <Cell span={8} style='height:100%'>
       
-        <div bind:this={mapElement} class = 'map'></div>
+      <div bind:this={mapElement} class = 'map'>
+    </div>
+
     </Cell>
     <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
         <Paper color="secondary" style='height:100%'>
-          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} />
+          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} on:status={handleStatus} />
       </Paper>
             
         {/if}
