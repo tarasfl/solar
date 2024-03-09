@@ -9,6 +9,7 @@
     import Paper, { Title, Subtitle, Content } from '@smui/paper';
 
     import { onMount } from 'svelte';
+    import sqlite3 from "sqlite3";
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
     import { goto } from '$app/navigation';
   
