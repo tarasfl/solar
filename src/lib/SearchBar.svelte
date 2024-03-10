@@ -37,9 +37,10 @@
       let data: any;
       if(checkedSolarSwitch){
         searchBuildings(bounds)
-          .then(buildings => {
+          .then(resp => {
             loadingStatus.set(true)
-            getBuildingInsight(buildings, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
+            console.log(resp)
+            getBuildingInsight(resp, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
               solarData.set(data)
             }).finally(
               () => {

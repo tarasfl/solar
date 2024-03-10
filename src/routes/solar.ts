@@ -3,6 +3,7 @@ import { writable } from 'svelte/store';
 
 // variable for showing fetching status 
 export const loadingStatus = writable<boolean>(false);
+export const solarData = writable()
 
 // capacity per each solar panel
 let PANEL_CAPACITY = 250
@@ -13,12 +14,13 @@ function sleep(ms:number) {
 
 // export function for requesting Solar API data
 export async function getBuildingInsight(
-    elements: any,
+    elementsArray: any[],
     apiKey: string
 ) {
     let data: any;
-    let buildingInsightsData: any[];
-    buildingInsightsData = []
+    let elements = elementsArray[0]
+    let buildingInsightsData: any[] = [];
+    let buildingData: any[] = [];
 
     loadingStatus.set(true);
 
@@ -28,13 +30,17 @@ export async function getBuildingInsight(
         try {
             // fetching data
             data = await makeRequestBuildingInsight(elements[i].latitude, elements[i].longitude, apiKey) 
-            buildingInsightsData.push(data) 
+            if(data){
+              buildingInsightsData.push(data) 
+              buildingData.push(elementsArray[1][i])
+            }
+            
         }catch (error) {
             console.error('Error writing data to list:', error);
         }
 
     };
-    return buildingInsightsData;
+    return [buildingData, buildingInsightsData]
 }
 
 // fetching and parsing data from Solar API
