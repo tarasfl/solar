@@ -2,7 +2,7 @@
 
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
-    import InfoCard from "../../lib/InfoCard.svelte";
+    import InfoCard from "../../lib/PanelBuilldingInsights.svelte";
 
     // smui elements
     import LayoutGrid, {Cell} from "@smui/layout-grid";
@@ -62,7 +62,9 @@
       map = new mapsLibrary.Map(mapElement, {
         center: location,
         zoom: 20,
-        mapTypeId: 'satellite'
+        mapTypeId: 'satellite',
+        disableDefaultUI: true ,
+        zoomControl: true
       });
 
     })
@@ -81,7 +83,7 @@
     {#if geometryLibrary != undefined}
     <InfoCard {map} {geometryLibrary} {solarPotential} {location} />
     {/if}
-    <div id="overlay" style="position: absolute; top: 230px; left: 300px; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
+    <div id="overlay" style="position: absolute; top: 200px; left: 300px; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
         <div class="text-line"><p>Annual sunshine</p> <p>{anualSunshine}</p></div>
         <div class="text-line"><p>Roof Area</p> <p>{area}</p></div>
         <div class="text-line"><p>Max panel count</p> <p>{maxPanelCount}</p></div>

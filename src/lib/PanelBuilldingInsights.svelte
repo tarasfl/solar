@@ -6,6 +6,7 @@
 
     import Slider from '@smui/slider';
     import { Icon } from '@smui/common';
+    import Paper, { Content} from '@smui/paper';
    
     import {normalize} from '../routes/visualize'
 
@@ -71,10 +72,11 @@ return solarPanels
     console.log(solarPanels)
 </script>
 
-<div>
+<Paper color="secondary" style='margin-top:5px'>
+  <Content>
     <div class = 'heading'>
         <div style="display: flex; align-items: center;">
-            <Icon class='material-icons'>solar_power</Icon>
+            <Icon class='material-icons' color='primary'>solar_power</Icon>
             <p style = 'margin-left: 5px;'>Panel count: </p>
          </div>
         <p>{configId}</p>
@@ -85,13 +87,14 @@ min={0}
 max={solarPotential.solarPanelConfigs.length - 1}
 input$aria-label="Continuous slider"
 />
+</Content>
+</Paper>
 
-</div>
 
 <style>
     .heading{
         display: flex;
-        justify-content: space-between;
+        justify-content:center;
         align-items: center;
     }
     div {

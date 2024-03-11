@@ -1,6 +1,6 @@
 <script lang='ts'>
     import Button, { Label } from '@smui/button';
-    import List, {Item, PrimaryText} from '@smui/list';
+    import List, {Item, PrimaryText, SecondaryText, Text} from '@smui/list';
 
   import Pagination from './Pagination.svelte';
 
@@ -21,6 +21,8 @@
     export let c02Savings: number;
     export let solarPotential: SolarPotential;
     
+console.log(elements[0][0].tags['addr:street'] 
+)
 
 let items = data;
 let currentPage = 1;
@@ -39,7 +41,8 @@ function getCurrentPageItems() {
 
 </script>
 
-<List>
+
+<List twoLine>
   {#each getCurrentPageItems() as i}
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
@@ -49,7 +52,29 @@ function getCurrentPageItems() {
     anualSunshine = i.solarPotential.maxSunshineHoursPerYear
     c02Savings = i.solarPotential.carbonOffsetFactorKgPerMwh
     solarPotential = i.solarPotential
-  }}><PrimaryText style = 'color: black;'>{i.name}</PrimaryText></Item>
+  }}>
+  <Text>
+   {#if elements[0][data.indexOf(i)].tags['name'] }
+  <PrimaryText>
+    <strong>{elements[0][data.indexOf(i)].tags['name'] }</strong>
+  </PrimaryText>
+
+  <SecondaryText>
+    {elements[0][data.indexOf(i)].tags['addr:street'] }  {elements[0][data.indexOf(i)].tags['addr:housenumber'] }, {elements[0][data.indexOf(i)].tags['addr:city'] }
+  </SecondaryText>
+  {:else}
+
+  <PrimaryText>
+    <strong>{elements[0][data.indexOf(i)].tags['addr:street'] }  {elements[0][data.indexOf(i)].tags['addr:housenumber'] }</strong>
+  </PrimaryText>
+
+  <SecondaryText>
+    {elements[0][data.indexOf(i)].tags['addr:city'] }
+  </SecondaryText>
+  {/if}
+</Text>
+</Item>
+
   {/each}
 </List>
 
@@ -60,7 +85,9 @@ function getCurrentPageItems() {
 />
 
 
-<Button ><Label>Save</Label></Button>
+<Button  variant="raised" style='width:100%'>
+  <Label style='color:#fff'>Save</Label>
+</Button>
 
 
 
