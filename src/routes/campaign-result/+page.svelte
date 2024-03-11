@@ -9,6 +9,7 @@
 
     import {solarData} from '../solar'
     import  {type SolarPotential} from '../classes'
+    import sqlite3 from "sqlite3";
 
     export let data: any[];
     export let buildings: any[];
@@ -68,6 +69,10 @@
       });
 
     })
+
+    function writeDataToDB(){
+
+    }
 </script>
 
 
