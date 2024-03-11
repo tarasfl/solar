@@ -12,6 +12,7 @@
   //   import Select, {Option} from '@smui/select';
 
     export let data: any[];
+    export let elements: any[];
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
     export let area: number;
@@ -19,8 +20,6 @@
     export let anualSunshine: number;
     export let c02Savings: number;
     export let solarPotential: SolarPotential;
-    console.log(data)
-
     
 
 let items = data;
@@ -42,7 +41,7 @@ function getCurrentPageItems() {
 
 <List>
   {#each getCurrentPageItems() as i}
-  <Item style='margin-bottom: 5px; width:100%' color="primary" on:click = {() => {
+  <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
     area = i.solarPotential.maxArrayAreaMeters2

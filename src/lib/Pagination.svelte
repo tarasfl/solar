@@ -18,14 +18,17 @@
   </script>
   
   <div class="pagination">
-    <IconButton on:click={prevPage} class='material-icons'>Prev</IconButton>
+    <IconButton on:click={prevPage} class='material-icons'>chevron_left</IconButton>
     <span>Page {currentPage} of {totalPages}</span>
-    <button on:click={nextPage}>Next</button>
+    <IconButton on:click={nextPage} class='material-icons'>chevron_right</IconButton>
   </div>
   
   <style>
     .pagination {
       margin-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
     }
   </style>
   

@@ -12,6 +12,7 @@
 
     export let data: any[];
     export let buildings: any[];
+    export let elements: any[];
     export let area: number;
     export let maxPanelCount: number;
     export let anualSunshine: number;
@@ -33,6 +34,7 @@
     solarData.subscribe((value:any[]) => {
         data = value[1];
         buildings = value[0];
+        elements = value;
     })
     // location = {lat: data[0].center.latitude, lng: data[0].center.longitude}
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
@@ -70,25 +72,27 @@
 <h3 class='page-title'>Search Campaign Result</h3>
 <div class='lead-search'>
 
-  {#if geometryLibrary != undefined}
-  <InfoCard {map} {geometryLibrary} {solarPotential} {location} />
-  {/if}
+  
 <LayoutGrid class='container'>
   <Cell span={8} style='height:100%'>
-    
+    <div>
       <div bind:this={mapElement} class = 'map' style="position: relative; overflow:hidden;">
     </div>
+    {#if geometryLibrary != undefined}
+    <InfoCard {map} {geometryLibrary} {solarPotential} {location} />
+    {/if}
     <div id="overlay" style="position: absolute; top: 230px; left: 300px; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
         <div class="text-line"><p>Annual sunshine</p> <p>{anualSunshine}</p></div>
         <div class="text-line"><p>Roof Area</p> <p>{area}</p></div>
         <div class="text-line"><p>Max panel count</p> <p>{maxPanelCount}</p></div>
         <div class="text-line"><p>C02 savings</p> <p>{c02Savings}</p></div>
       </div>
+    </div>
   </Cell>
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList bind:solarPotential bind:location bind:area bind:anualSunshine bind:maxPanelCount bind:c02Savings data = {data} {map}/>
+        <RoofList elements = {elements} bind:solarPotential bind:location bind:area bind:anualSunshine bind:maxPanelCount bind:c02Savings data = {data} {map}/>
     </Paper>
           
       {/if}
@@ -117,5 +121,4 @@
     }
 
   </style>
-
 

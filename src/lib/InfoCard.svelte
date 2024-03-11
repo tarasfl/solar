@@ -3,24 +3,35 @@
     type SolarPanelConfig,
     type SolarPotential
   } from '../routes/classes';
-    export let solarPanels: google.maps.Polygon[] = [];
 
+    import Slider from '@smui/slider';
+    import { Icon } from '@smui/common';
+   
     import {normalize} from '../routes/visualize'
-    import SearchBar from './SearchBar.svelte';
 
     export let geometryLibrary: google.maps.GeometryLibrary;
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;
     export let solarPotential: SolarPotential;
     export let map: google.maps.Map;
+    let configId: number | undefined = solarPotential.solarPanelConfigs.length - 1;
 
+    let panelConfig: SolarPanelConfig | undefined;
+  $: if (solarPotential && configId !== undefined) {
+    panelConfig = solarPotential.solarPanelConfigs[configId];
+  }
+  export let solarPanels: google.maps.Polygon[] = [];
+  $: solarPanels.map((panel, i) =>
+    panel.setMap(panelConfig && i < panelConfig.panelsCount ? map : null),
+  );
 
     console.log(solarPanels)
     
     function showPanels(solarPotential: SolarPotential, solarPanels: google.maps.Polygon[]){
-        console.log(solarPanels)
+
         solarPanels.forEach((panel) => {
-  panel.setMap(map);
+  panel.setMap(null);
 });
+  
         
     const palette = ['E8EAF6', '1A237E'];
 
@@ -54,14 +65,36 @@
       });
     });
 
-    solarPanels.forEach((panel) => {
-  panel.setMap(map);
-});
 return solarPanels    
 }
     $: solarPanels = showPanels(solarPotential, solarPanels)
-
-   
-
     console.log(solarPanels)
 </script>
+
+<div>
+    <div class = 'heading'>
+        <div style="display: flex; align-items: center;">
+            <Icon class='material-icons'>solar_power</Icon>
+            <p style = 'margin-left: 5px;'>Panel count: </p>
+         </div>
+        <p>{configId}</p>
+    </div>
+<Slider
+bind:value = {configId}
+min={0}
+max={solarPotential.solarPanelConfigs.length - 1}
+input$aria-label="Continuous slider"
+/>
+
+</div>
+
+<style>
+    .heading{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    div {
+        height: 50px;
+    }
+</style>
