@@ -80,7 +80,7 @@
 </header>
 <md-divider></md-divider>
 
-<Drawer style='width:auto;' class='nav' variant="modal" fixed={false} bind:open>
+<Drawer style='width:auto; z-index: 9999;' class='nav' variant="modal" fixed={false} bind:open>
   <Content>
     <List >
       {#each options as option, i}

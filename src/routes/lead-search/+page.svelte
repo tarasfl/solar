@@ -59,7 +59,6 @@
       const geocoderResult = geocoderResponse.results[0];  // recieving results
       bounds = geocoderResult.geometry.viewport
       console.log(geocoderResult)
-      console.log(bounds)
       location = geocoderResult.geometry.location; // writing location
   
       map = new mapsLibrary.Map(mapElement, {

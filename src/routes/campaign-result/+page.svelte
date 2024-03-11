@@ -2,13 +2,15 @@
 
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
-    import InfoCard from "../../lib/PanelBuilldingInsights.svelte";
+    import PanelBuilldingInsights from "../../lib/PanelBuilldingInsights.svelte";
 
     // smui elements
     import LayoutGrid, {Cell} from "@smui/layout-grid";
+    import { Icon } from '@smui/common';
 
     import {solarData} from '../solar'
     import  {type SolarPotential} from '../classes'
+    import sqlite3 from "sqlite3";
 
     export let data: any[];
     export let buildings: any[];
@@ -47,6 +49,7 @@
     console.log(data[0].center)
     console.log(buildings)
     onMount(async () => {
+
     const loader = new Loader({
         apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
         version: 'weekly', // You can specify the version of Google Maps API
@@ -66,12 +69,34 @@
         disableDefaultUI: true ,
         zoomControl: true
       });
+      if (mapElement !== null ){
+      const overlay = document.getElementById('overlay');
+      const mapContainer = mapElement.getBoundingClientRect();
+      const top = mapContainer.top + 10; // Adjust as needed
+    const left = mapContainer.left +10 ; // Adjust as needed
+
+    // Set the position of the overlay
+    overlay.style.top = `${top}px`;
+    overlay.style.left = `${left}px`;
+      
+    window.addEventListener('resize', () => {
+  const mapContainer = mapElement.getBoundingClientRect();
+  const top = mapContainer.top + 10; // Adjust as needed
+  const left = mapContainer.left +10 ; // Adjust as needed
+  overlay.style.top = `${top}px`;
+  overlay.style.left = `${left}px`;
+  
+});}
 
     })
+
+    
+
+    function writeDataToDB(){
+
+    }
 </script>
 
-
-<h3 class='page-title'>Search Campaign Result</h3>
 <div class='lead-search'>
 
   
@@ -80,14 +105,22 @@
     <div>
       <div bind:this={mapElement} class = 'map' style="position: relative; overflow:hidden;">
     </div>
-    {#if geometryLibrary != undefined}
-    <InfoCard {map} {geometryLibrary} {solarPotential} {location} />
-    {/if}
-    <div id="overlay" style="position: absolute; top: 200px; left: 300px; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
-        <div class="text-line"><p>Annual sunshine</p> <p>{anualSunshine}</p></div>
-        <div class="text-line"><p>Roof Area</p> <p>{area}</p></div>
-        <div class="text-line"><p>Max panel count</p> <p>{maxPanelCount}</p></div>
-        <div class="text-line"><p>C02 savings</p> <p>{c02Savings}</p></div>
+    <div id="overlay" style="position: absolute; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
+        <div class="text-line">
+          <div class = 'left-side-text'><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>light_mode</Icon><p>Annual sunshine</p> </div>
+          <div class="right-side-text"><p>{anualSunshine.toFixed(2)}</p></div>
+        </div>
+        <div class="text-line">
+          <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>square_foot</Icon><p>Roof Area</p> </div>
+          <div class="right-side-text"><p>{area.toFixed(2)}</p></div>
+        </div>
+        <div class="text-line">
+          <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon><p>Max panel count</p> </div>
+          <div class="right-side-text"><p>{maxPanelCount}</p></div>
+        </div>
+        <div class="text-line">
+          <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>co2</Icon><p>C02 savings</p> </div>
+          <div class="right-side-text"><p>{c02Savings.toFixed(2)}</p></div></div>
       </div>
     </div>
   </Cell>
@@ -99,10 +132,27 @@
           
       {/if}
   </Cell>
+  <Cell>
+    {#if geometryLibrary != undefined}
+    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} {location} />
+    {/if}
+  </Cell>
 </LayoutGrid>
 </div>
 
 <style>
+
+  .left-side-text {
+    width: 70%;
+    display: flex;
+  }
+  .right-side-text {
+    width: 30%;
+    text-align: right;
+    color: rgba(114, 114, 114, 0.9);
+    margin-right: 5px;
+    margin-left: 10px;
+  }
 
     .lead-search,
   .lead-search :global(.container),
@@ -112,14 +162,14 @@
     }
 
     .map {
-      min-height: 420px;
+      min-height: 480px;
       height:100%;
       width: 100%;
     }
 
     .text-line{
         display: flex;
-        justify-content: space-between;
+        justify-content: stretch;
     }
 
   </style>

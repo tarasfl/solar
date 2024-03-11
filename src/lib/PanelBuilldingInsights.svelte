@@ -76,7 +76,7 @@ return solarPanels
   <Content>
     <div class = 'heading'>
         <div style="display: flex; align-items: center;">
-            <Icon class='material-icons' color='primary'>solar_power</Icon>
+            <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon>
             <p style = 'margin-left: 5px;'>Panel count: </p>
          </div>
         <p>{configId}</p>
