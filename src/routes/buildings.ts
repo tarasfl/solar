@@ -50,5 +50,5 @@ export async function searchBuildings(bounds: google.maps.LatLngBounds) {
             longitude: lon
         };
     }));
-    return [nodeCoordinates, data.elements];
+    return [nodeCoordinates, data.elements]
   }

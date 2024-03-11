@@ -41,6 +41,13 @@
             loadingStatus.set(true)
             console.log(resp)
             getBuildingInsight(resp, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
+              let passData: any[] = []
+              data[1].forEach((obj) => {
+                if((obj.solarPotential.maxArrayPanelsCount / (obj.solarPotential.panelCapacityWatts/1000) ) >= value){
+                  passData.push(obj)
+                }
+              })
+              console.log(passData)
               solarData.set(data)
             }).finally(
               () => {

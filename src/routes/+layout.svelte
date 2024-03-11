@@ -79,14 +79,15 @@
 /* Layout grid spacing. */
 :root {
   --mdc-theme-secondary: #fff;
-  --mdc-layout-grid-margin-desktop: 24px;
-  --mdc-layout-grid-gutter-desktop: 24px;
+  --mdc-layout-grid-padding: 0;
+  --mdc-layout-grid-margin-desktop: 5px;
+  --mdc-layout-grid-gutter-desktop: 5px;
   --mdc-layout-grid-column-width-desktop: 72px;
-  --mdc-layout-grid-margin-tablet: 16px;
-  --mdc-layout-grid-gutter-tablet: 16px;
+  --mdc-layout-grid-margin-tablet: 5px;
+  --mdc-layout-grid-gutter-tablet: 5px;
   --mdc-layout-grid-column-width-tablet: 72px;
-  --mdc-layout-grid-margin-phone: 16px;
-  --mdc-layout-grid-gutter-phone: 16px;
+  --mdc-layout-grid-margin-phone: 5px;
+  --mdc-layout-grid-gutter-phone: 5px;
   --mdc-layout-grid-column-width-phone: 72px;
 }
 
