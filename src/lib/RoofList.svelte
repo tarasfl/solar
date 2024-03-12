@@ -7,9 +7,9 @@
   import {
     type SolarPanelConfig,
     type SolarPotential
-  } from '../routes/classes';
+  } from '../routes/clases';
+  // import {writeDataToDB} from '../routes/database'
 
-  //   import Select, {Option} from '@smui/select';
 
     export let data: any[];
     export let elements: any[];
@@ -39,6 +39,19 @@ function getCurrentPageItems() {
   return items.slice(startIndex, endIndex);
 }
 
+</script>
+
+<script lang="ts" context='module'>
+    import sqlite3 from "sqlite3";
+
+// 
+export function writeDataToDB(){
+    // const db = new sqlite3.Database('');
+    // db.run("CREATE TABLE IF NOT EXISTS Campaign (campaign_id INTEGER PRIMARY KEY,zipcode TEXT,status TEXT,leads NUMERIC,kwp NUMERIC,panel_count NUMERIC);");
+    // db.run("CREATE TABLE LeadCampaign (building_id INTEGER PRIMARY KEY, address TEXT, roof_area TEXT, kwp TEXT, data_layer TEXT, prospect_name TEXT, email TEXT, phone TEXT, building TEX);");
+    // db.run("ALTER TABLE LeadCampaign ADD COLUMN IF NOT EXIST campaign_id INTEGER REFERENCES Campaign(campaign_id);")
+    // db.close()
+  }
 </script>
 
 
@@ -85,7 +98,7 @@ function getCurrentPageItems() {
 />
 
 
-<Button  variant="raised" style='width:100%'>
+<Button  variant="raised" style='width:100%' on:click = {() => { writeDataToDB() }}>
   <Label style='color:#fff'>Save</Label>
 </Button>
 

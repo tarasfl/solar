@@ -16,7 +16,7 @@
     import Slider from '@smui/slider';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData, filterValue} from '../routes/solar'
     import { goto } from '$app/navigation';
   
     export let location: google.maps.LatLng | undefined;
@@ -49,6 +49,7 @@
               })
               console.log(passData)
               solarData.set(data)
+              filterValue.set(value)
             }).finally(
               () => {
                 

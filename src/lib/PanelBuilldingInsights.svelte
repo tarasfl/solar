@@ -11,7 +11,6 @@
     import {normalize} from '../routes/visualize'
 
     export let geometryLibrary: google.maps.GeometryLibrary;
-    export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;
     export let solarPotential: SolarPotential;
     export let map: google.maps.Map;
     let configId: number | undefined = solarPotential.solarPanelConfigs.length - 1;

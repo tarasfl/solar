@@ -8,9 +8,8 @@
     import LayoutGrid, {Cell} from "@smui/layout-grid";
     import { Icon } from '@smui/common';
 
-    import {solarData} from '../solar'
-    import  {type SolarPotential} from '../classes'
-    import sqlite3 from "sqlite3";
+    import {solarData, filterValue} from '../solar'
+    import  {type SolarPotential} from '../clases'
 
     export let data: any[];
     export let buildings: any[];
@@ -38,7 +37,6 @@
         buildings = value[0];
         elements = value;
     })
-    // location = {lat: data[0].center.latitude, lng: data[0].center.longitude}
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     area = data[0].solarPotential.maxArrayAreaMeters2
     maxPanelCount = data[0].solarPotential.maxArrayPanelsCount
@@ -89,12 +87,6 @@
 });}
 
     })
-
-    
-
-    function writeDataToDB(){
-
-    }
 </script>
 
 <div class='lead-search'>
@@ -134,7 +126,7 @@
   </Cell>
   <Cell>
     {#if geometryLibrary != undefined}
-    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} {location} />
+    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
     {/if}
   </Cell>
 </LayoutGrid>
