@@ -35,7 +35,10 @@ export async function searchBuildings(bounds: google.maps.LatLngBounds) {
 
     // // Query OSM to get coordinates for each node
     const nodeCoordinates = await Promise.all(nodeIds.map(async nodeId => {
-        const response = await fetch(`https://api.openstreetmap.org/api/0.6/node/${nodeId}`)
+        const response = await fetch(`https://api.openstreetmap.org/api/0.6/node/${nodeId}`, {
+    method: 'GET',
+    mode: 'no-cors'
+});
         const xmlText = await response.text();
 
         // Parse the XML response
