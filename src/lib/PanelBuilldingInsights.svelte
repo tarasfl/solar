@@ -2,7 +2,7 @@
     import {
     type SolarPanelConfig,
     type SolarPotential
-  } from '../routes/clases';
+  } from '../routes/classes';
 
     import Slider from '@smui/slider';
     import { Icon } from '@smui/common';

@@ -31,7 +31,7 @@ export async function getBuildingInsight(
         try {
             // fetching data
             data = await makeRequestBuildingInsight(elements[i].latitude, elements[i].longitude, apiKey) 
-            if(data){
+            if(data && !(buildingInsightsData.map((data => data.name)).includes(data.name))){
               buildingInsightsData.push(data) 
               buildingData.push(elementsArray[1][i])
             }
@@ -42,6 +42,35 @@ export async function getBuildingInsight(
 
     };
     return [buildingData, buildingInsightsData]
+}
+
+export async function getBusinessInsights(    
+  elementsArray: any[],
+  apiKey: string
+  ){
+    let data: any;
+    let buildingInsightsData: any[] = [];
+    let buildingData: any[] = [];
+
+    for (let i = 0; i < elementsArray.length; i++) {
+      await sleep(1000);
+      try {
+          // fetching data
+          data = await makeRequestBuildingInsight(elementsArray[i].geometry.location.lat(), elementsArray[i].geometry.location.lng(), apiKey) 
+          if(data && !(buildingInsightsData.map((data => data.name)).includes(data.name))){
+            buildingInsightsData.push(data) 
+            console.log(data, elementsArray[i])
+            buildingData.push(elementsArray[i])
+            data = undefined
+          }
+          
+      }catch (error) {
+          console.error('Error writing data to list:');
+      }
+
+  };
+  return [buildingData, buildingInsightsData]
+
 }
 
 // fetching and parsing data from Solar API

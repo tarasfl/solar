@@ -10,7 +10,7 @@
     import { Icon } from '@smui/common';
 
     import {solarData, filterValue} from '../solar'
-    import  {type SolarPotential} from '../clases'
+    import  {type SolarPotential} from '../classes'
 
     export let data: any[];
     export let buildings: any[];
@@ -38,6 +38,7 @@
         buildings = value[0];
         elements = value;
     })
+    console.log(elements)
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     area = data[0].solarPotential.maxArrayAreaMeters2
     maxPanelCount = data[0].solarPotential.maxArrayPanelsCount
@@ -88,13 +89,6 @@
 });}
 
     })
-
-    
-
-    function writeDataToDB(){
-
-    }
-    export let leadData; //for display data 
 </script>
 
 <div class='lead-search'>
@@ -127,7 +121,7 @@
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList elements = {elements} bind:solarPotential bind:location bind:area bind:anualSunshine bind:maxPanelCount bind:c02Savings data = {data} {map}/>
+        <RoofList elements = {elements} bind:solarPotential bind:location bind:area bind:anualSunshine bind:maxPanelCount bind:c02Savings solarData = {data} {map}/>
     </Paper>
           
       {/if}

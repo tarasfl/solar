@@ -11,7 +11,7 @@
 
   import {campaigns} from '../routes/solar'
 
-    export let data: any[];
+    export let solarData: any[];
     export let elements: any[];
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
@@ -21,13 +21,20 @@
     export let c02Savings: number;
     export let solarPotential: SolarPotential;
 
-let items = data;
+let items = solarData;
 let currentPage = 1;
 let pageSize = 5; // Number of items per page
+let googleData = false;
 
+console.log(solarData[0])
+if(elements[0][0].scope == "GOOGLE"){
+  googleData = true;
+  console.log("GOOGLE", googleData)
+}
 
 function onPageChange(newPage) {
   currentPage = newPage;
+  getCurrentPageItems()
 }
 
 function getCurrentPageItems() {
@@ -41,7 +48,7 @@ function writeDataToStorage(){
   campaigns.subscribe(value => {
     writeData = value
   })
-  writeData.push(data)
+  writeData.push(solarData)
   campaigns.set(writeData)
 }
 campaigns.subscribe(value => {
@@ -52,7 +59,7 @@ campaigns.subscribe(value => {
 
 
 <List twoLine>
-  {#each getCurrentPageItems() as i}
+  {#each solarData as i}
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
@@ -62,27 +69,40 @@ campaigns.subscribe(value => {
     c02Savings = i.solarPotential.carbonOffsetFactorKgPerMwh
     solarPotential = i.solarPotential
   }}>
+  {#if !googleData}
+    <Text>
+    {#if elements[0][solarData.indexOf(i)].tags['name'] }
+    <PrimaryText>
+      <strong>{elements[0][solarData.indexOf(i)].tags['name'] }</strong>
+    </PrimaryText>
+
+    <SecondaryText>
+      {elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }, {elements[0][solarData.indexOf(i)].tags['addr:city'] }
+    </SecondaryText>
+    {:else}
+
+    <PrimaryText>
+      <strong>{elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }</strong>
+    </PrimaryText>
+
+    <SecondaryText>
+      {elements[0][solarData.indexOf(i)].tags['addr:city'] }
+    </SecondaryText>
+    {/if}
+  </Text>
+  {:else if googleData}
   <Text>
-   {#if elements[0][data.indexOf(i)].tags['name'] }
   <PrimaryText>
-    <strong>{elements[0][data.indexOf(i)].tags['name'] }</strong>
+    <strong>{elements[0][solarData.indexOf(i)].name }</strong>
   </PrimaryText>
 
   <SecondaryText>
-    {elements[0][data.indexOf(i)].tags['addr:street'] }  {elements[0][data.indexOf(i)].tags['addr:housenumber'] }, {elements[0][data.indexOf(i)].tags['addr:city'] }
+    {elements[0][solarData.indexOf(i)].vicinity } 
   </SecondaryText>
-  {:else}
-
-  <PrimaryText>
-    <strong>{elements[0][data.indexOf(i)].tags['addr:street'] }  {elements[0][data.indexOf(i)].tags['addr:housenumber'] }</strong>
-  </PrimaryText>
-
-  <SecondaryText>
-    {elements[0][data.indexOf(i)].tags['addr:city'] }
-  </SecondaryText>
-  {/if}
 </Text>
+{/if}
 </Item>
+
 
   {/each}
 </List>
