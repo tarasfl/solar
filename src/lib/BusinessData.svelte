@@ -8,8 +8,8 @@
     <Panel  variant="unelevated">
     <Header style = 'align-items: center; display:flex'>
         <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>store</Icon>
-        Panel Data:
-        <span slot="description">Yearly energy</span>
+        Business Data:
+        <span slot="description"></span>
     </Header>
     <Content>
       Content
