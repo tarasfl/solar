@@ -9,7 +9,6 @@
     import Paper, { Title, Subtitle, Content } from '@smui/paper';
 
     import { onMount } from 'svelte';
-    import sqlite3 from "sqlite3";
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
     import { goto } from '$app/navigation';
   
@@ -26,13 +25,12 @@
 
     function handleStatus(event:any) {
     // redirect on sucessful data fetching
-   if ( event.detail.success){
-    goto('/campaign-result')
-   };
-  }
-  
+      if (event.detail.success){
+        goto('/campaign-result')
+      };
+    }
+
     onMount(async () => {
-      
       const loader = new Loader({
         apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
         version: 'weekly', // You can specify the version of Google Maps API
@@ -47,8 +45,6 @@
       geometryLibrary = await libraries.geometry;
       mapsLibrary = await libraries.maps;
       placesLibrary = await libraries.places;
-
-      
 
        // Get the address information for the default location.
       const geocoder = new google.maps.Geocoder();

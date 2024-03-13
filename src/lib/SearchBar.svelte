@@ -16,7 +16,7 @@
     import Slider from '@smui/slider';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData, filterValue} from '../routes/solar'
     import { goto } from '$app/navigation';
   
     export let location: google.maps.LatLng | undefined;
@@ -31,9 +31,11 @@
     const dispatch = createEventDispatcher()
   
     let textFieldElement: MdFilledTextField;
+    let service = new google.maps.places.PlacesService(map);
 
     // function for parsing Solar API data
     export async function parseData(){
+      let request  = {bounds: bounds}
       let data: any;
       if(checkedSolarSwitch){
         searchBuildings(bounds)
@@ -49,6 +51,7 @@
               })
               console.log(passData)
               solarData.set(data)
+              filterValue.set(value)
             }).finally(
               () => {
                 

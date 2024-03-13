@@ -1,6 +1,6 @@
 <script lang='ts'>
-    import Button, { Label } from '@smui/button';
-    import List, {Item, PrimaryText, SecondaryText, Text} from '@smui/list';
+  import Button, { Label } from '@smui/button';
+  import List, {Item, PrimaryText, SecondaryText, Text} from '@smui/list';
 
   import Pagination from './Pagination.svelte';
 
@@ -9,7 +9,7 @@
     type SolarPotential
   } from '../routes/classes';
 
-  //   import Select, {Option} from '@smui/select';
+  import {campaigns} from '../routes/solar'
 
     export let data: any[];
     export let elements: any[];
@@ -20,9 +20,6 @@
     export let anualSunshine: number;
     export let c02Savings: number;
     export let solarPotential: SolarPotential;
-    
-console.log(elements[0][0].tags['addr:street'] 
-)
 
 let items = data;
 let currentPage = 1;
@@ -39,7 +36,19 @@ function getCurrentPageItems() {
   return items.slice(startIndex, endIndex);
 }
 
+function writeDataToStorage(){
+  let writeData = []
+  campaigns.subscribe(value => {
+    writeData = value
+  })
+  writeData.push(data)
+  campaigns.set(writeData)
+}
+campaigns.subscribe(value => {
+    console.log(value)
+  })
 </script>
+
 
 
 <List twoLine>
@@ -85,7 +94,7 @@ function getCurrentPageItems() {
 />
 
 
-<Button  variant="raised" style='width:100%'>
+<Button  variant="raised" style='width:100%' on:click = {() => { writeDataToStorage() }}>
   <Label style='color:#fff'>Save</Label>
 </Button>
 

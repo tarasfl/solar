@@ -2,16 +2,16 @@
     import {
     type SolarPanelConfig,
     type SolarPotential
-  } from '../routes/classes';
+  } from '../routes/clases';
 
     import Slider from '@smui/slider';
     import { Icon } from '@smui/common';
-    import Paper, { Content} from '@smui/paper';
+    // import Paper, { Content} from '@smui/paper';
+    import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
    
     import {normalize} from '../routes/visualize'
 
     export let geometryLibrary: google.maps.GeometryLibrary;
-    export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;
     export let solarPotential: SolarPotential;
     export let map: google.maps.Map;
     let configId: number | undefined = solarPotential.solarPanelConfigs.length - 1;
@@ -72,7 +72,13 @@ return solarPanels
     console.log(solarPanels)
 </script>
 
-<Paper color="secondary" style='margin-top:5px'>
+<Accordion color="secondary" style='margin-top:5px'>
+  <Panel  variant="unelevated">
+  <Header style = 'align-items: center; display:flex'>
+      <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon>
+      Panel Data:
+      <span slot="description">Yearly energy</span>
+  </Header>
   <Content>
     <div class = 'heading'>
         <div style="display: flex; align-items: center;">
@@ -82,19 +88,21 @@ return solarPanels
         <p>{configId}</p>
     </div>
 <Slider
+style = 'width: 100%, margin:0'
 bind:value = {configId}
 min={0}
 max={solarPotential.solarPanelConfigs.length - 1}
 input$aria-label="Continuous slider"
 />
 </Content>
-</Paper>
+</Panel>
+</Accordion>
 
 
 <style>
     .heading{
         display: flex;
-        justify-content:center;
+        justify-content:start;
         align-items: center;
     }
     div {

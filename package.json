@@ -46,9 +46,9 @@
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@smui/select": "^7.0.0-beta.16",
 		"@smui/top-app-bar": "^7.0.0-beta.16",
+		"better-sqlite3": "^9.4.3",
 		"chart.js": "^4.4.1",
 		"material-components-web": "^14.0.0",
-		"rollup": "^4.12.0",
-		"sqlite3": "^5.1.7"
+		"rollup": "^4.12.0"
 	}
 }

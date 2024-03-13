@@ -3,14 +3,14 @@
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
     import PanelBuilldingInsights from "../../lib/PanelBuilldingInsights.svelte";
+    import BusinessData from "../../lib/BusinessData.svelte";
 
     // smui elements
     import LayoutGrid, {Cell} from "@smui/layout-grid";
     import { Icon } from '@smui/common';
 
-    import {solarData} from '../solar'
-    import  {type SolarPotential} from '../classes'
-    import sqlite3 from "sqlite3";
+    import {solarData, filterValue} from '../solar'
+    import  {type SolarPotential} from '../clases'
 
     export let data: any[];
     export let buildings: any[];
@@ -38,7 +38,6 @@
         buildings = value[0];
         elements = value;
     })
-    // location = {lat: data[0].center.latitude, lng: data[0].center.longitude}
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     area = data[0].solarPotential.maxArrayAreaMeters2
     maxPanelCount = data[0].solarPotential.maxArrayPanelsCount
@@ -95,6 +94,7 @@
     function writeDataToDB(){
 
     }
+    export let leadData; //for display data 
 </script>
 
 <div class='lead-search'>
@@ -132,10 +132,14 @@
           
       {/if}
   </Cell>
-  <Cell>
+  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
     {#if geometryLibrary != undefined}
-    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} {location} />
+    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
     {/if}
+  </Cell>
+
+  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
+    <BusinessData />
   </Cell>
 </LayoutGrid>
 </div>
