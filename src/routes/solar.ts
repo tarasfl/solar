@@ -3,8 +3,9 @@ import { writable } from 'svelte/store';
 
 // variable for showing fetching status 
 export const loadingStatus = writable<boolean>(false);
-export const solarData = writable()
-export const filterValue = writable()
+export const solarData = writable();
+export const filterValue = writable();
+export const campaigns = writable([]);
 
 // capacity per each solar panel
 // function for sleep between each request

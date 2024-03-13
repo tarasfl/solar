@@ -48,8 +48,6 @@
       mapsLibrary = await libraries.maps;
       placesLibrary = await libraries.places;
 
-      
-
        // Get the address information for the default location.
       const geocoder = new google.maps.Geocoder();
       const geocoderResponse = await geocoder.geocode({

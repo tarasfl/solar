@@ -15,7 +15,7 @@
     import Button, { Label } from '@smui/button';
     import Slider from '@smui/slider';
  
-    import { searchBuildings} from '../routes/buildings'
+    import { searchBuildings, fetchBusinessesWithinBounds} from '../routes/buildings'
     import {getBuildingInsight, loadingStatus, solarData, filterValue} from '../routes/solar'
     import { goto } from '$app/navigation';
   
@@ -36,6 +36,9 @@
     export async function parseData(){
       let data: any;
       if(checkedSolarSwitch){
+        fetchBusinessesWithinBounds(bounds, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((businesses) => {
+    console.log(businesses);
+  })
         searchBuildings(bounds)
           .then(resp => {
             loadingStatus.set(true)

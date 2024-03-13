@@ -86,7 +86,7 @@
       {#each options as option, i}
       {#if option.subMenu}
         <Accordion>
-          <Panel>
+          <Panel  variant="unelevated">
             <Header>
               <Graphic class="material-icons" >{option.icon}</Graphic>
               <SecondaryText><big>{option.title}</big></SecondaryText>
@@ -114,20 +114,6 @@
   </Content>
 </Drawer>
 
-   
-   <!-- <Drawer variant="modal" fixed={false} bind:open>
-      <Content>
-        <List twoLine singleSelection >
-          {#each menu_elements as element }
-              <Item href={element.href} on:click={() => (open = false)} class="item">
-                <PrimaryText><Graphic class='material-icons'>{element.icon}</Graphic></PrimaryText>
-                <SecondaryText>{element.text}</SecondaryText>
-
-              </Item>
-          {/each}
-        </List>
-        </Content>
-    </Drawer> -->
   
   <style>
      * :global(.item) {

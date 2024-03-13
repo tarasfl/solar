@@ -3,6 +3,7 @@
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
     import PanelBuilldingInsights from "../../lib/PanelBuilldingInsights.svelte";
+    import BusinessData from "../../lib/BusinessData.svelte";
 
     // smui elements
     import LayoutGrid, {Cell} from "@smui/layout-grid";
@@ -124,10 +125,14 @@
           
       {/if}
   </Cell>
-  <Cell>
+  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
     {#if geometryLibrary != undefined}
     <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
     {/if}
+  </Cell>
+
+  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
+    <BusinessData />
   </Cell>
 </LayoutGrid>
 </div>

@@ -56,7 +56,7 @@
       {#each options as option, i}
       {#if option.subMenu}
         <Accordion>
-          <Panel>
+          <Panel  variant="unelevated">
             <Header>
               <Graphic class="material-icons" >{option.icon}</Graphic>
               <SecondaryText><big>{option.title}</big></SecondaryText>

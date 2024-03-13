@@ -1,15 +1,15 @@
 <script lang='ts'>
-    import Button, { Label } from '@smui/button';
-    import List, {Item, PrimaryText, SecondaryText, Text} from '@smui/list';
+  import Button, { Label } from '@smui/button';
+  import List, {Item, PrimaryText, SecondaryText, Text} from '@smui/list';
 
   import Pagination from './Pagination.svelte';
 
   import {
     type SolarPanelConfig,
     type SolarPotential
-  } from '../routes/clases';
-  // import {writeDataToDB} from '../routes/database'
+  } from '../routes/classes';
 
+  import {campaigns} from '../routes/solar'
 
     export let data: any[];
     export let elements: any[];
@@ -20,9 +20,6 @@
     export let anualSunshine: number;
     export let c02Savings: number;
     export let solarPotential: SolarPotential;
-    
-console.log(elements[0][0].tags['addr:street'] 
-)
 
 let items = data;
 let currentPage = 1;
@@ -39,20 +36,19 @@ function getCurrentPageItems() {
   return items.slice(startIndex, endIndex);
 }
 
+function writeDataToStorage(){
+  let writeData = []
+  campaigns.subscribe(value => {
+    writeData = value
+  })
+  writeData.push(data)
+  campaigns.set(writeData)
+}
+campaigns.subscribe(value => {
+    console.log(value)
+  })
 </script>
 
-<script lang="ts" context='module'>
-    import sqlite3 from "sqlite3";
-
-// 
-export function writeDataToDB(){
-    // const db = new sqlite3.Database('');
-    // db.run("CREATE TABLE IF NOT EXISTS Campaign (campaign_id INTEGER PRIMARY KEY,zipcode TEXT,status TEXT,leads NUMERIC,kwp NUMERIC,panel_count NUMERIC);");
-    // db.run("CREATE TABLE LeadCampaign (building_id INTEGER PRIMARY KEY, address TEXT, roof_area TEXT, kwp TEXT, data_layer TEXT, prospect_name TEXT, email TEXT, phone TEXT, building TEX);");
-    // db.run("ALTER TABLE LeadCampaign ADD COLUMN IF NOT EXIST campaign_id INTEGER REFERENCES Campaign(campaign_id);")
-    // db.close()
-  }
-</script>
 
 
 <List twoLine>
@@ -98,7 +94,7 @@ export function writeDataToDB(){
 />
 
 
-<Button  variant="raised" style='width:100%' on:click = {() => { writeDataToDB() }}>
+<Button  variant="raised" style='width:100%' on:click = {() => { writeDataToStorage() }}>
   <Label style='color:#fff'>Save</Label>
 </Button>
 
