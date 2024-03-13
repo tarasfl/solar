@@ -88,6 +88,13 @@
 });}
 
     })
+
+    
+
+    function writeDataToDB(){
+
+    }
+    export let leadData; //for display data 
 </script>
 
 <div class='lead-search'>

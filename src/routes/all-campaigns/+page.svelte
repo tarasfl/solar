@@ -10,7 +10,7 @@
     } from '@smui/data-table';
     import Select, { Option } from '@smui/select';
     import IconButton from '@smui/icon-button';
-   
+
     type Todo = {
       zipCode: number;
       date: string;
@@ -42,7 +42,7 @@
     $: if (currentPage > lastPage) {
       currentPage = lastPage;
     }
-
+    export let campaignData; //for display data 
   </script>
 <div>
 <Paper color='secondary' style='height:500px'>
