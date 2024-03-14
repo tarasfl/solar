@@ -15,10 +15,6 @@
     export let elements: any[];
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
-    export let area: number;
-    export let maxPanelCount: number;
-    export let anualSunshine: number;
-    export let c02Savings: number;
     export let solarPotential: SolarPotential;
 
 let items = solarData;
@@ -63,10 +59,6 @@ campaigns.subscribe(value => {
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
-    area = i.solarPotential.maxArrayAreaMeters2
-    maxPanelCount = i.solarPotential.maxArrayPanelsCount
-    anualSunshine = i.solarPotential.maxSunshineHoursPerYear
-    c02Savings = i.solarPotential.carbonOffsetFactorKgPerMwh
     solarPotential = i.solarPotential
   }}>
   {#if !googleData}

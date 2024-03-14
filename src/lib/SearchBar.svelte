@@ -18,7 +18,7 @@
     import '@material/web/icon/icon';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData, filterValue, getBusinessInsights} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData, getBusinessInsights, filterValue} from '../routes/solar'
     import { goto } from '$app/navigation';
 
     const GOOGLE_API_KEY = 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A'
@@ -42,26 +42,16 @@
     export async function parseData(){
       let data: any;
       if(checkedSolarSwitch && checkedSearchAllBuildings){
+        filterValue.set(value)
         searchBuildings(bounds)
           .then(resp => {
             loadingStatus.set(true)
-            console.log(resp)
-            getBuildingInsight(resp, GOOGLE_API_KEY).then((data) => {
-              let passData: any[] = []
-              data[1].forEach((obj) => {
-                if((obj.solarPotential.maxArrayPanelsCount / (obj.solarPotential.panelCapacityWatts/1000) ) >= value){
-                  passData.push(obj)
-                }
-              })
-              console.log(passData)
+            getBuildingInsight(resp, GOOGLE_API_KEY, value).then((data) => {
               solarData.set(data)
-              filterValue.set(value)
             }).finally(
               () => {
-                
                 dispatch('status', { success: true });
                 loadingStatus.set(false)
-                
               }
             )
             
@@ -97,19 +87,11 @@
     console.log('no more results')
   }
   if (fetchedData.length >= 60 ){
-      getBusinessInsights(fetchedData, GOOGLE_API_KEY).then((data) => {
-              let passData: any[] = []
-              data[1].forEach((obj) => {
-                if((obj.solarPotential.maxArrayPanelsCount / (obj.solarPotential.panelCapacityWatts/1000) ) >= value){
-                  passData.push(obj)
-                }
-              })
-              console.log(passData)
+      getBusinessInsights(fetchedData, GOOGLE_API_KEY, value).then((data) => {
               solarData.set(data)
-              filterValue.set(value)
             }).finally(
               () => {
-                
+                fetchedData = []
                 dispatch('status', { success: true });
                 loadingStatus.set(false)
                 
@@ -119,7 +101,6 @@
 }
   
     onMount(async () => {
-      // https://lit.dev/docs/components/shadow-dom/
       await textFieldElement.updateComplete;
       const inputElement = textFieldElement.renderRoot.querySelector('input') as HTMLInputElement;
       const autocomplete = new placesLibrary.Autocomplete(inputElement, {

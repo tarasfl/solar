@@ -15,6 +15,8 @@
     export let solarPotential: SolarPotential;
     export let map: google.maps.Map;
     let configId: number | undefined = solarPotential.solarPanelConfigs.length - 1;
+    // $: configId = configId = solarPotential.solarPanelConfigs.length - 1;
+    
 
     let panelConfig: SolarPanelConfig | undefined;
   $: if (solarPotential && configId !== undefined) {

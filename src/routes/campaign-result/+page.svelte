@@ -15,10 +15,6 @@
     export let data: any[];
     export let buildings: any[];
     export let elements: any[];
-    export let area: number;
-    export let maxPanelCount: number;
-    export let anualSunshine: number;
-    export let c02Savings: number;
     export let solarPotential: SolarPotential;
 
     import { onMount } from 'svelte';
@@ -40,10 +36,6 @@
     })
     console.log(elements)
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
-    area = data[0].solarPotential.maxArrayAreaMeters2
-    maxPanelCount = data[0].solarPotential.maxArrayPanelsCount
-    anualSunshine = data[0].solarPotential.maxSunshineHoursPerYear
-    c02Savings = data[0].solarPotential.carbonOffsetFactorKgPerMwh
     solarPotential = data[0].solarPotential;
 
     console.log(data[0].center)
@@ -102,33 +94,33 @@
     <div id="overlay" style="position: absolute; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
         <div class="text-line">
           <div class = 'left-side-text'><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>light_mode</Icon><p>Annual sunshine</p> </div>
-          <div class="right-side-text"><p>{anualSunshine.toFixed(2)}</p></div>
+          <div class="right-side-text"><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div>
         </div>
         <div class="text-line">
           <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>square_foot</Icon><p>Roof Area</p> </div>
-          <div class="right-side-text"><p>{area.toFixed(2)}</p></div>
+          <div class="right-side-text"><p>{solarPotential.maxArrayAreaMeters2.toFixed(2)}</p></div>
         </div>
         <div class="text-line">
           <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon><p>Max panel count</p> </div>
-          <div class="right-side-text"><p>{maxPanelCount}</p></div>
+          <div class="right-side-text"><p>{solarPotential.maxArrayPanelsCount}</p></div>
         </div>
         <div class="text-line">
           <div class="left-side-text"><Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>co2</Icon><p>C02 savings</p> </div>
-          <div class="right-side-text"><p>{c02Savings.toFixed(2)}</p></div></div>
+          <div class="right-side-text"><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div></div>
       </div>
     </div>
   </Cell>
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList elements = {elements} bind:solarPotential bind:location bind:area bind:anualSunshine bind:maxPanelCount bind:c02Savings solarData = {data} {map}/>
+        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map}/>
     </Paper>
           
       {/if}
   </Cell>
   <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
     {#if geometryLibrary != undefined}
-    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
+    <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential}/>
     {/if}
   </Cell>
 
