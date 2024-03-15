@@ -42,7 +42,7 @@
     $: if (currentPage > lastPage) {
       currentPage = lastPage;
     }
-    export let campaignData; //for display data 
+    // export let campaignData; //for display data 
   </script>
 <div>
 <Paper color='secondary' style='height:500px'>
