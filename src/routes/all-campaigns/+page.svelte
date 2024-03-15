@@ -89,11 +89,9 @@
           <svelte:fragment slot="total">
             {start + 1}-{end} of {items.length}
           </svelte:fragment>
-       
           <IconButton
             class="material-icons"
             action="first-page"
-            disabled={currentPage === 0}
             title="First page"
             on:click={() => (currentPage = 0)}
             >first_page</IconButton
@@ -102,21 +100,17 @@
             class="material-icons"
             action="prev-page"
             title="Prev page"
-            on:click={() => currentPage--} 
-            disabled={currentPage === 0}>chevron_left</IconButton
+            on:click={() => currentPage--}>chevron_left</IconButton
           >
           <IconButton
             class="material-icons"
             action="next-page"
             title="Next page"
-            on:click={() => currentPage++}
-            disabled={currentPage === lastPage}>chevron_right</IconButton
+            on:click={() => currentPage++}>chevron_right</IconButton
           >
           <IconButton
             class="material-icons"
             action="last-page"
-            title="Last page"
-            disabled={currentPage === lastPage}
             on:click={() => (currentPage = lastPage)}
             >last_page</IconButton
           >
