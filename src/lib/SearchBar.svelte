@@ -1,9 +1,6 @@
  <script lang='ts'>
     /* global google */
-  
-    import '@material/web/textfield/filled-text-field';
-    import type { MdFilledTextField } from '@material/web/textfield/filled-text-field';
-    import '@material/web/icon/icon';
+
     import { onMount, } from 'svelte';
     import {redirect} from '@sveltejs/kit'
     import { createEventDispatcher } from 'svelte';
@@ -14,10 +11,17 @@
     import Segements from './Segements.svelte';
     import Button, { Label } from '@smui/button';
     import Slider from '@smui/slider';
+    import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
+    import { Icon } from '@smui/common';
+    import '@material/web/textfield/filled-text-field';
+    import type { MdFilledTextField } from '@material/web/textfield/filled-text-field';
+    import '@material/web/icon/icon';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData, filterValue} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData, getBusinessInsights, filterValue} from '../routes/solar'
     import { goto } from '$app/navigation';
+
+    const GOOGLE_API_KEY = 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A'
   
     export let location: google.maps.LatLng | undefined;
   
@@ -27,7 +31,8 @@
     export let initialValue = '';
     export let zoom = 15;
     export let value = 0;
-    export let checkedSolarSwitch = false;
+    let checkedSolarSwitch = false;
+    let checkedSearchAllBuildings = false;
     const dispatch = createEventDispatcher()
   
     let textFieldElement: MdFilledTextField;
@@ -35,29 +40,18 @@
 
     // function for parsing Solar API data
     export async function parseData(){
-      let request  = {bounds: bounds}
       let data: any;
-      if(checkedSolarSwitch){
+      if(checkedSolarSwitch && checkedSearchAllBuildings){
+        filterValue.set(value)
         searchBuildings(bounds)
           .then(resp => {
             loadingStatus.set(true)
-            console.log(resp)
-            getBuildingInsight(resp, 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A').then((data) => {
-              let passData: any[] = []
-              data[1].forEach((obj) => {
-                if((obj.solarPotential.maxArrayPanelsCount / (obj.solarPotential.panelCapacityWatts/1000) ) >= value){
-                  passData.push(obj)
-                }
-              })
-              console.log(passData)
+            getBuildingInsight(resp, GOOGLE_API_KEY, value).then((data) => {
               solarData.set(data)
-              filterValue.set(value)
             }).finally(
               () => {
-                
                 dispatch('status', { success: true });
                 loadingStatus.set(false)
-                
               }
             )
             
@@ -66,13 +60,41 @@
             console.error('Error searching buildings:', error);
           });
       }
+      else if (checkedSolarSwitch && !checkedSearchAllBuildings){
+        let request  = {bounds: bounds}
+        loadingStatus.set(true);
+        service.nearbySearch(request, callback);
+      }
       else{
         console.log('solar api is not turned on')
       }
     }
+
+    let fetchedData:any[] = []
+    // function for callback nearby search
+    function callback(results, status, pagination) {
+  if (status == google.maps.places.PlacesServiceStatus.OK) {
+    fetchedData = fetchedData.concat(results)
+    // Check if there are more results
+    if (pagination.hasNextPage) {
+      pagination.nextPage();
+    }
+    else {
+      getBusinessInsights(fetchedData, GOOGLE_API_KEY, value).then((data) => {
+              solarData.set(data)
+            }).finally(
+              () => {
+                fetchedData = []
+                dispatch('status', { success: true });
+                loadingStatus.set(false)
+                
+              }
+            )
+  }
+  } 
+}
   
     onMount(async () => {
-      // https://lit.dev/docs/components/shadow-dom/
       await textFieldElement.updateComplete;
       const inputElement = textFieldElement.renderRoot.querySelector('input') as HTMLInputElement;
       const autocomplete = new placesLibrary.Autocomplete(inputElement, {
@@ -132,6 +154,21 @@
     input$aria-label="Continuous slider"
   />
   <pre class="status">Min kW Potential: {value}</pre>
+
+  <Accordion style='margin-top:5px;'>
+    <Panel  variant="unelevated">
+    <Header style = 'align-items: center; display:flex'>
+      <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>settings</Icon>
+        Advanced Options
+    </Header>
+    <Content>
+      <FormField style='width:100%'>
+        <Switch icons={false} bind:checked={checkedSearchAllBuildings}/>
+        <span slot="label">Search all buildings</span>
+      </FormField>
+  </Content>
+  </Panel>
+  </Accordion>
   {/if}
     <Button  variant="raised" style='width:100%' on:click = {() => parseData()}>
       <Label style='color:#fff'>Search</Label>

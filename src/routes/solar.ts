@@ -16,7 +16,8 @@ function sleep(ms:number) {
 // export function for requesting Solar API data
 export async function getBuildingInsight(
     elementsArray: any[],
-    apiKey: string
+    apiKey: string,
+    minKwp: number
 ) {
     let data: any;
     let elements = elementsArray[0]
@@ -31,7 +32,7 @@ export async function getBuildingInsight(
         try {
             // fetching data
             data = await makeRequestBuildingInsight(elements[i].latitude, elements[i].longitude, apiKey) 
-            if(data){
+            if(data && !(buildingInsightsData.map((data => data.name)).includes(data.name)) && (data.solarPotential.maxArrayPanelsCount / (data.solarPotential.panelCapacityWatts/1000) ) >= minKwp ){
               buildingInsightsData.push(data) 
               buildingData.push(elementsArray[1][i])
             }
@@ -42,6 +43,37 @@ export async function getBuildingInsight(
 
     };
     return [buildingData, buildingInsightsData]
+}
+
+export async function getBusinessInsights(    
+  elementsArray: any[],
+  apiKey: string,
+  minKwp: number
+  ){
+    let data: any;
+    let buildingInsightsData: any[] = [];
+    let buildingData: any[] = [];
+    let totalData: any[] = []
+
+    for (let i = 0; i < elementsArray.length; i++) {
+      await sleep(1000);
+      try {
+          // fetching data
+          data = await makeRequestBuildingInsight(elementsArray[i].geometry.location.lat(), elementsArray[i].geometry.location.lng(), apiKey) 
+          if(data && !(buildingInsightsData.map((data => data.name)).includes(data.name)) && (data.solarPotential.maxArrayPanelsCount / (data.solarPotential.panelCapacityWatts/1000) ) >= minKwp ){
+            buildingInsightsData.push(data) 
+            buildingData.push(elementsArray[i])
+            totalData.push({solar: data, buildingData: elementsArray[i]})
+            data = undefined
+          }
+          
+      }catch (error) {
+          console.error('Error writing data to list:');
+      }
+
+  };
+  return [buildingData, buildingInsightsData]
+
 }
 
 // fetching and parsing data from Solar API

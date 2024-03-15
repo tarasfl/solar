@@ -23,7 +23,7 @@ export function getLeadCampaign(): LeadCampaign[]{
 }
 
 
-export function insertDataCampaign(data) {
+export function insertDataCampaign(data): number {
     const db = new Database('./data/database.db')
 
     try {
@@ -40,6 +40,8 @@ export function insertDataCampaign(data) {
             data.kwp,
             data.panel_count
         );
+        const lastInsertId = result.lastInsertRowid()
+        console.log(`A row has been inserted with ID ${lastInsertId}`);
 
         db.close();
 

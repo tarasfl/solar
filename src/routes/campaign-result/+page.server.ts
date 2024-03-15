@@ -1,30 +1,36 @@
-import {getLeadCampaign} from '../../lib/server/db'
-import { insertDataLeadCampaign } from '../../lib/server/db';
+// import {getLeadCampaign} from '../../lib/server/db'
+// import { insertDataCampaign, insertDataLeadCampaign } from '../../lib/server/db';
 
-//change
-const dataToInsert = {
-    address: '123 Main St',
-    roof_area: '100 sqft',
-    kwp: '5',
-    data_layer: 'Layer 1',
-    prospect_name: 'John Doeee',
-    email: 'john@example.com',
-    phone: '123-456-7890',
-    campaign_id: 1
-};
+// //change
+// const dataToInsert = {
+//     zipcode: 9000,
+//     status: 'ggg',
+//     leads: 99,
+//     kwp: 20000,
+//     panel_count: 88
+// };
 
-// try {
-//     const insertResult = insertDataLeadCampaign(dataToInsert);
-//     console.log('Data inserted successfully:', insertResult);
-// } catch (error) {
-//     console.error('Failed to insert data:', error);
+// //(zipcode, status, leads, kwp, panel_count)
+
+// function loadDataAndGetId(){
+//     let insertResult;
+//     try {
+//         insertResult = insertDataCampaign(dataToInsert);
+//         console.log('Data inserted successfully:', insertResult);
+//     } catch (error) {
+//         console.error('Failed to insert data:', error);
+//     }
+//     return insertResult.lastInsertRowid()
 // }
 
-export const load = (() => {
-    const leadCampaign = getLeadCampaign()
 
-    return{
-        leadCampaign
-    }
-})
+// export const load = (() => {
+//     const leadCampaign = getLeadCampaign()
+//     const campaign_id = loadDataAndGetId()
+
+//     return{
+//         leadCampaign, 
+//         campaign_id
+//     }
+// })
 

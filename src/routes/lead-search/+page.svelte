@@ -13,7 +13,7 @@
     import { goto } from '$app/navigation';
   
     let location: google.maps.LatLng | undefined;  // location
-    let zipCode = "90571"; // zipCode of default Location
+    let zipCode = 'Friedenstraße 11, Schwaig bei Nürnberg'; // zipCode of default Location 'Friedenstraße 11, Schwaig bei Nürnberg' 90571
     let map: google.maps.Map; // elemenent for map initialising
     let mapElement: HTMLElement; // HTML element for visualisation
     let bounds: google.maps.LatLngBounds;
@@ -53,7 +53,7 @@
       });
   
       const geocoderResult = geocoderResponse.results[0];  // recieving results
-      bounds = geocoderResult.geometry.viewport
+      bounds = geocoderResult.geometry.bounds
       console.log(geocoderResult)
       location = geocoderResult.geometry.location; // writing location
   
