@@ -15,8 +15,9 @@
     export let solarPotential: SolarPotential;
     export let map: google.maps.Map;
     let configId: number | undefined = solarPotential.solarPanelConfigs.length - 1;
-    // $: configId = configId = solarPotential.solarPanelConfigs.length - 1;
-    
+    $: if(configId >solarPotential.solarPanelConfigs.length - 1){
+      configId = solarPotential.solarPanelConfigs.length - 1;
+    }
 
     let panelConfig: SolarPanelConfig | undefined;
   $: if (solarPotential && configId !== undefined) {
@@ -27,7 +28,6 @@
     panel.setMap(panelConfig && i < panelConfig.panelsCount ? map : null),
   );
 
-    console.log(solarPanels)
     
     function showPanels(solarPotential: SolarPotential, solarPanels: google.maps.Polygon[]){
 
@@ -71,7 +71,6 @@
 return solarPanels    
 }
     $: solarPanels = showPanels(solarPotential, solarPanels)
-    console.log(solarPanels)
 </script>
 
 <Accordion color="secondary" style='margin-top:5px'>
@@ -79,7 +78,7 @@ return solarPanels
   <Header style = 'align-items: center; display:flex'>
       <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon>
       Panel Data:
-      <span slot="description">Yearly energy</span>
+      <span slot="description">Energy {(panelConfig.panelsCount / (solarPotential.panelCapacityWatts/1000) )}kW</span>
   </Header>
   <Content>
     <div class = 'heading'>
@@ -87,7 +86,7 @@ return solarPanels
             <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>solar_power</Icon>
             <p style = 'margin-left: 5px;'>Panel count: </p>
          </div>
-        <p>{configId}</p>
+        <p>{panelConfig.panelsCount}</p>
     </div>
 <Slider
 style = 'width: 100%, margin:0'

@@ -123,10 +123,6 @@
     <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential}/>
     {/if}
   </Cell>
-
-  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
-    <BusinessData />
-  </Cell>
 </LayoutGrid>
 </div>
 

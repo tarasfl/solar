@@ -75,18 +75,11 @@
     function callback(results, status, pagination) {
   if (status == google.maps.places.PlacesServiceStatus.OK) {
     fetchedData = fetchedData.concat(results)
-    console.log(results[0].geometry.location.lat(),'   ', results[0].geometry.location.lng() )
     // Check if there are more results
     if (pagination.hasNextPage) {
-      // Fetch next page using nextPageToken
       pagination.nextPage();
     }
-  } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-    console.log('no more results')
-  } else {
-    console.log('no more results')
-  }
-  if (fetchedData.length >= 60 ){
+    else {
       getBusinessInsights(fetchedData, GOOGLE_API_KEY, value).then((data) => {
               solarData.set(data)
             }).finally(
@@ -98,6 +91,7 @@
               }
             )
   }
+  } 
 }
   
     onMount(async () => {

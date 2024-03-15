@@ -16,7 +16,7 @@
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
     export let solarPotential: SolarPotential;
-
+    
 let items = solarData;
 let currentPage = 1;
 let pageSize = 5; // Number of items per page
@@ -55,7 +55,7 @@ campaigns.subscribe(value => {
 
 
 <List twoLine>
-  {#each solarData as i}
+  {#each getCurrentPageItems() as i}
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
@@ -78,7 +78,9 @@ campaigns.subscribe(value => {
     </PrimaryText>
 
     <SecondaryText>
+      {#if elements[0][solarData.indexOf(i)].tags['addr:city'] }
       {elements[0][solarData.indexOf(i)].tags['addr:city'] }
+      {/if}
     </SecondaryText>
     {/if}
   </Text>

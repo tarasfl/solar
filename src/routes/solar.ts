@@ -53,6 +53,7 @@ export async function getBusinessInsights(
     let data: any;
     let buildingInsightsData: any[] = [];
     let buildingData: any[] = [];
+    let totalData: any[] = []
 
     for (let i = 0; i < elementsArray.length; i++) {
       await sleep(1000);
@@ -61,8 +62,8 @@ export async function getBusinessInsights(
           data = await makeRequestBuildingInsight(elementsArray[i].geometry.location.lat(), elementsArray[i].geometry.location.lng(), apiKey) 
           if(data && !(buildingInsightsData.map((data => data.name)).includes(data.name)) && (data.solarPotential.maxArrayPanelsCount / (data.solarPotential.panelCapacityWatts/1000) ) >= minKwp ){
             buildingInsightsData.push(data) 
-            console.log(data, elementsArray[i])
             buildingData.push(elementsArray[i])
+            totalData.push({solar: data, buildingData: elementsArray[i]})
             data = undefined
           }
           
