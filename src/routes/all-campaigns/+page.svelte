@@ -10,6 +10,7 @@
     } from '@smui/data-table';
     import Select, { Option } from '@smui/select';
     import IconButton from '@smui/icon-button';
+    import { onMount } from 'svelte';
 
     type Todo = {
       zipCode: number;
@@ -27,6 +28,27 @@
     $: end = Math.min(start + rowsPerPage, items.length);
     $: lastPage = Math.max(Math.ceil(items.length / rowsPerPage) - 1, 0);
 
+    async function update_campaign() {
+      const data = {
+        zipcode: '12345',
+        status: 'active',
+        leads: 100,
+        kwp: 10,
+        panel_count: 50
+      };
+
+      const response = await fetch('/api/update_campaign', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'content-type': 'application/json'
+        }
+      });
+    }
+
+    onMount(() => {
+      update_campaign();
+    });
 
     items = [
         {
