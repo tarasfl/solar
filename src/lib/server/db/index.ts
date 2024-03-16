@@ -40,12 +40,12 @@ export function insertDataCampaign(data): number {
             data.kwp,
             data.panel_count
         );
-        const lastInsertId = result.lastInsertRowid()
-        console.log(`A row has been inserted with ID ${lastInsertId}`);
+        
+        const lastInsertId = result.lastID;
 
         db.close();
 
-        return result;
+        return lastInsertId;
     } catch (error) {
         console.error('Error inserting data into LeadCampaign table:', error);
         db.close();
@@ -73,10 +73,11 @@ export function insertDataLeadCampaign(data) {
             data.phone,
             data.campaign_id
         );
+        const lastInsertId = result.lastID;
 
         db.close();
 
-        return result;
+        return lastInsertId;
     } catch (error) {
         console.error('Error inserting data into LeadCampaign table:', error);
         db.close();
