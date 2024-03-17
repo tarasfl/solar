@@ -1,6 +1,8 @@
 <script lang="ts">
     import Accordion, { Panel, Header, Content } from '@smui-extra/accordion';
     import { Icon } from '@smui/common';
+    export let builldingData;
+    builldingData.s
 </script>
 
 

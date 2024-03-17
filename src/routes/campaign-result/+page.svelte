@@ -1,4 +1,5 @@
 <script lang="ts">
+    import html2canvas from 'html2canvas';
 
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
@@ -20,6 +21,7 @@
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader';
     import Paper from "@smui/paper";
+    import Button, {Label} from "@smui/button";
    
 
     let location: {lat: number, lng:number} | undefined | google.maps.LatLng;  // location
@@ -81,6 +83,29 @@
 });}
 
     })
+
+    function convertMapToImage() {
+      const content = document.getElementById('map', );
+
+      if (content) {
+        html2canvas(content, {useCORS: true, allowTaint: false}).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = generateFilename();
+            link.click();
+        });
+    }
+
+    const generateFilename = () => {
+    const now = new Date();
+    const timestamp = now.getTime();
+    return `google_map_${timestamp}.jpg`;
+  };
+}
+
+    
+
 </script>
 
 <div class='lead-search'>
@@ -88,7 +113,7 @@
   
 <LayoutGrid class='container'>
   <Cell span={8} style='height:100%'>
-    <div>
+    <div id='map'>
       <div bind:this={mapElement} class = 'map' style="position: relative; overflow:hidden;">
     </div>
     <div id="overlay" style="position: absolute; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;">
@@ -110,6 +135,7 @@
       </div>
     </div>
   </Cell>
+  
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
@@ -118,9 +144,17 @@
           
       {/if}
   </Cell>
-  <Cell spanDevices={{ desktop: 6, tablet: 8, phone: 4}}>
+  <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
     {#if geometryLibrary != undefined}
     <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential}/>
+    {/if}
+  </Cell>
+  <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
+    {#if geometryLibrary != undefined}
+    <Button  variant="raised" style='width:100%' on:click = {convertMapToImage}>
+      <Label style='color:#fff'>Download Image of map</Label>
+    </Button>
+    
     {/if}
   </Cell>
 </LayoutGrid>
