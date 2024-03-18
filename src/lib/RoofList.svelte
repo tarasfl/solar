@@ -7,7 +7,7 @@
   import {
     type SolarPanelConfig,
     type SolarPotential
-  } from '../routes/classes';
+  } from '../routes/clases';
 
   import {campaigns} from '../routes/solar'
 
@@ -16,7 +16,7 @@
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
     export let solarPotential: SolarPotential;
-    
+
 let items = solarData;
 let currentPage = 1;
 let pageSize = 5; // Number of items per page
