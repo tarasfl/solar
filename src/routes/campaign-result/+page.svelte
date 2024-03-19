@@ -112,6 +112,7 @@
 
   
 <LayoutGrid class='container'>
+  <Cell span = {12}><div class='return-label'><a href='/lead-search'><Icon class='material-icons'>arrow_back_ios</Icon><h3 style="display: inline; margin:0; padding:0">Search Leads</h3></a></div></Cell>
   <Cell span={8} style='height:100%'>
     <div id='map'>
       <div bind:this={mapElement} class = 'map' style="position: relative; overflow:hidden;">
@@ -161,6 +162,11 @@
 </div>
 
 <style>
+  .return-label > * {
+    color:rgba(0, 0, 0, 1);
+    align-items: center;
+
+  }
 
   .left-side-text {
     width: 70%;
