@@ -4,7 +4,7 @@ import { insertDataCampaign } from '../../../lib/server/db/index.js';
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }){
     const requestData = await request.json();
-    insertDataCampaign(requestData)
+    console.log(insertDataCampaign(requestData))
 
     return json(requestData)
 }

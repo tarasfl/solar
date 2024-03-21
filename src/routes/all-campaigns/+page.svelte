@@ -11,16 +11,19 @@
     import Select, { Option } from '@smui/select';
     import IconButton from '@smui/icon-button';
     import { onMount } from 'svelte';
+    import { page } from '$app/stores';
+
+    let campaign = $page.data.campaign;
 
     type Todo = {
-      zipCode: number;
-      date: string;
+      zipCode: string;
       status: string, 
-      numberOfLeads: number,
-      minkWP: number,
-      minPanelCount: number
+      leads: number,
+      kwp: number,
+      panel_count: number,
+      campaign_id: number
     };
-    let items: Todo[] = [];
+    let items: Todo[] = campaign;
     let rowsPerPage = 10;
     let currentPage = 0;
    
@@ -49,22 +52,10 @@
     onMount(() => {
       update_campaign();
     });
-
-    items = [
-        {
-            zipCode: 90571,
-            date: '26 feb 24',
-            status: 'completed',
-            numberOfLeads: 23,
-            minkWP: 250,
-            minPanelCount: 900
-        }
-    ]
    
     $: if (currentPage > lastPage) {
       currentPage = lastPage;
     }
-    // export let campaignData; //for display data 
   </script>
 <div>
 <Paper color='secondary' style='height:500px'>
@@ -85,13 +76,14 @@
         <Body>
           {#each items as item}
             <Row style='height:90px'>
-                <Cell class = 'cell-align' numeric><big><strong>{item.zipCode}</strong></big><p>{item.date}</p></Cell>
+              <!-- <p>{item.date}</p> -->
+                <Cell class = 'cell-align' numeric><big><strong>{item.zipCode}</strong></big></Cell>
                 <Cell class = 'cell-align'><big><strong>{item.status}</strong></big></Cell>
-                <Cell class = 'cell-align' numeric><big><strong>{item.numberOfLeads}</strong></big></Cell>
-                <Cell class = 'cell-align' numeric><big><strong>{item.minkWP}</strong></big></Cell>
-                <Cell class = 'cell-align' numeric><big><strong>{item.minPanelCount}</strong></big></Cell>
+                <Cell class = 'cell-align' numeric><big><strong>{item.leads}</strong></big></Cell>
+                <Cell class = 'cell-align' numeric><big><strong>{item.kwp}</strong></big></Cell>
+                <Cell class = 'cell-align' numeric><big><strong>{item.panel_count}</strong></big></Cell>
                 <Cell>
-                    <Button variant="raised" style='width:100%'>
+                    <Button variant="raised" style='width:100%' href = '/all-campaigns/{item.campaign_id}'>
                         <Label style='color:#fff'>View Data</Label>
                     </Button>
                 </Cell>

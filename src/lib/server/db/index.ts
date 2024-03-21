@@ -41,7 +41,7 @@ export function insertDataCampaign(data): number {
             data.panel_count
         );
         
-        const lastInsertId = result.lastID;
+        const lastInsertId = result.lastInsertRowid;
 
         db.close();
 

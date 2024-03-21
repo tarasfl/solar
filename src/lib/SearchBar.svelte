@@ -18,7 +18,7 @@
     import '@material/web/icon/icon';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData, getBusinessInsights, filterValue} from '../routes/solar'
+    import {getBuildingInsight, loadingStatus, solarData, getBusinessInsights, filterValue, locationName} from '../routes/solar'
     import { goto } from '$app/navigation';
 
     const GOOGLE_API_KEY = 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A'
@@ -40,7 +40,6 @@
 
     // function for parsing Solar API data
     export async function parseData(){
-      let data: any;
       if(checkedSolarSwitch && checkedSearchAllBuildings){
         filterValue.set(value)
         searchBuildings(bounds)
@@ -48,6 +47,7 @@
             loadingStatus.set(true)
             getBuildingInsight(resp, GOOGLE_API_KEY, value).then((data) => {
               solarData.set(data)
+
             }).finally(
               () => {
                 dispatch('status', { success: true });
@@ -61,6 +61,7 @@
           });
       }
       else if (checkedSolarSwitch && !checkedSearchAllBuildings){
+        filterValue.set(value)
         let request  = {bounds: bounds}
         loadingStatus.set(true);
         service.nearbySearch(request, callback);
@@ -98,7 +99,7 @@
       await textFieldElement.updateComplete;
       const inputElement = textFieldElement.renderRoot.querySelector('input') as HTMLInputElement;
       const autocomplete = new placesLibrary.Autocomplete(inputElement, {
-        fields: ['formatted_address', 'geometry', 'name'],
+        fields: ['formatted_address', 'geometry', 'name', ],
       });
       autocomplete.addListener('place_changed', async () => {
         const place = autocomplete.getPlace();
@@ -114,7 +115,8 @@
           map.setCenter(place.geometry.location);
           map.setZoom(zoom);
         }
-  
+        console.log(place)
+        locationName.set(place.name)
         location = place.geometry.location;
         if (place.name) {
           textFieldElement.value = place.name;
