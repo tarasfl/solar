@@ -25,11 +25,16 @@
     };
     let items: Todo[] = campaign;
     let rowsPerPage = 10;
-    let currentPage = 0;
-   
-    $: start = currentPage * rowsPerPage;
-    $: end = Math.min(start + rowsPerPage, items.length);
-    $: lastPage = Math.max(Math.ceil(items.length / rowsPerPage) - 1, 0);
+  let currentPage = 0;
+ 
+  $: start = currentPage * rowsPerPage;
+  $: end = Math.min(start + rowsPerPage, items.length);
+  $: slice = items.slice(start, end);
+  $: lastPage = Math.max(Math.ceil(items.length / rowsPerPage) - 1, 0);
+ 
+  $: if (currentPage > lastPage) {
+    currentPage = lastPage;
+  }
 
     async function update_campaign() {
       const data = {
@@ -58,14 +63,13 @@
     }
   </script>
 <div>
-<Paper color='secondary' style='height:500px'>
+<Paper color='secondary'>
     <Title>View all search campaigns</Title>
-    <!-- <Subtitle>To be implemented</Subtitle> -->
     <Content>
         <DataTable table$aria-label="Todo list" style="width: 100%;">
         <Head>
           <Row>
-            <Cell numeric class = 'cell-align-head'>Zipcode</Cell>
+            <Cell class = 'cell-align-head'>Zipcode</Cell>
             <Cell class = 'cell-align-head'>Status</Cell>
             <Cell numeric class = 'cell-align-head'>No. of Leads</Cell>
             <Cell numeric class = 'cell-align-head'>Min kWp</Cell>
@@ -74,7 +78,7 @@
           </Row>
         </Head>
         <Body>
-          {#each items as item}
+          {#each slice as item}
             <Row style='height:90px'>
               <!-- <p>{item.date}</p> -->
                 <Cell class = 'cell-align' numeric><big><strong>{item.zipCode}</strong></big></Cell>
