@@ -18,3 +18,21 @@ export interface Campaign {
     kwp: number;
     panel_count: number;
 }
+
+export interface DetailedPackageView {
+    address: string;
+    business_name: string;
+    owner_of_the_building: string;
+    email: string;
+    phone: string;
+    id: number;
+    campaign_id: number;
+    image_id: number;
+}
+
+export interface OverviewList {
+    search_area: string;
+    min_kWp_capacity: number;
+    number_of_roofs: number;
+    id: number;
+}

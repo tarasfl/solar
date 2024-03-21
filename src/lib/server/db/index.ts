@@ -1,86 +1,54 @@
 import Database from 'better-sqlite3';
-import { Campaign, LeadCampaign } from './types';
+import { Campaign, DetailedPackageView, LeadCampaign, OverviewList } from './types';
 
+const db = new Database('./data/database.db');
 
-export function getCampaign(): Campaign[]{
-    const db = new Database('./data/database.db')
-
-    const sql = 'select * from Campaign'
-
-    const stmnt = db.prepare(sql)
-    const rows = stmnt.all()
-    return rows as Campaign[]
+export function getCampaign(): Campaign[] {
+    const sql = 'SELECT * FROM Campaign';
+    return db.prepare(sql).all() as Campaign[];
 }
 
-export function getLeadCampaign(): LeadCampaign[]{
-    const db = new Database('./data/database.db')
-
-    const sql = 'select * from LeadCampaign'
-
-    const stmnt = db.prepare(sql)
-    const rows = stmnt.all()
-    return rows as LeadCampaign[]
+export function getLeadCampaign(): LeadCampaign[] {
+    const sql = 'SELECT * FROM LeadCampaign';
+    return db.prepare(sql).all() as LeadCampaign[];
 }
 
+export function getDetailedPackageViews(): DetailedPackageView[] {
+    const sql = 'SELECT * FROM DetailedPackageView';
+    return db.prepare(sql).all() as DetailedPackageView[];
+}
 
-export function insertDataCampaign(data): number {
-    const db = new Database('./data/database.db')
+export function getOverviewList(): OverviewList[] {
+    const sql = 'SELECT * FROM OverviewList';
+    return db.prepare(sql).all() as OverviewList[];
+}
+
+function insertData(table: string, data: any): number {
+    const placeholders = Object.keys(data).map(() => '?').join(', ');
+    const values = Object.values(data);
 
     try {
-        const stmt = db.prepare(`
-            INSERT INTO Campaign 
-            (zipcode, status, leads, kwp, panel_count) 
-            VALUES (?, ?, ?, ?, ?)
-        `);
-
-        const result = stmt.run(
-            data.zipcode,
-            data.status,
-            data.leads,
-            data.kwp,
-            data.panel_count
-        );
-        
-        const lastInsertId = result.lastInsertRowid;
-
-        db.close();
-
-        return lastInsertId;
+        const stmt = db.prepare(`INSERT INTO ${table} (${Object.keys(data).join(', ')}) VALUES (${placeholders})`);
+        const result = stmt.run(values);
+        return result.lastInsertRowid;
     } catch (error) {
-        console.error('Error inserting data into LeadCampaign table:', error);
-        db.close();
+        console.error(`Error inserting data into ${table} table:`, error);
         throw error;
     }
 }
 
-export function insertDataLeadCampaign(data) {
-    const db = new Database('./data/database.db')
+export function insertDataCampaign(data: Campaign): number {
+    return insertData('Campaign', data);
+}
 
-    try {
-        const stmt = db.prepare(`
-            INSERT INTO Campaign 
-            (address, roof_area, kwp, data_layer, prospect_name, email, phone, campaign_id) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        `);
+export function insertDataLeadCampaign(data: LeadCampaign): number {
+    return insertData('LeadCampaign', data);
+}
 
-        const result = stmt.run(
-            data.address,
-            data.roof_area,
-            data.kwp,
-            data.data_layer,
-            data.prospect_name,
-            data.email,
-            data.phone,
-            data.campaign_id
-        );
-        const lastInsertId = result.lastID;
+export function insertDataDetailedPackageView(data: DetailedPackageView): number {
+    return insertData('DetailedPackageView', data);
+}
 
-        db.close();
-
-        return lastInsertId;
-    } catch (error) {
-        console.error('Error inserting data into LeadCampaign table:', error);
-        db.close();
-        throw error;
-    }
+export function insertDataOverviewList(data: OverviewList): number {
+    return insertData('OverviewList', data);
 }

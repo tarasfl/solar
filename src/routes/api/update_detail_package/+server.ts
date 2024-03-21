@@ -1,0 +1,10 @@
+import { json } from '@sveltejs/kit';
+import { insertDataDetailedPackageView } from '../../../lib/server/db/index.js';
+
+/** @type {import('./$types').RequestHandler} */
+export async function POST({ request }){
+    const requestData = await request.json();
+    console.log(insertDataDetailedPackageView(requestData))
+
+    return json(requestData)
+}
