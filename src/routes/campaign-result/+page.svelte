@@ -1,22 +1,23 @@
 <script lang="ts">
     import html2canvas from 'html2canvas';
+    import { page } from '$app/stores';
 
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
     import PanelBuilldingInsights from "../../lib/PanelBuilldingInsights.svelte";
-    import BusinessData from "../../lib/BusinessData.svelte";
 
     // smui elements
     import LayoutGrid, {Cell} from "@smui/layout-grid";
     import { Icon } from '@smui/common';
 
-    import {solarData, filterValue} from '../solar'
+    import {solarData, filterValue, locationName} from '../solar'
     import  {type SolarPotential} from '../classes'
 
     export let data: any[];
     export let buildings: any[];
     export let elements: any[];
     export let solarPotential: SolarPotential;
+    export let campaign = $page.data.campaign;
 
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader';
@@ -31,17 +32,26 @@
     let mapsLibrary: google.maps.MapsLibrary;
     let geometryLibrary: google.maps.GeometryLibrary
 
+    let minKwp: number;
+    let zipCode: string;
+    let lastCampaignId = campaign[campaign.length-1].campaign_id;
+
+    filterValue.subscribe((value:any) =>{
+      minKwp = value;
+    })
+
+    locationName.subscribe((value:string) =>{
+      zipCode=value
+    })
+
     solarData.subscribe((value:any[]) => {
         data = value[1];
         buildings = value[0];
         elements = value;
     })
-    console.log(elements)
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     solarPotential = data[0].solarPotential;
 
-    console.log(data[0].center)
-    console.log(buildings)
     onMount(async () => {
 
     const loader = new Loader({
@@ -112,6 +122,7 @@
 
   
 <LayoutGrid class='container'>
+  <Cell span = {12}><div class='return-label'><a href='/lead-search'><Icon class='material-icons'>arrow_back_ios</Icon><h3 style="display: inline; margin:0; padding:0">Search Leads</h3></a></div></Cell>
   <Cell span={8} style='height:100%'>
     <div id='map'>
       <div bind:this={mapElement} class = 'map' style="position: relative; overflow:hidden;">
@@ -139,7 +150,7 @@
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map}/>
+        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map} minKwp = {minKwp} zipCode={zipCode} lastCampaignId={lastCampaignId}/>
     </Paper>
           
       {/if}
@@ -161,6 +172,11 @@
 </div>
 
 <style>
+  .return-label > * {
+    color:rgba(0, 0, 0, 1);
+    align-items: center;
+
+  }
 
   .left-side-text {
     width: 70%;

@@ -30,8 +30,8 @@
     },
     {
       subMenu: 1,
-      title:'Lead Generation',
-      elements: ['Lead Generation', 'All Campaigns'],
+      title:'Search Leads',
+      elements: ['Search Leads', 'All Campaigns'],
       icon:'search',
       href:['/lead-search', '/all-campaigns']
     }, 
@@ -49,7 +49,7 @@
     },
     {
       subMenu:0,
-      title:'Account Overview',
+      title:'My Account',
       icon:'person',
       href:['/account-overview']
     },

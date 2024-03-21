@@ -1,12 +1,10 @@
-// import {getLeadCampaign} from '../../lib/server/db'
+import {getCampaign} from '../../lib/server/db'
 
-// export const load = (() => {
-//     const leadCampaign = getLeadCampaign()
-//     const campaign_id = loadDataAndGetId()
+export const load = (() => {
+    const campaign = getCampaign()
 
-//     return{
-//         leadCampaign, 
-//         campaign_id
-//     }
-// })
+    return{
+        campaign: campaign
+    }
+})
 
