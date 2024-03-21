@@ -12,6 +12,9 @@
       import IconButton from '@smui/icon-button';
       import Paper, { Content, Title, Subtitle} from '@smui/paper';
     import Button, { Label } from '@smui/button';
+
+    let leads = $page.data.leads;
+
      
       type Todo = {
         prospectName: string;
@@ -23,16 +26,30 @@
         kWp:number;
       };
       let items: Todo[] = [
-          {
-              prospectName: 'Business',
-              email: 'email@url.com',
-              phoneNumber: '0738394848',
-              zipCode: '90571',
-              roofArea: 178.2,
-              panelCount: 78,
-              kWp: 1000
-          }
       ];
+    //   building_id: number;
+    // address: string;
+    // roof_area: string;
+    // kwp: string;
+    // data_layer: string;
+    // prospect_name: string;
+    // email: string;
+    // phone: string;
+    // campaign_id: number;
+
+    leads.forEach((lead) => {
+        if(lead.campaign_id == $page.params.slug){
+            items.push({
+                prospectName: lead.prospect_name,
+                email: lead.email,
+                phoneNumber: lead.phone,
+                zipCode: lead.address,
+                roofArea: lead.roof_area,
+                panelCount: 0,
+                kWp: lead.kwp
+            })
+        }
+    })
       let rowsPerPage = 10;
       let currentPage = 0;
      
@@ -51,7 +68,7 @@
 <div>
 
     <Paper color='secondary'>
-        <Title>View Campaign {$page.params.slug}</Title>
+        <Title>View Campaign</Title>
         <Content>
 
 
