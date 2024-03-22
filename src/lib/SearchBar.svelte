@@ -157,7 +157,7 @@
   />
   <pre class="status">Min kW Potential: {value}</pre>
 
-  <Accordion style='margin-top:5px;'>
+  <!-- <Accordion style='margin-top:5px;'>
     <Panel  variant="unelevated">
     <Header style = 'align-items: center; display:flex'>
       <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>settings</Icon>
@@ -170,7 +170,7 @@
       </FormField>
   </Content>
   </Panel>
-  </Accordion>
+  </Accordion> -->
   {/if}
     <Button  variant="raised" style='width:100%' on:click = {() => parseData()}>
       <Label style='color:#fff'>Search</Label>
