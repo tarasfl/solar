@@ -49,6 +49,7 @@ function onPageChange(newPage) {
   getCurrentPageItems()
 }
 
+
 function getCurrentPageItems() {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
