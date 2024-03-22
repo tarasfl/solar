@@ -35,28 +35,6 @@
   $: if (currentPage > lastPage) {
     currentPage = lastPage;
   }
-
-    async function update_campaign() {
-      const data = {
-        zipcode: '12345',
-        status: 'active',
-        leads: 100,
-        kwp: 10,
-        panel_count: 50
-      };
-
-      const response = await fetch('/api/update_campaign', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'content-type': 'application/json'
-        }
-      });
-    }
-
-    onMount(() => {
-      update_campaign();
-    });
    
     $: if (currentPage > lastPage) {
       currentPage = lastPage;
