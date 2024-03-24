@@ -4,6 +4,7 @@
   import Drawer, {Content } from '@smui/drawer';
   import List, { Item, SecondaryText, Graphic} from '@smui/list';
   import Accordion, { Panel, Header, Content as AccordionContent } from '@smui-extra/accordion';
+  import {Icon} from '@smui/common'
 
 
 
@@ -58,8 +59,10 @@
         <Accordion>
           <Panel  variant="unelevated">
             <Header>
-              <Graphic class="material-icons" >{option.icon}</Graphic>
+              <div style = 'display:flex;'>
+              <Icon class="material-icons" >{option.icon}</Icon>
               <SecondaryText><big>{option.title}</big></SecondaryText>
+            </div>
             </Header>
             <AccordionContent>
               <List>

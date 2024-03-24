@@ -8,7 +8,7 @@
     type SolarPanelConfig,
     type SolarPotential
   } from '../routes/classes';
-    import { i } from 'vite/dist/node/types.d-jgA8ss1A';
+    import { Writable } from 'svelte/store';
 
 
     export let solarData: any[];
@@ -19,12 +19,24 @@
     export let minKwp: number;
     export let zipCode: string;
     export let lastCampaignId: number;
+    export let actionPerformed: Writable<boolean>;
+
+    
+    let buttonClicked: boolean;
+    actionPerformed.subscribe((value) => {buttonClicked = value})
 
 let buildingsData = elements[0];
 let items = solarData;
-let currentPage = 1;
-let pageSize = 5; // Number of items per page
-let googleData = false;
+items.forEach((item) => {
+  item.buildingData = buildingsData[solarData.indexOf(item)]
+})
+
+let rowsPerPage = 5;
+let currentPage = 0;
+     
+$: start = currentPage * rowsPerPage;
+$: end = Math.min(start + rowsPerPage, items.length);
+$: slice = items.slice(start, end);
 
 // const result = stmt.run(
 //             data.address,
@@ -37,23 +49,8 @@ let googleData = false;
 //             data.campaign_id
 //         );
 
-
-
-if(elements[0][0].scope == "GOOGLE"){
-  googleData = true;
-  console.log("GOOGLE", googleData)
-}
-
 function onPageChange(newPage) {
   currentPage = newPage;
-  getCurrentPageItems()
-}
-
-
-function getCurrentPageItems() {
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  return items.slice(startIndex, endIndex);
 }
 
 
@@ -96,54 +93,31 @@ function getCurrentPageItems() {
     }
 
     async function writeData(){
-      update_campaign().then(() => update_lead_campaign())
-     
+      if(!buttonClicked){
+        update_campaign().then(() => update_lead_campaign())
+        actionPerformed.set(true)
+      }
     }
 </script>
 
 
 
 <List twoLine>
-  {#each getCurrentPageItems() as i}
+  {#each slice as i}
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
     solarPotential = i.solarPotential
   }}>
-  {#if !googleData}
-    <Text>
-    {#if elements[0][solarData.indexOf(i)].tags['name'] }
-    <PrimaryText>
-      <strong>{elements[0][solarData.indexOf(i)].tags['name'] }</strong>
-    </PrimaryText>
-
-    <SecondaryText>
-      {elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }, {elements[0][solarData.indexOf(i)].tags['addr:city'] }
-    </SecondaryText>
-    {:else}
-
-    <PrimaryText>
-      <strong>{elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }</strong>
-    </PrimaryText>
-
-    <SecondaryText>
-      {#if elements[0][solarData.indexOf(i)].tags['addr:city'] }
-      {elements[0][solarData.indexOf(i)].tags['addr:city'] }
-      {/if}
-    </SecondaryText>
-    {/if}
-  </Text>
-  {:else if googleData}
   <Text>
   <PrimaryText>
-    <strong>{elements[0][solarData.indexOf(i)].name }</strong>
+    <strong>{i.buildingData.name }</strong>
   </PrimaryText>
 
   <SecondaryText>
-    {elements[0][solarData.indexOf(i)].vicinity } 
+    {i.buildingData.vicinity } 
   </SecondaryText>
 </Text>
-{/if}
 </Item>
 
 
@@ -152,7 +126,7 @@ function getCurrentPageItems() {
 
 <Pagination
   currentPage={currentPage}
-  totalPages={Math.ceil(items.length / pageSize)}
+  totalPages={Math.ceil(items.length / rowsPerPage)-1}
   onPageChange={onPageChange}
 />
 

@@ -5,7 +5,7 @@
     import IconButton from '@smui/icon-button';
   
     function prevPage() {
-      if (currentPage > 1) {
+      if (currentPage >= 1) {
         onPageChange(currentPage - 1);
       }
     }
