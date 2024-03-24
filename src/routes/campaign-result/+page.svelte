@@ -30,7 +30,7 @@
     let mapElement: HTMLElement; // HTML element for visualisation
 
     let mapsLibrary: google.maps.MapsLibrary;
-    let geometryLibrary: google.maps.GeometryLibrary
+    let geometryLibrary: google.maps.GeometryLibrary;
 
     let minKwp: number;
     let zipCode: string;
@@ -38,10 +38,6 @@
 
     filterValue.subscribe((value:any) =>{
       minKwp = value;
-    })
-
-    locationName.subscribe((value:string) =>{
-      zipCode=value
     })
 
     solarData.subscribe((value:any[]) => {
@@ -63,6 +59,19 @@
         maps: loader.importLibrary('maps'),
         geometry: loader.importLibrary('geometry')
       };
+
+      const geocoder = new google.maps.Geocoder();
+      const geocoderResponse = await geocoder.geocode({
+        location: location,
+      });
+  
+      const geocoderResult = geocoderResponse.results[0];
+      geocoderResult.address_components.forEach((component) => {
+        if(component.types.includes("postal_code")){
+          zipCode = component.long_name
+        }
+      })
+
       geometryLibrary = await libraries.geometry;
       mapsLibrary = await libraries.maps;
 

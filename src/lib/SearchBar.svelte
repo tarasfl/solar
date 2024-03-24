@@ -18,10 +18,10 @@
     import '@material/web/icon/icon';
  
     import { searchBuildings} from '../routes/buildings'
-    import {getBuildingInsight, loadingStatus, solarData, getBusinessInsights, filterValue, locationName} from '../routes/solar'
+    import {loadingStatus, solarData, getBusinessInsights, filterValue, locationName} from '../routes/solar'
     import { goto } from '$app/navigation';
 
-    const GOOGLE_API_KEY = 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A'
+    export let googleApiKey:string;
   
     export let location: google.maps.LatLng | undefined;
   
@@ -40,27 +40,7 @@
 
     // function for parsing Solar API data
     export async function parseData(){
-      if(checkedSolarSwitch && checkedSearchAllBuildings){
-        filterValue.set(value)
-        searchBuildings(bounds)
-          .then(resp => {
-            loadingStatus.set(true)
-            getBuildingInsight(resp, GOOGLE_API_KEY, value).then((data) => {
-              solarData.set(data)
-
-            }).finally(
-              () => {
-                dispatch('status', { success: true });
-                loadingStatus.set(false)
-              }
-            )
-            
-          })
-          .catch(error => {
-            console.error('Error searching buildings:', error);
-          });
-      }
-      else if (checkedSolarSwitch && !checkedSearchAllBuildings){
+      if (checkedSolarSwitch && !checkedSearchAllBuildings){
         filterValue.set(value)
         let request  = {bounds: bounds}
         loadingStatus.set(true);
@@ -81,7 +61,7 @@
       pagination.nextPage();
     }
     else {
-      getBusinessInsights(fetchedData, GOOGLE_API_KEY, value).then((data) => {
+      getBusinessInsights(fetchedData, googleApiKey, value).then((data) => {
               solarData.set(data)
             }).finally(
               () => {
@@ -156,21 +136,6 @@
     input$aria-label="Continuous slider"
   />
   <pre class="status">Min kW Potential: {value}</pre>
-
-  <!-- <Accordion style='margin-top:5px;'>
-    <Panel  variant="unelevated">
-    <Header style = 'align-items: center; display:flex'>
-      <Icon class='material-icons' style = 'color:rgba(50, 110, 198, 0.8)'>settings</Icon>
-        Advanced Options
-    </Header>
-    <Content>
-      <FormField style='width:100%'>
-        <Switch icons={false} bind:checked={checkedSearchAllBuildings}/>
-        <span slot="label">Search all buildings</span>
-      </FormField>
-  </Content>
-  </Panel>
-  </Accordion> -->
   {/if}
     <Button  variant="raised" style='width:100%' on:click = {() => parseData()}>
       <Label style='color:#fff'>Search</Label>

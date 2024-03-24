@@ -16,7 +16,7 @@
     let campaign = $page.data.campaign;
 
     type Todo = {
-      zipCode: string;
+      zipcode: string;
       status: string, 
       leads: number,
       kwp: number,
@@ -58,8 +58,7 @@
         <Body>
           {#each slice as item}
             <Row style='height:90px'>
-              <!-- <p>{item.date}</p> -->
-                <Cell class = 'cell-align' numeric><big><strong>{item.zipCode}</strong></big></Cell>
+                <Cell class = 'cell-align'><big><strong>{item.zipcode}</strong></big></Cell>
                 <Cell class = 'cell-align'><big><strong>{item.status}</strong></big></Cell>
                 <Cell class = 'cell-align' numeric><big><strong>{item.leads}</strong></big></Cell>
                 <Cell class = 'cell-align' numeric><big><strong>{item.kwp}</strong></big></Cell>

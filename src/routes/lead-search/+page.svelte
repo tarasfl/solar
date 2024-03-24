@@ -11,6 +11,7 @@
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader'; // importing google maps API
     import { goto } from '$app/navigation';
+    import { page } from '$app/stores';
   
     let location: google.maps.LatLng | undefined;  // location
     let zipCode = 'Friedenstraße 11, Schwaig bei Nürnberg'; // zipCode of default Location 'Friedenstraße 11, Schwaig bei Nürnberg' 90571
@@ -23,6 +24,8 @@
     let mapsLibrary: google.maps.MapsLibrary;
     let placesLibrary: google.maps.PlacesLibrary;
 
+    export let googleApiKey = $page.data.googleMapsApiKey;
+
     function handleStatus(event:any) {
     // redirect on sucessful data fetching
       if (event.detail.success){
@@ -32,7 +35,7 @@
 
     onMount(async () => {
         const loader = new Loader({
-        apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
+        apiKey: googleApiKey,
         version: 'weekly', // You can specify the version of Google Maps API
       });
 
@@ -76,7 +79,7 @@
     <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
         <Paper color="secondary" style='height:100%'>
-          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} on:status={handleStatus} />
+          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} on:status={handleStatus} googleApiKey={googleApiKey} />
       </Paper>
             
         {/if}

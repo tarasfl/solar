@@ -8,7 +8,6 @@
     type SolarPanelConfig,
     type SolarPotential
   } from '../routes/classes';
-    import { i } from 'vite/dist/node/types.d-jgA8ss1A';
 
 
     export let solarData: any[];
@@ -22,6 +21,11 @@
 
 let buildingsData = elements[0];
 let items = solarData;
+items.forEach((item) => {
+  item.buildingData = buildingsData[solarData.indexOf(item)]
+  console.log(item.buildingData.name)
+})
+console.log(zipCode)
 let currentPage = 1;
 let pageSize = 5; // Number of items per page
 let googleData = false;
@@ -36,13 +40,6 @@ let googleData = false;
 //             data.phone,
 //             data.campaign_id
 //         );
-
-
-
-if(elements[0][0].scope == "GOOGLE"){
-  googleData = true;
-  console.log("GOOGLE", googleData)
-}
 
 function onPageChange(newPage) {
   currentPage = newPage;
@@ -110,40 +107,15 @@ function getCurrentPageItems() {
     map.setCenter(location)
     solarPotential = i.solarPotential
   }}>
-  {#if !googleData}
-    <Text>
-    {#if elements[0][solarData.indexOf(i)].tags['name'] }
-    <PrimaryText>
-      <strong>{elements[0][solarData.indexOf(i)].tags['name'] }</strong>
-    </PrimaryText>
-
-    <SecondaryText>
-      {elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }, {elements[0][solarData.indexOf(i)].tags['addr:city'] }
-    </SecondaryText>
-    {:else}
-
-    <PrimaryText>
-      <strong>{elements[0][solarData.indexOf(i)].tags['addr:street'] }  {elements[0][solarData.indexOf(i)].tags['addr:housenumber'] }</strong>
-    </PrimaryText>
-
-    <SecondaryText>
-      {#if elements[0][solarData.indexOf(i)].tags['addr:city'] }
-      {elements[0][solarData.indexOf(i)].tags['addr:city'] }
-      {/if}
-    </SecondaryText>
-    {/if}
-  </Text>
-  {:else if googleData}
   <Text>
   <PrimaryText>
-    <strong>{elements[0][solarData.indexOf(i)].name }</strong>
+    <strong>{i.buildingData.name }</strong>
   </PrimaryText>
 
   <SecondaryText>
-    {elements[0][solarData.indexOf(i)].vicinity } 
+    {i.buildingData.vicinity } 
   </SecondaryText>
 </Text>
-{/if}
 </Item>
 
 
