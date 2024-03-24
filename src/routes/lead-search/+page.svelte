@@ -31,7 +31,7 @@
     }
 
     onMount(async () => {
-      const loader = new Loader({
+        const loader = new Loader({
         apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
         version: 'weekly', // You can specify the version of Google Maps API
       });
