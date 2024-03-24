@@ -8,6 +8,7 @@
     type SolarPanelConfig,
     type SolarPotential
   } from '../routes/classes';
+    import { Writable } from 'svelte/store';
 
 
     export let solarData: any[];
@@ -18,17 +19,24 @@
     export let minKwp: number;
     export let zipCode: string;
     export let lastCampaignId: number;
+    export let actionPerformed: Writable<boolean>;
+
+    
+    let buttonClicked: boolean;
+    actionPerformed.subscribe((value) => {buttonClicked = value})
 
 let buildingsData = elements[0];
 let items = solarData;
 items.forEach((item) => {
   item.buildingData = buildingsData[solarData.indexOf(item)]
-  console.log(item.buildingData.name)
 })
-console.log(zipCode)
-let currentPage = 1;
-let pageSize = 5; // Number of items per page
-let googleData = false;
+
+let rowsPerPage = 5;
+let currentPage = 0;
+     
+$: start = currentPage * rowsPerPage;
+$: end = Math.min(start + rowsPerPage, items.length);
+$: slice = items.slice(start, end);
 
 // const result = stmt.run(
 //             data.address,
@@ -43,14 +51,6 @@ let googleData = false;
 
 function onPageChange(newPage) {
   currentPage = newPage;
-  getCurrentPageItems()
-}
-
-
-function getCurrentPageItems() {
-  const startIndex = (currentPage - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
-  return items.slice(startIndex, endIndex);
 }
 
 
@@ -93,15 +93,17 @@ function getCurrentPageItems() {
     }
 
     async function writeData(){
-      update_campaign().then(() => update_lead_campaign())
-     
+      if(!buttonClicked){
+        update_campaign().then(() => update_lead_campaign())
+        actionPerformed.set(true)
+      }
     }
 </script>
 
 
 
 <List twoLine>
-  {#each getCurrentPageItems() as i}
+  {#each slice as i}
   <Item style='margin-bottom: 5px;' color="primary" on:click = {() => {
     location = {lat: i.center.latitude, lng: i.center.longitude}
     map.setCenter(location)
@@ -124,7 +126,7 @@ function getCurrentPageItems() {
 
 <Pagination
   currentPage={currentPage}
-  totalPages={Math.ceil(items.length / pageSize)}
+  totalPages={Math.ceil(items.length / rowsPerPage)-1}
   onPageChange={onPageChange}
 />
 

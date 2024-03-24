@@ -12,6 +12,9 @@
 
     import {solarData, filterValue, locationName} from '../solar'
     import  {type SolarPotential} from '../classes'
+    import { writable } from 'svelte/store';
+
+    let actionPerformed = writable(false);
 
     export let data: any[];
     export let buildings: any[];
@@ -159,7 +162,7 @@
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map} minKwp = {minKwp} zipCode={zipCode} lastCampaignId={lastCampaignId}/>
+        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map} minKwp = {minKwp} zipCode={zipCode} lastCampaignId={lastCampaignId} actionPerformed={actionPerformed}/>
     </Paper>
           
       {/if}
