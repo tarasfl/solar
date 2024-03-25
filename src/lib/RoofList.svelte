@@ -13,6 +13,7 @@
 
     export let solarData: any[];
     export let elements: any[];
+    export let img_data: string;
     export let location: {lat: number, lng:number} | undefined | google.maps.LatLng;;
     export let map: google.maps.Map;
     export let solarPotential: SolarPotential;
@@ -72,15 +73,17 @@ function onPageChange(newPage) {
   }
   async function update_lead_campaign(){
     solarData.forEach(async (elem) => {
-    const data = {
-    address: buildingsData[solarData.indexOf(elem)].vicinity,
-    roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
-    kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
-    data_layer: null,
-    prospect_name: buildingsData[solarData.indexOf(elem)].name,
-    email: null,
-    phone: null,
-    campaign_id: lastCampaignId+1
+      const data = {
+        address: buildingsData[solarData.indexOf(elem)].vicinity,
+        roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
+        kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
+        data_layer: null,
+        prospect_name: buildingsData[solarData.indexOf(elem)].name,
+        email: null,
+        phone: null,
+        campaign_id: lastCampaignId+1,
+        panel_count: 0,
+        img_data: img_data
       };
       await fetch('/api/update_lead_campaign', {
         method: 'POST',

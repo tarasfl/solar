@@ -37,6 +37,7 @@
 
     let minKwp: number;
     let zipCode: string;
+    let imgData: string;
     let lastCampaignId = campaign[campaign.length-1].campaign_id;
 
     filterValue.subscribe((value:any) =>{
@@ -52,7 +53,7 @@
     solarPotential = data[0].solarPotential;
 
     onMount(async () => {
-
+    convertMapToImage()
     const loader = new Loader({
         apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
         version: 'weekly', // You can specify the version of Google Maps API
@@ -106,26 +107,27 @@
 
     })
 
-    function convertMapToImage() {
-      const content = document.getElementById('map', );
+    async function convertMapToImage() {
+    const content = document.getElementById('map');
 
-      if (content) {
-        html2canvas(content, {useCORS: true, allowTaint: false}).then(canvas => {
-            const imgData = canvas.toDataURL('image/jpeg');
-            const link = document.createElement('a');
-            link.href = imgData;
-            link.download = generateFilename();
-            link.click();
-        });
+    if (content) {
+      const canvas = await html2canvas(content, { useCORS: true, allowTaint: false });
+      imgData = canvas.toDataURL('image/jpeg');
     }
+  }
 
-    const generateFilename = () => {
+  function downloadImage() {
+    const link = document.createElement('a');
+    link.href = imgData;
+    link.download = generateFilename();
+    link.click();
+  }
+
+  function generateFilename() {
     const now = new Date();
     const timestamp = now.getTime();
     return `google_map_${timestamp}.jpg`;
-  };
-}
-
+  }
     
 
 </script>
@@ -162,8 +164,19 @@
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
       {#if map}
       <Paper color="secondary" style='height:100%'>
-        <RoofList elements = {elements} bind:solarPotential bind:location solarData = {data} {map} minKwp = {minKwp} zipCode={zipCode} lastCampaignId={lastCampaignId} actionPerformed={actionPerformed}/>
-    </Paper>
+        <RoofList 
+            elements={elements} 
+            bind:solarPotential 
+            bind:location 
+            solarData={data} 
+            {map} 
+            minKwp={minKwp} 
+            zipCode={zipCode} 
+            lastCampaignId={lastCampaignId} 
+            actionPerformed={actionPerformed} 
+            img_data={imgData} 
+        />
+      </Paper>
           
       {/if}
   </Cell>
@@ -174,7 +187,7 @@
   </Cell>
   <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
     {#if geometryLibrary != undefined}
-    <Button  variant="raised" style='width:100%' on:click = {convertMapToImage}>
+    <Button  variant="raised" style='width:100%' on:click = {downloadImage}>
       <Label style='color:#fff'>Download Image of map</Label>
     </Button>
     
