@@ -1,54 +1,67 @@
-import Database from 'better-sqlite3';
+import pg from 'pg';
+const { Pool } = pg;
 import { Campaign, DetailedPackageView, LeadCampaign, OverviewList } from './types';
 
-const db = new Database('./data/database.db');
+const pool = new Pool({
+    user: 'postgres',
+    password: "eU'2;s3dl1",
+    host: '202.61.254.173',
+    database: 'solar_db',
+    port: 5432,
+});
 
-export function getCampaign(): Campaign[] {
-    const sql = 'SELECT * FROM Campaign';
-    return db.prepare(sql).all() as Campaign[];
-}
-
-export function getLeadCampaign(): LeadCampaign[] {
-    const sql = 'SELECT * FROM LeadCampaign';
-    return db.prepare(sql).all() as LeadCampaign[];
-}
-
-export function getDetailedPackageViews(): DetailedPackageView[] {
-    const sql = 'SELECT * FROM DetailedPackageView';
-    return db.prepare(sql).all() as DetailedPackageView[];
-}
-
-export function getOverviewList(): OverviewList[] {
-    const sql = 'SELECT * FROM OverviewList';
-    return db.prepare(sql).all() as OverviewList[];
-}
-
-function insertData(table: string, data: any): number {
-    const placeholders = Object.keys(data).map(() => '?').join(', ');
-    const values = Object.values(data);
-
+export async function getCampaign(): Promise<Campaign[]> {
+    const sql = 'SELECT * FROM campaign';
+    const client = await pool.connect();
     try {
-        const stmt = db.prepare(`INSERT INTO ${table} (${Object.keys(data).join(', ')}) VALUES (${placeholders})`);
-        const result = stmt.run(values);
-        return result.lastInsertRowid;
-    } catch (error) {
-        console.error(`Error inserting data into ${table} table:`, error);
-        throw error;
+        const result = await client.query(sql);
+        return result.rows as Campaign[];
+    } finally {
+        client.release();
     }
 }
 
-export function insertDataCampaign(data: Campaign): number {
-    return insertData('Campaign', data);
+export async function getLeadCampaign(): Promise<LeadCampaign[]> {
+    const sql = 'SELECT * FROM lead_campaign';
+    const client = await pool.connect();
+    try {
+        const result = await client.query(sql);
+        return result.rows as LeadCampaign[];
+    } finally {
+        client.release();
+    }
 }
 
-export function insertDataLeadCampaign(data: LeadCampaign): number {
-    return insertData('LeadCampaign', data);
+export async function insertDataCampaign(data: Campaign): Promise<number> {
+    const sql = `INSERT INTO "Campaign" (${Object.keys(data).join(', ')}) VALUES (${Object.keys(data).map((_, index) => '$' + (index + 1)).join(', ')}) RETURNING campaign_id`;
+    const values = Object.values(data);
+    const client = await pool.connect();
+    try {
+        const result = await client.query(sql, values);
+        return result.rows[0].campaign_id;
+    } finally {
+        client.release();
+    }
 }
 
-export function insertDataDetailedPackageView(data: DetailedPackageView): number {
-    return insertData('DetailedPackageView', data);
+export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number> {
+    const sql = `INSERT INTO "LeadCampaign" (${Object.keys(data).join(', ')}) VALUES (${Object.keys(data).map((_, index) => '$' + (index + 1)).join(', ')}) RETURNING building_id`;
+    const values = Object.values(data);
+    const client = await pool.connect();
+    try {
+        const result = await client.query(sql, values);
+        return result.rows[0].building_id;
+    } finally {
+        client.release();
+    }
 }
 
-export function insertDataOverviewList(data: OverviewList): number {
-    return insertData('OverviewList', data);
+export async function deleteCampaign(campaignId: number) {
+    const client = await pool.connect();
+    try {
+        await client.query('DELETE FROM "LeadCampaign" WHERE campaign_id = $1', [campaignId]);
+        await client.query('DELETE FROM "Campaign" WHERE campaign_id = $1', [campaignId]);
+    } finally {
+        client.release();
+    }
 }
