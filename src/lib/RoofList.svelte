@@ -21,6 +21,7 @@
     export let zipCode: string;
     export let lastCampaignId: number;
     export let actionPerformed: Writable<boolean>;
+    export let leads: any[]; 
 
     
     let buttonClicked: boolean;
@@ -54,12 +55,12 @@ function onPageChange(newPage) {
   currentPage = newPage;
 }
 
-
-  async function update_campaign() {
+// write to db campaign
+  async function update_campaign(leadsArray) {
       const data = {
         zipcode: zipCode,
         status: 'active',
-        leads: solarData.length,
+        leads: leadsArray.length,
         kwp: minKwp,
         panel_count: (minKwp/0.45).toFixed(0)
       };
@@ -71,36 +72,85 @@ function onPageChange(newPage) {
         }
       })
   }
-  async function update_lead_campaign(){
-    solarData.forEach(async (elem) => {
-      const data = {
-        address: buildingsData[solarData.indexOf(elem)].vicinity,
-        roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
-        kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
-        data_layer: null,
-        prospect_name: buildingsData[solarData.indexOf(elem)].name,
-        email: null,
-        phone: null,
-        campaign_id: lastCampaignId+1,
-        panel_count: 0,
-        img_data: img_data
-      };
-      await fetch('/api/update_lead_campaign', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'content-type': 'application/json'
-        }
-      })
+
+  // filter leads too prevent dublicating data in db
+function filterLeads(leadsArray){
+  let filteredLeads = [];
+  leadsArray.forEach((data:any) =>{
+    if(leads.length>0){
+    leads.forEach((element: any) => {
+      if (element.address == data.address && element.prospect_name == data.prospect_name){
+        console.log('item is allready in db')
+      }else{
+        filteredLeads.push(data)
+      }
+    })
+  }
+  else{
+    filteredLeads.push(data)
+  }
+  })
+
+  return filteredLeads;
+
+}  
+
+// prepare leads data to write to db
+function prepareLeads(){
+  let leadsArray = [];
+  solarData.forEach(async (elem) => {
+    const data = {
+      address: buildingsData[solarData.indexOf(elem)].vicinity,
+      roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
+      kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
+      data_layer: null,
+      prospect_name: buildingsData[solarData.indexOf(elem)].name,
+      email: null,
+      phone: null,
+      campaign_id: lastCampaignId+1,
+      panel_count: 0,
+      img_data: img_data
+    };
+    leadsArray.push(data)
 })
+return leadsArray;
     }
 
-    async function writeData(){
-      if(!buttonClicked){
-        update_campaign().then(() => update_lead_campaign())
-        actionPerformed.set(true)
+
+async function update_lead_campaign(leadsArray: any[]){
+  leadsArray.forEach(async (data: any) =>  {
+    await fetch('/api/update_lead_campaign', {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {
+        'content-type': 'application/json'
+      }
+    })
+  })
+}
+
+// write data to campaign and leads data to db
+async function writeData(leadsArray: any[]) {
+      update_campaign(leadsArray).then(() => update_lead_campaign(leadsArray))
+      actionPerformed.set(true)
+}
+
+// function triggered by button to start saving data to db
+async function performWritingData(){
+  if(!buttonClicked){
+    let leadsArray = prepareLeads();
+    let filteredLeads = filterLeads(leadsArray)
+
+    if(filteredLeads.length>0){
+          await writeData(filteredLeads)
+    }
+    else{
+      if (confirm("There is no unique leads found, save them anyway? ") == true) {
+            await writeData(leadsArray)
       }
     }
+  }
+}
 </script>
 
 
@@ -134,7 +184,7 @@ function onPageChange(newPage) {
 />
 
 
-<Button  variant="raised" style='width:100%' on:click = {() => { writeData() }}>
+<Button  variant="raised" style='width:100%' on:click = {() => { performWritingData() }}>
   <Label style='color:#fff'>Save</Label>
 </Button>
 

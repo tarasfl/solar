@@ -21,6 +21,7 @@
     export let elements: any[];
     export let solarPotential: SolarPotential;
     export let campaign = $page.data.campaign;
+    export let leads = $page.data.leads;
 
     import { onMount } from 'svelte';
     import {Loader} from '@googlemaps/js-api-loader';
@@ -38,7 +39,7 @@
     let minKwp: number;
     let zipCode: string;
     let imgData: string;
-    let lastCampaignId = campaign[campaign.length-1].campaign_id;
+    let lastCampaignId = campaign[campaign.length-1]==undefined?  0: campaign[campaign.length-1].campaign_id;
 
     filterValue.subscribe((value:any) =>{
       minKwp = value;
@@ -175,6 +176,7 @@
             lastCampaignId={lastCampaignId} 
             actionPerformed={actionPerformed} 
             img_data={imgData} 
+            leads = {leads}
         />
       </Paper>
           
