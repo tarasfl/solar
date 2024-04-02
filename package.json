@@ -52,6 +52,7 @@
 		"chart.js": "^4.4.1",
 		"html2canvas": "^1.4.1",
 		"material-components-web": "^14.0.0",
+		"pg": "^8.11.4",
 		"rollup": "^4.12.0"
 	}
 }

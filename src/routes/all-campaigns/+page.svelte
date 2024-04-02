@@ -1,45 +1,43 @@
 <script lang="ts">
-    import Paper, { Content, Title, Subtitle} from '@smui/paper';
-    import Button, { Label } from '@smui/button';
-    import DataTable, {
-      Head,
-      Body,
-      Row,
-      Cell,
-      Pagination,
-    } from '@smui/data-table';
-    import Select, { Option } from '@smui/select';
-    import IconButton from '@smui/icon-button';
-    import { onMount } from 'svelte';
-    import { page } from '$app/stores';
+  import Paper, { Content, Title, Subtitle} from '@smui/paper';
+  import Button, { Label } from '@smui/button';
+  import DataTable, {
+    Head,
+    Body,
+    Row,
+    Cell,
+    Pagination,
+  } from '@smui/data-table';
+  import Select, { Option } from '@smui/select';
+  import IconButton from '@smui/icon-button';
+  import { onMount } from 'svelte';
+  import { page } from '$app/stores';
 
-    let campaign = $page.data.campaign;
+  let campaign = $page.data.campaign;
 
-    type Todo = {
+  type Todo = {
       zipcode: string;
-      status: string, 
-      leads: number,
-      kwp: number,
-      panel_count: number,
-      campaign_id: number
-    };
-    let items: Todo[] = campaign;
-    let rowsPerPage = 10;
+      status: string; 
+      leads: number;
+      kwp: number;
+      panel_count: number;
+      campaign_id: number;
+  };
+
+  let items: Todo[] = campaign;
+  let rowsPerPage = 10;
   let currentPage = 0;
- 
+
   $: start = currentPage * rowsPerPage;
   $: end = Math.min(start + rowsPerPage, items.length);
   $: slice = items.slice(start, end);
   $: lastPage = Math.max(Math.ceil(items.length / rowsPerPage) - 1, 0);
- 
+
   $: if (currentPage > lastPage) {
-    currentPage = lastPage;
-  }
-   
-    $: if (currentPage > lastPage) {
       currentPage = lastPage;
-    }
-  </script>
+  }
+</script>
+
 <div>
 <Paper color='secondary'>
     <Title>View all search campaigns</Title>
@@ -53,6 +51,7 @@
             <Cell numeric class = 'cell-align-head'>Min kWp</Cell>
             <Cell numeric class = 'cell-align-head'>Min Panel Count</Cell>
             <Cell class = 'cell-align-head'>Action</Cell>
+            <Cell class = 'cell-align-head'>Delete</Cell>
           </Row>
         </Head>
         <Body>
@@ -68,6 +67,11 @@
                         <Label style='color:#fff'>View Data</Label>
                     </Button>
                 </Cell>
+                <Cell>
+                  <Button variant="raised" style='width:100%'>
+                      <Label style='color:#fff'>Delete</Label>
+                  </Button>
+              </Cell>
             </Row>
           {/each}
         </Body>
