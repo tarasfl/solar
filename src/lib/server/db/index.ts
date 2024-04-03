@@ -33,10 +33,9 @@ export async function getLeadCampaign(): Promise<LeadCampaign[]> {
 }
 
 export async function insertDataCampaign(data: Campaign) {
-    const sql = `INSERT INTO campaign (campaign_id, zipcode, status, leads, kwp, panel_count) 
-                 VALUES ($1, $2, $3, $4, $5, $6) RETURNING campaign_id`;
+    const sql = `INSERT INTO campaign (zipcode, status, leads, kwp, panel_count) 
+                 VALUES ($1, $2, $3, $4, $5) RETURNING campaign_id`;
     const values = [
-        data.campaign_id,
         data.zipcode,
         data.status,
         data.leads,
