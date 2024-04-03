@@ -32,9 +32,17 @@ export async function getLeadCampaign(): Promise<LeadCampaign[]> {
     }
 }
 
-export async function insertDataCampaign(data: Campaign): Promise<number> {
-    const sql = `INSERT INTO "Campaign" (${Object.keys(data).join(', ')}) VALUES (${Object.keys(data).map((_, index) => '$' + (index + 1)).join(', ')}) RETURNING campaign_id`;
-    const values = Object.values(data);
+export async function insertDataCampaign(data: Campaign) {
+    const sql = `INSERT INTO campaign (zipcode, status, leads, kwp, panel_count) 
+                 VALUES ($1, $2, $3, $4, $5) RETURNING campaign_id`;
+    const values = [
+        data.zipcode,
+        data.status,
+        data.leads,
+        data.kwp,
+        data.panel_count
+    ];
+
     const client = await pool.connect();
     try {
         const result = await client.query(sql, values);
@@ -44,9 +52,24 @@ export async function insertDataCampaign(data: Campaign): Promise<number> {
     }
 }
 
+
 export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number> {
-    const sql = `INSERT INTO "LeadCampaign" (${Object.keys(data).join(', ')}) VALUES (${Object.keys(data).map((_, index) => '$' + (index + 1)).join(', ')}) RETURNING building_id`;
-    const values = Object.values(data);
+    const sql = `INSERT INTO lead_campaign (building_id, address, roof_area, kwp, data_layer, 
+                 prospect_name, email, phone, building, campaign_id, img_data, panel_count) 
+                 VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING building_id`;
+    const values = [
+        data.address,
+        data.roof_area,
+        data.kwp,
+        data.data_layer,
+        data.prospect_name,
+        data.email,
+        data.phone,
+        data.building,
+        data.campaign_id,
+        data.img_data,
+        data.panel_count
+    ];
     const client = await pool.connect();
     try {
         const result = await client.query(sql, values);
