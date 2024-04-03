@@ -8,6 +8,9 @@ export interface LeadCampaign {
     email: string;
     phone: string;
     campaign_id: number;
+    building: string;
+    img_data: string;
+    panel_count: number;
 }
 
 export interface Campaign {
