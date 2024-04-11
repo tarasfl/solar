@@ -45,6 +45,8 @@
           'content-type': 'application/json'
         }
       })
+
+      location.reload()
   }
 
 </script>
