@@ -36,6 +36,17 @@
   $: if (currentPage > lastPage) {
       currentPage = lastPage;
   }
+
+  async function delete_campaign(campaign_id) {
+      await fetch('/api/delete_campaign', {
+        method: 'POST',
+        body: JSON.stringify(campaign_id),
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+  }
+
 </script>
 
 <div>
@@ -68,7 +79,7 @@
                     </Button>
                 </Cell>
                 <Cell>
-                  <Button variant="raised" style='width:100%'>
+                  <Button variant="raised" style='width:100%' on:click={() => delete_campaign(item.campaign_id)}>
                       <Label style='color:#fff'>Delete</Label>
                   </Button>
               </Cell>

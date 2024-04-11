@@ -4,8 +4,8 @@ import { Campaign, DetailedPackageView, LeadCampaign, OverviewList } from './typ
 
 const pool = new Pool({
     user: 'postgres',
-    password: "eU'2;s3dl1",
-    host: '202.61.254.173',
+    password: "wZm5IwbgfG30",
+    host: 'localhost',
     database: 'solar_db',
     port: 5432,
 });
@@ -82,8 +82,8 @@ export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number
 export async function deleteCampaign(campaignId: number) {
     const client = await pool.connect();
     try {
-        await client.query('DELETE FROM "LeadCampaign" WHERE campaign_id = $1', [campaignId]);
-        await client.query('DELETE FROM "Campaign" WHERE campaign_id = $1', [campaignId]);
+        await client.query('DELETE FROM "lead_campaign" WHERE campaign_id = $1', [campaignId]);
+        await client.query('DELETE FROM "campaign" WHERE campaign_id = $1', [campaignId]);
     } finally {
         client.release();
     }
