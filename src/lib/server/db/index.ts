@@ -55,8 +55,8 @@ export async function insertDataCampaign(data: Campaign) {
 
 export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number> {
     const sql = `INSERT INTO lead_campaign (building_id, address, roof_area, kwp, data_layer, 
-                 prospect_name, email, phone, building, campaign_id, img_data, panel_count) 
-                 VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING building_id`;
+                 prospect_name, email, phone, campaign_id, img_data, panel_count) 
+                 VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING building_id`;
     const values = [
         data.address,
         data.roof_area,
@@ -65,7 +65,6 @@ export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number
         data.prospect_name,
         data.email,
         data.phone,
-        data.building,
         data.campaign_id,
         data.img_data,
         data.panel_count
