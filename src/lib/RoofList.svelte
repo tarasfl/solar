@@ -96,25 +96,25 @@ function filterLeads(leadsArray){
 }  
 
 // prepare leads data to write to db
-async function prepareLeads() {
-    let leadsArray = [];
-    for (const elem of solarData) {
-        const data = {
-            address: buildingsData[solarData.indexOf(elem)].vicinity,
-            roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
-            kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
-            data_layer: null,
-            prospect_name: buildingsData[solarData.indexOf(elem)].name,
-            email: null,
-            phone: null,
-            campaign_id: 1,
-            panel_count: 0,
-            img_data: img_data
-        };
-        leadsArray.push(data);
+function prepareLeads(){
+  let leadsArray = [];
+  solarData.forEach(async (elem) => {
+    const data = {
+      address: buildingsData[solarData.indexOf(elem)].vicinity,
+      roof_area: elem.solarPotential.maxArrayAreaMeters2.toFixed(2),
+      kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
+      data_layer: null,
+      prospect_name: buildingsData[solarData.indexOf(elem)].name,
+      email: null,
+      phone: null,
+      campaign_id: lastCampaignId+1,
+      panel_count: 0,
+      img_data: img_data
+    };
+    leadsArray.push(data)
+})
+return leadsArray;
     }
-    return leadsArray;
-}
 
 
 async function update_lead_campaign(leadsArray: any[]){
