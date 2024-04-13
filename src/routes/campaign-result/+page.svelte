@@ -1,6 +1,7 @@
 <script lang="ts">
     import html2canvas from 'html2canvas';
     import { page } from '$app/stores';
+    import { goto } from '$app/navigation';
 
     // Svelte components
     import RoofList from "../../lib/RoofList.svelte";
@@ -15,6 +16,8 @@
     import { writable } from 'svelte/store';
 
     let actionPerformed = writable(false);
+    let dataWritten: boolean;
+    $: if(dataWritten) goto('/all-campaigns')
 
     export let data: any[];
     export let buildings: any[];
@@ -39,8 +42,10 @@
     let minKwp: number;
     let zipCode: string;
     let imgData: string;
-    let lastCampaignId = campaign[campaign.length-1]==undefined?  0: campaign[campaign.length-1].campaign_id;
+    
+    let lastCampaignId = campaign[campaign.length-1]==undefined?  1: campaign[campaign.length-1].campaign_id;
 
+    console.log(actionPerformed)
     filterValue.subscribe((value:any) =>{
       minKwp = value;
     })
@@ -50,14 +55,23 @@
         buildings = value[0];
         elements = value;
     })
+
+    actionPerformed.subscribe((value) =>{
+      dataWritten = value;
+    })
+
+    console.log(dataWritten)
+
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     solarPotential = data[0].solarPotential;
+
+    export let googleApiKey = $page.data.googleMapsApiKey;
 
     onMount(async () => {
     convertMapToImage()
     const loader = new Loader({
-        apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
-        version: 'weekly', // You can specify the version of Google Maps API
+        apiKey: googleApiKey,
+        version: 'weekly', 
       });
 
       const libraries = {
@@ -91,7 +105,7 @@
       const overlay = document.getElementById('overlay');
       const mapContainer = mapElement.getBoundingClientRect();
       const top = mapContainer.top + 10; // Adjust as needed
-    const left = mapContainer.left +10 ; // Adjust as needed
+      const left = mapContainer.left +10 ; // Adjust as needed
 
     // Set the position of the overlay
     overlay.style.top = `${top}px`;
@@ -106,6 +120,7 @@
   
 });}
 
+
     })
 
     async function convertMapToImage() {
@@ -117,11 +132,23 @@
     }
   }
 
+
   function downloadImage() {
-    const link = document.createElement('a');
-    link.href = imgData;
-    link.download = generateFilename();
-    link.click();
+    const content = document.getElementById('map');
+      if (content) {
+        html2canvas(content, {useCORS: true, allowTaint: false}).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = generateFilename();
+            link.click();
+        });
+    }
+    const generateFilename = () => {
+    const now = new Date();
+    const timestamp = now.getTime();
+    return `google_map_${timestamp}.jpg`;
+  };
   }
 
   function generateFilename() {

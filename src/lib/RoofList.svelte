@@ -40,16 +40,6 @@ $: start = currentPage * rowsPerPage;
 $: end = Math.min(start + rowsPerPage, items.length);
 $: slice = items.slice(start, end);
 
-// const result = stmt.run(
-//             data.address,
-//             data.roof_area,
-//             data.kwp,
-//             data.data_layer,
-//             data.prospect_name,
-//             data.email,
-//             data.phone,
-//             data.campaign_id
-//         );
 
 function onPageChange(newPage) {
   currentPage = newPage;
@@ -57,8 +47,10 @@ function onPageChange(newPage) {
 
 // write to db campaign
   async function update_campaign(leadsArray) {
+    let id  = lastCampaignId + 1
+    console.log(id)
       const data = {
-        campaign_id: lastCampaignId + 1,
+        campaign_id: id,
         zipcode: zipCode,
         status: 'active',
         leads: leadsArray.length,
@@ -132,7 +124,7 @@ async function update_lead_campaign(leadsArray: any[]){
 
 // write data to campaign and leads data to db
 async function writeData(leadsArray: any[]) {
-      update_campaign(leadsArray).then(() => update_lead_campaign(leadsArray))
+      update_campaign(leadsArray).then(() => update_lead_campaign(leadsArray).then(() => window.alert('Data was written successfully')))
       actionPerformed.set(true)
 }
 

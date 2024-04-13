@@ -18,6 +18,12 @@
     let map: google.maps.Map; // elemenent for map initialising
     let mapElement: HTMLElement; // HTML element for visualisation
     let bounds: google.maps.LatLngBounds;
+    let selected: string;
+    $: if(selected == "Individual"){
+      zipCode = 'Friedenstraße 11, Schwaig bei Nürnberg';
+    } else if (selected == "Range"){
+      zipCode = '90571';
+    }
     
   
     let geometryLibrary: google.maps.GeometryLibrary;
@@ -79,7 +85,7 @@
     <Cell spanDevices={{ desktop: 4, tablet: 8, phone: 4}}>
         {#if placesLibrary && map}
         <Paper color="secondary" style='height:100%'>
-          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} on:status={handleStatus} googleApiKey={googleApiKey} />
+          <SearchBar bind:location {bounds} {placesLibrary} {map} initialValue={zipCode} on:status={handleStatus} googleApiKey={googleApiKey} bind:selected = {selected} />
       </Paper>
             
         {/if}
