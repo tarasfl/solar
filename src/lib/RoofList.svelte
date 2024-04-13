@@ -58,7 +58,7 @@ function onPageChange(newPage) {
 // write to db campaign
   async function update_campaign(leadsArray) {
       const data = {
-        campaign_id: lastCampaignId,
+        campaign_id: lastCampaignId + 1,
         zipcode: zipCode,
         status: 'active',
         leads: leadsArray.length,
