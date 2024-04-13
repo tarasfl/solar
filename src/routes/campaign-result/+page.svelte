@@ -43,9 +43,8 @@
     let zipCode: string;
     let imgData: string;
     
-    let lastCampaignId = campaign[campaign.length-1]==undefined?  1: campaign[campaign.length-1].campaign_id;
+    let lastCampaignId = campaign[campaign.length-1]==undefined?  0: campaign[campaign.length-1].campaign_id;
 
-    console.log(actionPerformed)
     filterValue.subscribe((value:any) =>{
       minKwp = value;
     })
