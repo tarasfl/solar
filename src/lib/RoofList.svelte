@@ -48,7 +48,6 @@ function onPageChange(newPage) {
 // write to db campaign
   async function update_campaign(leadsArray) {
     let id  = lastCampaignId + 1
-    console.log(id)
       const data = {
         campaign_id: id,
         zipcode: zipCode,
