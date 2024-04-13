@@ -47,8 +47,10 @@ function onPageChange(newPage) {
 
 // write to db campaign
   async function update_campaign(leadsArray) {
+    let id  = lastCampaignId + 1
+    console.log(id)
       const data = {
-        campaign_id: lastCampaignId + 1,
+        campaign_id: id,
         zipcode: zipCode,
         status: 'active',
         leads: leadsArray.length,
@@ -122,9 +124,8 @@ async function update_lead_campaign(leadsArray: any[]){
 
 // write data to campaign and leads data to db
 async function writeData(leadsArray: any[]) {
-      update_campaign(leadsArray).then(() => update_lead_campaign(leadsArray).finally(window.alert('Data was written successfully')))
+      update_campaign(leadsArray).then(() => update_lead_campaign(leadsArray).then(() => window.alert('Data was written successfully')))
       actionPerformed.set(true)
-      window.alert('Data was written successfully')
 }
 
 // function triggered by button to start saving data to db
