@@ -53,11 +53,13 @@
     location = new google.maps.LatLng(data[0].center.latitude, data[0].center.longitude)
     solarPotential = data[0].solarPotential;
 
+    export let googleApiKey = $page.data.googleMapsApiKey;
+
     onMount(async () => {
     convertMapToImage()
     const loader = new Loader({
-        apiKey: 'AIzaSyBP2gDNENS_7umt0jaHn3RtgseKS_8lQ_A',
-        version: 'weekly', // You can specify the version of Google Maps API
+        apiKey: googleApiKey,
+        version: 'weekly', 
       });
 
       const libraries = {
@@ -117,11 +119,23 @@
     }
   }
 
+
   function downloadImage() {
-    const link = document.createElement('a');
-    link.href = imgData;
-    link.download = generateFilename();
-    link.click();
+    const content = document.getElementById('map');
+      if (content) {
+        html2canvas(content, {useCORS: true, allowTaint: false}).then(canvas => {
+            const imgData = canvas.toDataURL('image/jpeg');
+            const link = document.createElement('a');
+            link.href = imgData;
+            link.download = generateFilename();
+            link.click();
+        });
+    }
+    const generateFilename = () => {
+    const now = new Date();
+    const timestamp = now.getTime();
+    return `google_map_${timestamp}.jpg`;
+  };
   }
 
   function generateFilename() {

@@ -1,9 +1,12 @@
 import {getCampaign, getLeadCampaign} from '../../lib/server/db'
 import { error } from '@sveltejs/kit';
+import { GOOGLEMAPSAPIKEY } from '$env/static/private';
+
 
 export function load() {
     let campaign:any;
     let leads: any;
+    const googleMapsApiKey = GOOGLEMAPSAPIKEY
     try{
         campaign = getCampaign()
         leads = getLeadCampaign()
@@ -14,7 +17,8 @@ export function load() {
         
     return{
         campaign: campaign,
-        leads: leads
+        leads: leads,
+        googleMapsApiKey: googleMapsApiKey
     }
 }
 

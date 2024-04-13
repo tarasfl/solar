@@ -21,6 +21,8 @@
     import {loadingStatus, solarData, getBusinessInsights, filterValue, locationName} from '../routes/solar'
     import { goto } from '$app/navigation';
 
+    export let selected: string;
+
     export let googleApiKey:string;
   
     export let location: google.maps.LatLng | undefined;
@@ -111,7 +113,7 @@
 <div class='search-bar'>
 
   <div class='search-element'>
-    <Segements />
+    <Segements bind:selected />
   </div>
 
   <div class='search-element'>
