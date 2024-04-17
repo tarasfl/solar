@@ -54,6 +54,8 @@
   import type { MdFilledTextField } from '@material/web/textfield/filled-text-field'
   import '@material/web/icon/icon'
 
+  import { writable } from 'svelte/store'
+
   import { searchBuildings } from '../routes/buildings'
   import {
     loadingStatus,
@@ -62,7 +64,6 @@
     filterValue,
     locationName,
   } from '../routes/solar'
-  import { goto } from '$app/navigation'
 
   export let selected: string
 
@@ -100,6 +101,22 @@
   function callback(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       fetchedData = fetchedData.concat(results)
+      if(selected == 'Individual'){ 
+        //fetchedData = fetchedData[0]
+        getBusinessInsights(fetchedData, googleApiKey, value)
+          .then((data) => {
+            console.log(data)
+            data = [[data[0][0]], [data[1][0]]]
+            console.log(data)
+            solarData.set(data)
+          })
+          .finally(() => {
+            fetchedData = []
+            dispatch('status', { success: true })
+            loadingStatus.set(false)
+          })
+      }
+      else{
       // Check if there are more results
       if (pagination.hasNextPage) {
         pagination.nextPage()
@@ -114,6 +131,7 @@
             loadingStatus.set(false)
           })
       }
+    }
     }
   }
 
@@ -139,7 +157,6 @@
         map.setCenter(place.geometry.location)
         map.setZoom(zoom)
       }
-      console.log(place)
       locationName.set(place.name)
       location = place.geometry.location
       if (place.name) {

@@ -181,8 +181,10 @@
     }
 
     async function performWritingData(){
+      let leadsArray = [];
+      leads = []
       if(!buttonClicked){
-        let leadsArray = prepareLeads();
+        leadsArray = prepareLeads();
         let filteredLeads = filterLeads(leadsArray)
 
         if(filteredLeads.length>0){
