@@ -1,3 +1,6 @@
+{#if data[0] != undefined}
+  
+
 <div class="lead-search">
   <LayoutGrid class="container">
     <Cell span="{12}"
@@ -102,6 +105,7 @@
     </Cell>
   </LayoutGrid>
 </div>
+{/if}
 
 <script lang="ts">
   import html2canvas from 'html2canvas'
@@ -192,12 +196,16 @@
       location: location,
     })
 
+    if(data.length > 1){
     const geocoderResult = geocoderResponse.results[0]
     geocoderResult.address_components.forEach((component) => {
       if (component.types.includes('postal_code')) {
         zipCode = component.long_name
       }
     })
+  }else{
+      zipCode = buildings[0].vicinity
+  }
 
     geometryLibrary = await libraries.geometry
     mapsLibrary = await libraries.maps
@@ -261,11 +269,6 @@
     }
   }
 
-  function generateFilename() {
-    const now = new Date()
-    const timestamp = now.getTime()
-    return `google_map_${timestamp}.jpg`
-  }
 </script>
 
 <style>

@@ -89,7 +89,6 @@ async function makeRequestBuildingInsight(
         if (response.status != 200) {
           throw content;
         }
-        console.log('buildingInsightsResponse', content);
         return content;
       },
     );

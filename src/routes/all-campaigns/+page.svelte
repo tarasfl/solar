@@ -5,7 +5,7 @@
       <DataTable table$aria-label="Todo list" style="width: 100%;">
         <Head>
           <Row>
-            <Cell class="cell-align-head">Zipcode</Cell>
+            <Cell class="cell-align-head">Address of search</Cell>
             <Cell class="cell-align-head">Status</Cell>
             <Cell numeric class="cell-align-head">No. of Leads</Cell>
             <Cell numeric class="cell-align-head">Min kWp</Cell>
