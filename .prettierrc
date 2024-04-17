@@ -1,0 +1,10 @@
+{
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "htmlWhitespaceSensitivity": "strict",
+  "svelteSortOrder": "markup-scripts-styles-options",
+  "svelteStrictMode": true,
+  "plugins": ["prettier-plugin-svelte"]
+}
