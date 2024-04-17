@@ -1,10 +1,10 @@
 import pg from 'pg';
 const { Pool } = pg;
-import { Campaign, DetailedPackageView, LeadCampaign, OverviewList } from './types';
+import { Campaign, LeadCampaign } from './types';
 
 const pool = new Pool({
     user: 'postgres',
-    password: "wZm5IwbgfG30",
+    password: "1999",
     host: 'localhost',
     database: 'solar_db',
     port: 5432,
@@ -65,7 +65,7 @@ export async function insertDataLeadCampaign(data: LeadCampaign): Promise<number
         data.data_layer,
         data.prospect_name,
         data.email,
-        data.phone,
+        data.phone_number,
         data.campaign_id,
         data.img_data,
         data.panel_count
@@ -84,6 +84,24 @@ export async function deleteCampaign(campaignId: number) {
     try {
         await client.query('DELETE FROM "lead_campaign" WHERE campaign_id = $1', [campaignId]);
         await client.query('DELETE FROM "campaign" WHERE campaign_id = $1', [campaignId]);
+    } finally {
+        client.release();
+    }
+}
+
+export async function updateMailData(building_id: number, new_email: string) {
+    const client = await pool.connect();
+    try {
+        await client.query('UPDATE lead_campaign SET email = $1 WHERE building_id = $2', [new_email, building_id]);
+    } finally {
+        client.release();
+    }
+}
+
+export async function updatePhoneData(building_id: number, new_phone: string) {
+    const client = await pool.connect();
+    try {
+        await client.query('UPDATE lead_campaign SET phone = $1 WHERE building_id = $2', [new_phone, building_id]);
     } finally {
         client.release();
     }

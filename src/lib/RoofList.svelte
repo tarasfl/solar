@@ -97,8 +97,8 @@ function prepareLeads(){
       kwp: elem.solarPotential.panelCapacityWatts.toFixed(2),
       data_layer: null,
       prospect_name: buildingsData[solarData.indexOf(elem)].name,
-      email: null,
-      phone: null,
+      email: 'Email Field',
+      phone_number: 'Phone Field',
       campaign_id: lastCampaignId+1,
       panel_count: 0,
       img_data: img_data
