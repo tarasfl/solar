@@ -4,7 +4,7 @@ import { deleteCampaign } from '../../../lib/server/db/index.js';
 /** @type {import('./$types').RequestHandler} */
 export async function POST({ request }){
     const requestData = await request.json();
-    console.log(deleteCampaign(requestData))
+    deleteCampaign(requestData)
 
     return json(requestData)
 }
