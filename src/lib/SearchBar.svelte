@@ -159,9 +159,7 @@
       }
       locationName.set(place.name)
       location = place.geometry.location
-      if (place.name) {
-        textFieldElement.value = place.name
-      } else if (place.formatted_address) {
+      if (place.formatted_address) {
         textFieldElement.value = place.formatted_address
       }
     })
