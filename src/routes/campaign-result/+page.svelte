@@ -1,110 +1,112 @@
 {#if data[0] != undefined}
-  
-
-<div class="lead-search">
-  <LayoutGrid class="container">
-    <Cell span="{12}"
-      ><div class="return-label"
-        ><a href="/lead-search"
-          ><Icon class="material-icons">arrow_back_ios</Icon><h3
-            style="display: inline; margin:0; padding:0">Search Leads</h3
-          ></a
-        ></div
-      ></Cell
-    >
-    <Cell span="{8}" style="height:100%">
-      <div id="map">
-        <div
-          bind:this="{mapElement}"
-          class="map"
-          style="position: relative; overflow:hidden;"
-        >
-        </div>
-        <div
-          id="overlay"
-          style="position: absolute; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;"
-        >
-          <div class="text-line">
-            <div class="left-side-text"
-              ><Icon
-                class="material-icons"
-                style="color:rgba(50, 110, 198, 0.8)">light_mode</Icon
-              ><p>Annual sunshine</p>
-            </div>
-            <div class="right-side-text"
-              ><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div
-            >
-          </div>
-          <div class="text-line">
-            <div class="left-side-text"
-              ><Icon
-                class="material-icons"
-                style="color:rgba(50, 110, 198, 0.8)">square_foot</Icon
-              ><p>Roof Area</p>
-            </div>
-            <div class="right-side-text"
-              ><p>{solarPotential.maxArrayAreaMeters2.toFixed(2)}</p></div
-            >
-          </div>
-          <div class="text-line">
-            <div class="left-side-text"
-              ><Icon
-                class="material-icons"
-                style="color:rgba(50, 110, 198, 0.8)">solar_power</Icon
-              ><p>Max panel count</p>
-            </div>
-            <div class="right-side-text"
-              ><p>{solarPotential.maxArrayPanelsCount}</p></div
-            >
-          </div>
-          <div class="text-line">
-            <div class="left-side-text"
-              ><Icon
-                class="material-icons"
-                style="color:rgba(50, 110, 198, 0.8)">co2</Icon
-              ><p>C02 savings</p>
-            </div>
-            <div class="right-side-text"
-              ><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div
-            ></div
+  <div class="lead-search">
+    <LayoutGrid class="container">
+      <Cell span="{12}"
+        ><div class="return-label"
+          ><a href="/lead-search"
+            ><Icon class="material-icons">arrow_back_ios</Icon><h3
+              style="display: inline; margin:0; padding:0">Search Leads</h3
+            ></a
+          ></div
+        ></Cell
+      >
+      <Cell span="{8}" style="height:100%">
+        <div id="map">
+          <div
+            bind:this="{mapElement}"
+            class="map"
+            style="position: relative; overflow:hidden;"
           >
+          </div>
+          <div
+            id="overlay"
+            style="position: absolute; background-color: rgba(255, 255, 255, 1); padding: 10px; border-radius: 5px; z-index: 1000;"
+          >
+            <div class="text-line">
+              <div class="left-side-text"
+                ><Icon
+                  class="material-icons"
+                  style="color:rgba(50, 110, 198, 0.8)">light_mode</Icon
+                ><p>Annual sunshine</p>
+              </div>
+              <div class="right-side-text"
+                ><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div
+              >
+            </div>
+            <div class="text-line">
+              <div class="left-side-text"
+                ><Icon
+                  class="material-icons"
+                  style="color:rgba(50, 110, 198, 0.8)">square_foot</Icon
+                ><p>Roof Area</p>
+              </div>
+              <div class="right-side-text"
+                ><p>{solarPotential.maxArrayAreaMeters2.toFixed(2)}</p></div
+              >
+            </div>
+            <div class="text-line">
+              <div class="left-side-text"
+                ><Icon
+                  class="material-icons"
+                  style="color:rgba(50, 110, 198, 0.8)">solar_power</Icon
+                ><p>Max panel count</p>
+              </div>
+              <div class="right-side-text"
+                ><p>{solarPotential.maxArrayPanelsCount}</p></div
+              >
+            </div>
+            <div class="text-line">
+              <div class="left-side-text"
+                ><Icon
+                  class="material-icons"
+                  style="color:rgba(50, 110, 198, 0.8)">co2</Icon
+                ><p>C02 savings</p>
+              </div>
+              <div class="right-side-text"
+                ><p>{solarPotential.maxSunshineHoursPerYear.toFixed(2)}</p></div
+              ></div
+            >
+          </div>
         </div>
-      </div>
-    </Cell>
+      </Cell>
 
-    <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
-      {#if map}
-        <Paper color="secondary" style="height:100%">
-          <RoofList
-            {elements}
-            bind:solarPotential
-            bind:location
-            solarData="{data}"
-            {map}
-            {minKwp}
-            {zipCode}
-            {lastCampaignId}
-            {actionPerformed}
-            img_data="{imgData}"
-            {leads}
-          />
-        </Paper>
-      {/if}
-    </Cell>
-    <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
-      {#if geometryLibrary != undefined}
-        <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
-      {/if}
-    </Cell>
-    <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
-      {#if geometryLibrary != undefined}
-        <Button variant="raised" style="width:100%" on:click="{downloadImage}">
-          <Label style="color:#fff">Download Image of map</Label>
-        </Button>
-      {/if}
-    </Cell>
-  </LayoutGrid>
-</div>
+      <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
+        {#if map}
+          <Paper color="secondary" style="height:100%">
+            <RoofList
+              {elements}
+              bind:solarPotential
+              bind:location
+              solarData="{data}"
+              {map}
+              {minKwp}
+              {zipCode}
+              {lastCampaignId}
+              {actionPerformed}
+              img_data="{imgData}"
+              {leads}
+            />
+          </Paper>
+        {/if}
+      </Cell>
+      <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
+        {#if geometryLibrary != undefined}
+          <PanelBuilldingInsights {map} {geometryLibrary} {solarPotential} />
+        {/if}
+      </Cell>
+      <Cell spanDevices="{{ desktop: 4, tablet: 8, phone: 4 }}">
+        {#if geometryLibrary != undefined}
+          <Button
+            variant="raised"
+            style="width:100%; background-color: #007bff;"
+            on:click="{downloadImage}"
+          >
+            <Label style="color:#fff">Download Image of map</Label>
+          </Button>
+        {/if}
+      </Cell>
+    </LayoutGrid>
+  </div>
 {/if}
 
 <script lang="ts">
@@ -196,16 +198,16 @@
       location: location,
     })
 
-    if(data.length > 1){
-    const geocoderResult = geocoderResponse.results[0]
-    geocoderResult.address_components.forEach((component) => {
-      if (component.types.includes('postal_code')) {
-        zipCode = component.long_name
-      }
-    })
-  }else{
+    if (data.length > 1) {
+      const geocoderResult = geocoderResponse.results[0]
+      geocoderResult.address_components.forEach((component) => {
+        if (component.types.includes('postal_code')) {
+          zipCode = component.long_name
+        }
+      })
+    } else {
       zipCode = buildings[0].vicinity
-  }
+    }
 
     geometryLibrary = await libraries.geometry
     mapsLibrary = await libraries.maps
@@ -268,7 +270,6 @@
       return `google_map_${timestamp}.jpg`
     }
   }
-
 </script>
 
 <style>
