@@ -29,7 +29,11 @@
       />
       <pre class="status">Min kW Potential: {value}</pre>
     {/if}
-    <Button variant="raised" style="width:100%" on:click="{() => parseData()}">
+    <Button
+      variant="raised"
+      style="width:100%; background-color: #007bff;"
+      on:click="{() => parseData()}"
+    >
       <Label style="color:#fff">Search</Label>
     </Button>
   </div>
@@ -41,7 +45,6 @@
   import { onMount } from 'svelte'
   import { redirect } from '@sveltejs/kit'
   import { createEventDispatcher } from 'svelte'
-
   // importing smui elements
   import Switch from '@smui/switch'
   import FormField from '@smui/form-field'
@@ -101,7 +104,7 @@
   function callback(results, status, pagination) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
       fetchedData = fetchedData.concat(results)
-      if(selected == 'Individual'){ 
+      if (selected == 'Individual') {
         //fetchedData = fetchedData[0]
         getBusinessInsights(fetchedData, googleApiKey, value)
           .then((data) => {
@@ -115,23 +118,22 @@
             dispatch('status', { success: true })
             loadingStatus.set(false)
           })
-      }
-      else{
-      // Check if there are more results
-      if (pagination.hasNextPage) {
-        pagination.nextPage()
       } else {
-        getBusinessInsights(fetchedData, googleApiKey, value)
-          .then((data) => {
-            solarData.set(data)
-          })
-          .finally(() => {
-            fetchedData = []
-            dispatch('status', { success: true })
-            loadingStatus.set(false)
-          })
+        // Check if there are more results
+        if (pagination.hasNextPage) {
+          pagination.nextPage()
+        } else {
+          getBusinessInsights(fetchedData, googleApiKey, value)
+            .then((data) => {
+              solarData.set(data)
+            })
+            .finally(() => {
+              fetchedData = []
+              dispatch('status', { success: true })
+              loadingStatus.set(false)
+            })
+        }
       }
-    }
     }
   }
 

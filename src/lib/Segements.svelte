@@ -5,7 +5,12 @@
   bind:selected
   style="width:100%"
 >
-  <Segment {segment} style="width:50%">
+  <Segment
+    {segment}
+    style="width:50%; {segment === selected
+      ? 'background-color: #007bff; color: #fff;'
+      : ''}"
+  >
     <Label>{segment}</Label>
   </Segment>
 </SegmentedButton>

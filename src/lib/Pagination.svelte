@@ -2,7 +2,7 @@
   <IconButton on:click="{prevPage}" class="material-icons"
     >chevron_left</IconButton
   >
-  <span>Page {currentPage+1} of {totalPages+1}</span>
+  <span>Page {currentPage + 1} of {totalPages + 1}</span>
   <IconButton on:click="{nextPage}" class="material-icons"
     >chevron_right</IconButton
   >
