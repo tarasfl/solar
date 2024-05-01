@@ -170,7 +170,9 @@
 
 <style>
   md-filled-text-field {
+    border: none;
     width: 100%;
+    padding: 12px 0px;
   }
 
   .search-element {
