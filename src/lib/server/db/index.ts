@@ -4,7 +4,7 @@ import { Campaign, LeadCampaign } from './types';
 
 const pool = new Pool({
     user: 'postgres',
-    password: "1999",
+    password: "wZm5IwbgfG30",
     host: 'localhost',
     database: 'solar_db',
     port: 5432,
