@@ -38,6 +38,7 @@
 </html>
 
 <script lang="ts">
+  import '../app.pcss'
   import { onMount } from 'svelte'
 
   // importing materials UI elements
